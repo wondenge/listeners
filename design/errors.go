@@ -7,7 +7,7 @@ import (
 	_ "goa.design/plugins/v3/zaplogger" // Enables ZapLogger Plugin
 )
 
-var ErrorResponseMessage = ResultType("ErrorResponseMessage", func() {
+var ErrorResponseMessage = Type("ErrorResponseMessage", func() {
 	Description("Response Error Details")
 
 	Attribute("requestId", String, func() {
@@ -25,12 +25,6 @@ var ErrorResponseMessage = ResultType("ErrorResponseMessage", func() {
 	Attribute("errorMessage", String, func() {
 		Description("This is a short descriptive message of the failure reason.")
 		Example("Invalid Access Token")
-	})
-
-	View("default", func() {
-		Attribute("requestId")
-		Attribute("errorCode")
-		Attribute("errorMessage")
 	})
 })
 

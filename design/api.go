@@ -28,7 +28,7 @@ var _ = API("listener", func() {
 	})
 	Server("listener", func() {
 		Description("listener hosts all Listener Services.")
-		Services("mpesa")
+		Services("swagger", "health", "mpesa")
 		Host("local", func() {
 			Description("Localhost")
 			URI("http://localhost:8000")
@@ -36,27 +36,163 @@ var _ = API("listener", func() {
 	})
 })
 
-var _ = Service("mpesa", func() {
+var _ = Service("swagger", func() {
+	Description("The swagger service serves the API swagger definition.")
+	HTTP(func() {
+		Path("/swagger")
+	})
 
+	// Defines an endpoint that serves static assets via HTTP.
+	// Serve the file with relative path ../../gen/http/openapi.json
+	// for requests sent to /swagger.json.
+	Files("/swagger.json", "../../gen/http/openapi.json", func() {
+		Description("JSON document containing the API swagger definition")
+	})
 })
 
-// '/mpesa/b2c/v1'
-// '/mpesa/b2b/v1'
+var _ = Service("health", func() {
 
-// B2C CALLBACK '/b2c/result'
-// B2C ResultURL - /api/v1/b2c/result
+	// HTTP defines the HTTP transport specific
+	// properties of an API, a service or a single method.
+	HTTP(func() {
+		Path("/health")
+	})
 
-// B2C TIMEOUT '/b2c/timeout'
-// B2C QueueTimeoutURL - /api/v1/b2c/timeout
+	// Defines a single service method
+	Method("show", func() {
+		Description("Health check endpoint.")
+		Result(String)
+		HTTP(func() {
+			GET("/")
+			Response(func() {
+				Code(StatusOK)
+				ContentType("text/plain")
+			})
+		})
+	})
+})
 
-// C2B VALIDATION REQUEST '/validation'
-// C2B ValidationURL - /api/v1/c2b/validation
+var _ = Service("mpesa", func() {
 
-// C2B CONFIRMATION REQUEST- '/confirmation'
-// C2B ConfirmationURL - /api/v1/c2b/confirmation
+	HTTP(func() {
+		Path("/mpesa")
+	})
 
-// B2B CALLBACK '/b2b/result'
-// B2B ResultURL - /api/v1/b2b/result
+	// Account Balance Queue TimeOut URL
+	// Path that stores information of time out transaction.
+	Method("AccountBalanceTimeout", func() {
+		Description("Account Balance Queue TimeOut URL")
+		Payload()
+		Result()
+		HTTP(func() {
+			POST("/accountbalance/v1/timeout")
+			Response(StatusOK)
+		})
+	})
 
-// B2B TIMEOUT '/b2b/timeout'
-// B2B QueueTimeoutURL - /api/v1/b2b/timeout
+	// Account Balance Result URL
+	// Path that stores information of transaction
+	Method("AccountBalanceResult", func() {
+		Description("Account Balance Result URL")
+		Payload()
+		Result()
+		HTTP(func() {
+			POST("/accountbalance/v1/result")
+			Response(StatusOK)
+		})
+	})
+
+	// Transaction Status Queue TimeOut URL
+	// Path that stores information of time out transaction.
+	Method("TransactionStatusTimeout", func() {
+		Description("Transaction Status Queue TimeOut URL")
+		Payload()
+		Result()
+		HTTP(func() {
+			POST("/transactionstatus/v1/timeout")
+			Response(StatusOK)
+		})
+	})
+
+	// Transaction Status Result URL
+	// Path that stores information of transaction
+	Method("TransactionStatusResult", func() {
+		Description("Transaction Status Result URL")
+		Payload()
+		Result()
+		HTTP(func() {
+			POST("/transactionstatus/v1/result")
+			Response(StatusOK)
+		})
+	})
+
+	// Reversal Queue TimeOut URL
+	// Path that stores information of time out transaction.
+	Method("ReversalTimeout", func() {
+		Description("Reversal Queue TimeOut URL")
+		Payload()
+		Result()
+		HTTP(func() {
+			POST("/reversal/v1/timeout")
+			Response(StatusOK)
+		})
+	})
+
+	// Reversal Result URL
+	// Path that stores information of transaction
+	Method("ReversalResult", func() {
+		Description("Reversal Result URL")
+		Payload()
+		Result()
+		HTTP(func() {
+			POST("/reversal/v1/result")
+			Response(StatusOK)
+		})
+	})
+
+	// B2C Queue TimeOut URL
+	// Path that stores information of time out transaction.
+	Method("B2CTimeout", func() {
+		Description("B2C Queue TimeOut URL")
+		Payload()
+		Result()
+		HTTP(func() {
+			POST("/b2c/v1/timeout")
+			Response(StatusOK)
+		})
+	})
+
+	// B2C Result URL
+	// Path that stores information of transaction
+	Method("B2CResult", func() {
+		Description("B2C Result URL")
+		Payload()
+		Result()
+		HTTP(func() {
+			POST("/b2c/v1/result")
+			Response(StatusOK)
+		})
+	})
+
+	// C2B Validation URL
+	Method("C2BValidation", func() {
+		Description("C2B Validation URL")
+		Payload()
+		Result()
+		HTTP(func() {
+			POST("/c2b/v1/validation")
+			Response(StatusOK)
+		})
+	})
+
+	// C2B Confirmation URL
+	Method("C2BConfirmation", func() {
+		Description("C2B Confirmation URL")
+		Payload()
+		Result()
+		HTTP(func() {
+			POST("/c2b/v1/confirmation")
+			Response(StatusOK)
+		})
+	})
+})
