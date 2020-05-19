@@ -82,8 +82,8 @@ var _ = Service("mpesa", func() {
 	// Path that stores information of time out transaction.
 	Method("AccountBalanceTimeout", func() {
 		Description("Account Balance Queue TimeOut URL")
-		Payload()
-		Result()
+		Payload(AccountBalanceResult)
+		Result(String)
 		HTTP(func() {
 			POST("/accountbalance/v1/timeout")
 			Response(StatusOK)
@@ -94,8 +94,8 @@ var _ = Service("mpesa", func() {
 	// Path that stores information of transaction
 	Method("AccountBalanceResult", func() {
 		Description("Account Balance Result URL")
-		Payload()
-		Result()
+		Payload(AccountBalanceResult)
+		Result(String)
 		HTTP(func() {
 			POST("/accountbalance/v1/result")
 			Response(StatusOK)
@@ -106,8 +106,8 @@ var _ = Service("mpesa", func() {
 	// Path that stores information of time out transaction.
 	Method("TransactionStatusTimeout", func() {
 		Description("Transaction Status Queue TimeOut URL")
-		Payload()
-		Result()
+		Payload(TransactionStatusResult)
+		Result(String)
 		HTTP(func() {
 			POST("/transactionstatus/v1/timeout")
 			Response(StatusOK)
@@ -118,8 +118,8 @@ var _ = Service("mpesa", func() {
 	// Path that stores information of transaction
 	Method("TransactionStatusResult", func() {
 		Description("Transaction Status Result URL")
-		Payload()
-		Result()
+		Payload(TransactionStatusResult)
+		Result(String)
 		HTTP(func() {
 			POST("/transactionstatus/v1/result")
 			Response(StatusOK)
@@ -130,8 +130,8 @@ var _ = Service("mpesa", func() {
 	// Path that stores information of time out transaction.
 	Method("ReversalTimeout", func() {
 		Description("Reversal Queue TimeOut URL")
-		Payload()
-		Result()
+		Payload(ReversalResult)
+		Result(String)
 		HTTP(func() {
 			POST("/reversal/v1/timeout")
 			Response(StatusOK)
@@ -142,8 +142,8 @@ var _ = Service("mpesa", func() {
 	// Path that stores information of transaction
 	Method("ReversalResult", func() {
 		Description("Reversal Result URL")
-		Payload()
-		Result()
+		Payload(ReversalResult)
+		Result(String)
 		HTTP(func() {
 			POST("/reversal/v1/result")
 			Response(StatusOK)
@@ -154,8 +154,8 @@ var _ = Service("mpesa", func() {
 	// Path that stores information of time out transaction.
 	Method("B2CTimeout", func() {
 		Description("B2C Queue TimeOut URL")
-		Payload()
-		Result()
+		Payload(B2CPaymentResult)
+		Result(String)
 		HTTP(func() {
 			POST("/b2c/v1/timeout")
 			Response(StatusOK)
@@ -166,8 +166,8 @@ var _ = Service("mpesa", func() {
 	// Path that stores information of transaction
 	Method("B2CResult", func() {
 		Description("B2C Result URL")
-		Payload()
-		Result()
+		Payload(B2CPaymentResult)
+		Result(String)
 		HTTP(func() {
 			POST("/b2c/v1/result")
 			Response(StatusOK)
@@ -177,8 +177,8 @@ var _ = Service("mpesa", func() {
 	// C2B Validation URL
 	Method("C2BValidation", func() {
 		Description("C2B Validation URL")
-		Payload()
-		Result()
+		Payload(ValidationResult)
+		Result(String)
 		HTTP(func() {
 			POST("/c2b/v1/validation")
 			Response(StatusOK)
@@ -188,8 +188,8 @@ var _ = Service("mpesa", func() {
 	// C2B Confirmation URL
 	Method("C2BConfirmation", func() {
 		Description("C2B Confirmation URL")
-		Payload()
-		Result()
+		Payload(ConfirmationResult)
+		Result(String)
 		HTTP(func() {
 			POST("/c2b/v1/confirmation")
 			Response(StatusOK)
