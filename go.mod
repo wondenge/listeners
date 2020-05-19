@@ -1,4 +1,4 @@
-module github.com/wondenge/mpesa-listener
+module github.com/wondenge/listeners
 
 go 1.14
 

@@ -74,29 +74,26 @@ var B2CPaymentResult = Type("B2CPaymentResult", func() {
 					Example("TransactionAmount")
 				})
 				Elem(func() {
-					MinLength(0)
 					Example(8000)
 				})
 			})
-			Attribute("B2CWorkingAccountAvailableFunds", MapOf(String, Int64), func() {
+			Attribute("B2CWorkingAccountAvailableFunds", MapOf(String, Int), func() {
 				Description("Available balance of the Working account under the B2C shortcode used in the transaction.")
 				Key(func() {
 					MinLength(1)
 					Example("B2CWorkingAccountAvailableFunds")
 				})
 				Elem(func() {
-					MinLength(0)
 					Example(150000)
 				})
 			})
-			Attribute("B2CUtilityAccountAvailableFunds", MapOf(String, Int64), func() {
+			Attribute("B2CUtilityAccountAvailableFunds", MapOf(String, Int), func() {
 				Description("Available balance of the Utility account under the B2C shortcode used in the transaction.")
 				Key(func() {
 					MinLength(1)
 					Example("B2CUtilityAccountAvailableFunds")
 				})
 				Elem(func() {
-					MinLength(0)
 					Example(133568)
 				})
 			})
@@ -122,7 +119,7 @@ var B2CPaymentResult = Type("B2CPaymentResult", func() {
 					Example("254708374149 - John Doe")
 				})
 			})
-			Attribute("B2CChargesPaidAccountAvailableFunds", MapOf(String, Int64), func() {
+			Attribute("B2CChargesPaidAccountAvailableFunds", MapOf(String, Int), func() {
 				Description("Available balance of the Charges Paid account under the B2C shortcode used in the transaction.")
 				Key(func() {
 					MinLength(1)

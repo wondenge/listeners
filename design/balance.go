@@ -39,14 +39,14 @@ var AccountBalanceResult = Type("AccountBalanceResult", func() {
 				})
 
 			})
-			Attribute("BOCompletedTime", MapOf(String, Int), func() {
+			Attribute("BOCompletedTime", MapOf(String, String), func() {
 				Key(func() {
 					MinLength(1)
 					Example("BOCompletedTime")
 				})
 				Elem(func() {
 					Format(FormatDateTime)
-					Example(20170728095642)
+					Example("20170728095642")
 				})
 			})
 		})

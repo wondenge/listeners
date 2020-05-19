@@ -33,13 +33,13 @@ var LNMOResult = ResultType("LNMOResult", func() {
 })
 
 var Item = Type("Item", func() {
-	Attribute("Amount", MapOf(String, Int64), func() {
+	Attribute("Amount", MapOf(String, Int), func() {
 		Description("This is the Amount that was transacted")
 		Key(func() {
 			Example("Amount")
 		})
 		Elem(func() {
-			Example(10500.5)
+			Example(10500)
 		})
 	})
 
@@ -54,13 +54,13 @@ var Item = Type("Item", func() {
 			Example("LHG31AA5TX")
 		})
 	})
-	Attribute("Balance", MapOf(String, Int64), func() {
+	Attribute("Balance", MapOf(String, Int), func() {
 		Description("Balance of the account for the shortcode used as partyB")
 		Key(func() {
 			Example("Balance")
 		})
 		Elem(func() {
-			Example(32009.9)
+			Example(32009)
 		})
 	})
 	Attribute("TransactionDate", MapOf(String, String), func() {

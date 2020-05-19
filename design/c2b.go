@@ -43,8 +43,8 @@ var ValidationResult = Type("ValidationResult", func() {
 
 	Attribute("BusinessShortCode", Int, func() {
 		Description("Organizations shortcode (Paybill or Buygoods)")
-		MinLength(5)
-		MaxLength(6)
+		//MinLength(5)
+		//MaxLength(6)
 		Example(654321)
 	})
 
@@ -61,9 +61,9 @@ var ValidationResult = Type("ValidationResult", func() {
 	// receiving organization shortcode. For validation request,
 	// this field is usually blank whereas for the confirmation message,
 	// the value represents the new balance after the payment has been received.
-	Attribute("OrgAccountBalance", Int64, func() {
+	Attribute("OrgAccountBalance", Int, func() {
 		Description("Current utility account balance of the payment receiving organization shortcode")
-		Example(30671.00)
+		Example(30671)
 	})
 	Attribute("ThirdPartyTransID", String)
 	Attribute("MSISDN", Int, func() {
@@ -119,8 +119,8 @@ var ConfirmationResult = Type("ConfirmationResult", func() {
 
 	Attribute("BusinessShortCode", Int, func() {
 		Description("Organizations shortcode (Paybill or Buygoods)")
-		MinLength(5)
-		MaxLength(6)
+		//MinLength(5)
+		//MaxLength(6)
 		Example(654321)
 	})
 
@@ -137,9 +137,9 @@ var ConfirmationResult = Type("ConfirmationResult", func() {
 	// receiving organization shortcode. For validation request,
 	// this field is usually blank whereas for the confirmation message,
 	// the value represents the new balance after the payment has been received.
-	Attribute("OrgAccountBalance", Int64, func() {
+	Attribute("OrgAccountBalance", Int, func() {
 		Description("Current utility account balance of the payment receiving organization shortcode")
-		Example(30671.00)
+		Example(30671)
 	})
 	Attribute("ThirdPartyTransID", String)
 	Attribute("MSISDN", Int, func() {

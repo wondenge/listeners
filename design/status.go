@@ -53,7 +53,7 @@ var TransactionStatusResult = Type("TransactionStatusResult", func() {
 						Example(20170727101415)
 					})
 				})
-				Attribute("Amount", MapOf(String, Int64), func() {
+				Attribute("Amount", MapOf(String, Int), func() {
 					Key(func() {
 						Example("Amount")
 					})
