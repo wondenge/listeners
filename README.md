@@ -2,10 +2,6 @@
 
 This is a Golang HTTP service listening for Callbacks and Timeouts from the following API providers.
 
-- Daraja API
-
-# Daraja API Endpoints
-
 # Usage
 
 Creates two binaries, which can be used to test the HTTP listners.
