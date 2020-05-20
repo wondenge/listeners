@@ -12,7 +12,6 @@ import (
 	"io"
 	"net/http"
 
-	mpesa "github.com/wondenge/listeners/gen/mpesa"
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
 )
@@ -24,7 +23,7 @@ func EncodeAccountBalanceTimeoutResponse(encoder func(context.Context, http.Resp
 		res := v.(string)
 		enc := encoder(ctx, w)
 		body := res
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		return enc.Encode(body)
 	}
 }
@@ -44,10 +43,6 @@ func DecodeAccountBalanceTimeoutRequest(mux goahttp.Muxer, decoder func(*http.Re
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateAccountBalanceTimeoutRequestBody(&body)
-		if err != nil {
-			return nil, err
-		}
 		payload := NewAccountBalanceTimeoutAccountBalanceResult(&body)
 
 		return payload, nil
@@ -61,7 +56,7 @@ func EncodeAccountBalanceResultEndpointResponse(encoder func(context.Context, ht
 		res := v.(string)
 		enc := encoder(ctx, w)
 		body := res
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		return enc.Encode(body)
 	}
 }
@@ -81,10 +76,6 @@ func DecodeAccountBalanceResultEndpointRequest(mux goahttp.Muxer, decoder func(*
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateAccountBalanceResultRequestBody(&body)
-		if err != nil {
-			return nil, err
-		}
 		payload := NewAccountBalanceResult(&body)
 
 		return payload, nil
@@ -98,7 +89,7 @@ func EncodeTransactionStatusTimeoutResponse(encoder func(context.Context, http.R
 		res := v.(string)
 		enc := encoder(ctx, w)
 		body := res
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		return enc.Encode(body)
 	}
 }
@@ -118,10 +109,6 @@ func DecodeTransactionStatusTimeoutRequest(mux goahttp.Muxer, decoder func(*http
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateTransactionStatusTimeoutRequestBody(&body)
-		if err != nil {
-			return nil, err
-		}
 		payload := NewTransactionStatusTimeoutTransactionStatusResult(&body)
 
 		return payload, nil
@@ -135,7 +122,7 @@ func EncodeTransactionStatusResultEndpointResponse(encoder func(context.Context,
 		res := v.(string)
 		enc := encoder(ctx, w)
 		body := res
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		return enc.Encode(body)
 	}
 }
@@ -155,10 +142,6 @@ func DecodeTransactionStatusResultEndpointRequest(mux goahttp.Muxer, decoder fun
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateTransactionStatusResultRequestBody(&body)
-		if err != nil {
-			return nil, err
-		}
 		payload := NewTransactionStatusResult(&body)
 
 		return payload, nil
@@ -172,7 +155,7 @@ func EncodeReversalTimeoutResponse(encoder func(context.Context, http.ResponseWr
 		res := v.(string)
 		enc := encoder(ctx, w)
 		body := res
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		return enc.Encode(body)
 	}
 }
@@ -192,10 +175,6 @@ func DecodeReversalTimeoutRequest(mux goahttp.Muxer, decoder func(*http.Request)
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateReversalTimeoutRequestBody(&body)
-		if err != nil {
-			return nil, err
-		}
 		payload := NewReversalTimeoutReversalResult(&body)
 
 		return payload, nil
@@ -209,7 +188,7 @@ func EncodeReversalResultEndpointResponse(encoder func(context.Context, http.Res
 		res := v.(string)
 		enc := encoder(ctx, w)
 		body := res
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		return enc.Encode(body)
 	}
 }
@@ -229,10 +208,6 @@ func DecodeReversalResultEndpointRequest(mux goahttp.Muxer, decoder func(*http.R
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateReversalResultRequestBody(&body)
-		if err != nil {
-			return nil, err
-		}
 		payload := NewReversalResult(&body)
 
 		return payload, nil
@@ -246,7 +221,7 @@ func EncodeB2CTimeoutResponse(encoder func(context.Context, http.ResponseWriter)
 		res := v.(string)
 		enc := encoder(ctx, w)
 		body := res
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		return enc.Encode(body)
 	}
 }
@@ -266,10 +241,6 @@ func DecodeB2CTimeoutRequest(mux goahttp.Muxer, decoder func(*http.Request) goah
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateB2CTimeoutRequestBody(&body)
-		if err != nil {
-			return nil, err
-		}
 		payload := NewB2CTimeoutB2CPaymentResult(&body)
 
 		return payload, nil
@@ -283,7 +254,7 @@ func EncodeB2CResultResponse(encoder func(context.Context, http.ResponseWriter) 
 		res := v.(string)
 		enc := encoder(ctx, w)
 		body := res
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		return enc.Encode(body)
 	}
 }
@@ -303,10 +274,6 @@ func DecodeB2CResultRequest(mux goahttp.Muxer, decoder func(*http.Request) goaht
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-		err = ValidateB2CResultRequestBody(&body)
-		if err != nil {
-			return nil, err
-		}
 		payload := NewB2CResultB2CPaymentResult(&body)
 
 		return payload, nil
@@ -320,7 +287,7 @@ func EncodeC2BValidationResponse(encoder func(context.Context, http.ResponseWrit
 		res := v.(string)
 		enc := encoder(ctx, w)
 		body := res
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		return enc.Encode(body)
 	}
 }
@@ -357,7 +324,7 @@ func EncodeC2BConfirmationResponse(encoder func(context.Context, http.ResponseWr
 		res := v.(string)
 		enc := encoder(ctx, w)
 		body := res
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		return enc.Encode(body)
 	}
 }
@@ -385,66 +352,4 @@ func DecodeC2BConfirmationRequest(mux goahttp.Muxer, decoder func(*http.Request)
 
 		return payload, nil
 	}
-}
-
-// unmarshalAccountBalanceParametersRequestBodyToMpesaAccountBalanceParameters
-// builds a value of type *mpesa.AccountBalanceParameters from a value of type
-// *AccountBalanceParametersRequestBody.
-func unmarshalAccountBalanceParametersRequestBodyToMpesaAccountBalanceParameters(v *AccountBalanceParametersRequestBody) *mpesa.AccountBalanceParameters {
-	if v == nil {
-		return nil
-	}
-	res := &mpesa.AccountBalanceParameters{
-		AccountBalance:  v.AccountBalance,
-		BOCompletedTime: v.BOCompletedTime,
-	}
-
-	return res
-}
-
-// unmarshalTransactionStatusResultParameterRequestBodyToMpesaTransactionStatusResultParameter
-// builds a value of type *mpesa.TransactionStatusResultParameter from a value
-// of type *TransactionStatusResultParameterRequestBody.
-func unmarshalTransactionStatusResultParameterRequestBodyToMpesaTransactionStatusResultParameter(v *TransactionStatusResultParameterRequestBody) *mpesa.TransactionStatusResultParameter {
-	if v == nil {
-		return nil
-	}
-	res := &mpesa.TransactionStatusResultParameter{
-		ReceiptNo:                v.ReceiptNo,
-		ConversationID:           v.ConversationID,
-		FinalisedTime:            v.FinalisedTime,
-		Amount:                   v.Amount,
-		TransactionStatus:        v.TransactionStatus,
-		ReasonType:               v.ReasonType,
-		TransactionReason:        v.TransactionReason,
-		DebitPartyCharges:        v.DebitPartyCharges,
-		DebitAccountType:         v.DebitAccountType,
-		InitiatedTime:            v.InitiatedTime,
-		OriginatorConversationID: v.OriginatorConversationID,
-		CreditPartyName:          v.CreditPartyName,
-		DebitPartyName:           v.DebitPartyName,
-	}
-
-	return res
-}
-
-// unmarshalB2CResultParametersRequestBodyToMpesaB2CResultParameters builds a
-// value of type *mpesa.B2CResultParameters from a value of type
-// *B2CResultParametersRequestBody.
-func unmarshalB2CResultParametersRequestBodyToMpesaB2CResultParameters(v *B2CResultParametersRequestBody) *mpesa.B2CResultParameters {
-	if v == nil {
-		return nil
-	}
-	res := &mpesa.B2CResultParameters{
-		TransactionReceipt:                  v.TransactionReceipt,
-		TransactionAmount:                   v.TransactionAmount,
-		B2CWorkingAccountAvailableFunds:     v.B2CWorkingAccountAvailableFunds,
-		B2CUtilityAccountAvailableFunds:     v.B2CUtilityAccountAvailableFunds,
-		TransactionCompletedDateTime:        v.TransactionCompletedDateTime,
-		ReceiverPartyPublicName:             v.ReceiverPartyPublicName,
-		B2CChargesPaidAccountAvailableFunds: v.B2CChargesPaidAccountAvailableFunds,
-		B2CRecipientIsRegisteredCustomer:    v.B2CRecipientIsRegisteredCustomer,
-	}
-
-	return res
 }

@@ -31,7 +31,7 @@ var _ = API("listener", func() {
 		Services("swagger", "health", "mpesa")
 		Host("local", func() {
 			Description("Localhost")
-			URI("http://localhost:8000")
+			URI("http://localhost:3000")
 		})
 	})
 })
@@ -86,7 +86,7 @@ var _ = Service("mpesa", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/accountbalance/v1/timeout")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -98,7 +98,7 @@ var _ = Service("mpesa", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/accountbalance/v1/result")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -110,7 +110,7 @@ var _ = Service("mpesa", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/transactionstatus/v1/timeout")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -122,7 +122,7 @@ var _ = Service("mpesa", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/transactionstatus/v1/result")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -134,7 +134,7 @@ var _ = Service("mpesa", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/reversal/v1/timeout")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -146,7 +146,7 @@ var _ = Service("mpesa", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/reversal/v1/result")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -158,7 +158,7 @@ var _ = Service("mpesa", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/b2c/v1/timeout")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -170,7 +170,7 @@ var _ = Service("mpesa", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/b2c/v1/result")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -181,7 +181,7 @@ var _ = Service("mpesa", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/c2b/v1/validation")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 
@@ -192,7 +192,7 @@ var _ = Service("mpesa", func() {
 		Result(String)
 		HTTP(func() {
 			POST("/c2b/v1/confirmation")
-			Response(StatusOK)
+			Response(StatusCreated)
 		})
 	})
 })

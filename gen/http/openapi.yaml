@@ -11,7 +11,7 @@ info:
     name: Apache License
     url: https://github.com/wondenge/mpesa-listener/blob/master/LICENSE
   version: "1.0"
-host: localhost:8000
+host: localhost:3000
 consumes:
 - application/json
 - application/xml
@@ -51,8 +51,8 @@ paths:
         schema:
           $ref: '#/definitions/MpesaAccountBalanceResultRequestBody'
       responses:
-        "200":
-          description: OK response.
+        "201":
+          description: Created response.
           schema:
             type: string
       schemes:
@@ -71,8 +71,8 @@ paths:
         schema:
           $ref: '#/definitions/MpesaAccountBalanceTimeoutRequestBody'
       responses:
-        "200":
-          description: OK response.
+        "201":
+          description: Created response.
           schema:
             type: string
       schemes:
@@ -91,8 +91,8 @@ paths:
         schema:
           $ref: '#/definitions/MpesaB2CResultRequestBody'
       responses:
-        "200":
-          description: OK response.
+        "201":
+          description: Created response.
           schema:
             type: string
       schemes:
@@ -111,8 +111,8 @@ paths:
         schema:
           $ref: '#/definitions/MpesaB2CTimeoutRequestBody'
       responses:
-        "200":
-          description: OK response.
+        "201":
+          description: Created response.
           schema:
             type: string
       schemes:
@@ -131,8 +131,8 @@ paths:
         schema:
           $ref: '#/definitions/MpesaC2BConfirmationRequestBody'
       responses:
-        "200":
-          description: OK response.
+        "201":
+          description: Created response.
           schema:
             type: string
       schemes:
@@ -151,8 +151,8 @@ paths:
         schema:
           $ref: '#/definitions/MpesaC2BValidationRequestBody'
       responses:
-        "200":
-          description: OK response.
+        "201":
+          description: Created response.
           schema:
             type: string
       schemes:
@@ -171,8 +171,8 @@ paths:
         schema:
           $ref: '#/definitions/MpesaReversalResultRequestBody'
       responses:
-        "200":
-          description: OK response.
+        "201":
+          description: Created response.
           schema:
             type: string
       schemes:
@@ -191,8 +191,8 @@ paths:
         schema:
           $ref: '#/definitions/MpesaReversalTimeoutRequestBody'
       responses:
-        "200":
-          description: OK response.
+        "201":
+          description: Created response.
           schema:
             type: string
       schemes:
@@ -211,8 +211,8 @@ paths:
         schema:
           $ref: '#/definitions/MpesaTransactionStatusResultRequestBody'
       responses:
-        "200":
-          description: OK response.
+        "201":
+          description: Created response.
           schema:
             type: string
       schemes:
@@ -231,8 +231,8 @@ paths:
         schema:
           $ref: '#/definitions/MpesaTransactionStatusTimeoutRequestBody'
       responses:
-        "200":
-          description: OK response.
+        "201":
+          description: Created response.
           schema:
             type: string
       schemes:
@@ -252,576 +252,206 @@ paths:
       schemes:
       - http
 definitions:
-  AccountBalanceParametersRequestBody:
-    title: AccountBalanceParametersRequestBody
-    type: object
-    properties:
-      AccountBalance:
-        type: string
-        example: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-      BOCompletedTime:
-        type: string
-        example: "20170728095642"
-        format: date-time
-    example:
-      AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-      BOCompletedTime: "20170728095642"
-  B2CResultParametersRequestBody:
-    title: B2CResultParametersRequestBody
-    type: object
-    properties:
-      B2CChargesPaidAccountAvailableFunds:
-        type: number
-        description: Available balance of the Charges Paid account under the B2C shortcode used in the transaction.
-        example: 236543.9
-        format: double
-      B2CRecipientIsRegisteredCustomer:
-        type: string
-        description: Key indicating whether customer is registered on M-PESA
-        example: "Y"
-        enum:
-        - "Y"
-        - "N"
-        pattern: '[a-zA-Z]+'
-      B2CUtilityAccountAvailableFunds:
-        type: number
-        description: Available balance of the Utility account under the B2C shortcode used in the transaction.
-        example: 23654.5
-        format: double
-      B2CWorkingAccountAvailableFunds:
-        type: number
-        description: Available balance of the Working account under the B2C shortcode used in the transaction.
-        example: 2000
-        format: double
-      ReceiverPartyPublicName:
-        type: string
-        description: This is the name and phone number of the customer who received the payment.
-        example: 254722000000 - Safaricom PLC
-        pattern: '[a-zA-Z]+'
-      TransactionAmount:
-        type: integer
-        description: This is the amount that was transacted.
-        example: 8000
-        format: int64
-      TransactionCompletedDateTime:
-        type: string
-        description: This is the date and time that the transaction completed M-PESA.
-        example: 17.07.2017 10:54:57
-        format: date-time
-      TransactionReceipt:
-        type: string
-        description: This is a unique M-PESA transaction ID for every payment request.
-        example: LGH3197RIB
-        pattern: '[a-zA-Z]+'
-    example:
-      B2CChargesPaidAccountAvailableFunds: 236543.9
-      B2CRecipientIsRegisteredCustomer: "Y"
-      B2CUtilityAccountAvailableFunds: 23654.5
-      B2CWorkingAccountAvailableFunds: 2000
-      ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-      TransactionAmount: 8000
-      TransactionCompletedDateTime: 17.07.2017 10:54:57
-      TransactionReceipt: LGH3197RIB
   MpesaAccountBalanceResultRequestBody:
     title: MpesaAccountBalanceResultRequestBody
     type: object
     properties:
-      Result:
-        type: object
-        properties:
-          ConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: 236543-276372-2
-          OriginatorConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            type: object
-            properties:
-              ReferenceItem:
-                type: object
-                example:
-                  QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
-                additionalProperties: true
-            example:
-              ReferenceItem:
-                QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
-          ResultCode:
-            type: integer
-            description: Numeric status code indicating the status of the transaction processing
-            example: 0
-            format: int64
-          ResultDesc:
-            type: string
-            description: Message from the API that gives the status of the request
-            example: Initiator information is invalid
-          ResultParameters:
-            type: object
-            properties:
-              ResultParameter:
-                type: array
-                items:
-                  $ref: '#/definitions/AccountBalanceParametersRequestBody'
-                example:
-                - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                  BOCompletedTime: "20170728095642"
-                - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                  BOCompletedTime: "20170728095642"
-            example:
-              ResultParameter:
-              - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                BOCompletedTime: "20170728095642"
-              - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                BOCompletedTime: "20170728095642"
-              - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                BOCompletedTime: "20170728095642"
-              - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                BOCompletedTime: "20170728095642"
-          ResultType:
-            type: integer
-            description: Status code indicating whether transaction was already sent to your listener
-            default: 0
-            example: 0
-            format: int64
-          TransactionID:
-            type: string
-            description: Unique M-PESA transaction ID for every payment request.
-            example: LHG31AA5TX
-        example:
-          ConversationId: 236543-276372-2
-          OriginatorConversationId: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            ReferenceItem:
-              QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
-          ResultCode: 0
-          ResultDesc: Initiator information is invalid
-          ResultParameters:
-            ResultParameter:
-            - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-              BOCompletedTime: "20170728095642"
-            - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-              BOCompletedTime: "20170728095642"
-            - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-              BOCompletedTime: "20170728095642"
-            - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-              BOCompletedTime: "20170728095642"
-          ResultType: 0
-          TransactionID: LHG31AA5TX
+      ConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: 236543-276372-2
+      MpesaResultCode:
+        type: integer
+        description: Numeric status code indicating the status of the transaction processing
+        example: 0
+        format: int64
+      MpesaResultDesc:
+        type: string
+        description: Message from the API that gives the status of the request
+        example: Initiator information is invalid
+      MpesaResultParameters:
+        type: string
+        example: Rem totam reprehenderit itaque eos.
+      MpesaResultType:
+        type: integer
+        description: Status code indicating whether transaction was already sent to your listener
+        example: 0
+        format: int64
+      Occasion:
+        type: string
+        example: Occasion
+      OriginatorConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL:
+        type: string
+        description: Queue Timeout URL
+        example: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID:
+        type: string
+        description: Unique M-PESA transaction ID for every payment request.
+        example: LHG31AA5TX
     example:
-      Result:
-        ConversationId: 236543-276372-2
-        OriginatorConversationId: AG_2376487236_126732989KJHJKH
-        ReferenceData:
-          ReferenceItem:
-            QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
-        ResultCode: 0
-        ResultDesc: Initiator information is invalid
-        ResultParameters:
-          ResultParameter:
-          - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-            BOCompletedTime: "20170728095642"
-          - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-            BOCompletedTime: "20170728095642"
-          - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-            BOCompletedTime: "20170728095642"
-        ResultType: 0
-        TransactionID: LHG31AA5TX
+      ConversationId: 236543-276372-2
+      MpesaResultCode: 0
+      MpesaResultDesc: Initiator information is invalid
+      MpesaResultParameters: Non fugit ullam laborum vero.
+      MpesaResultType: 0
+      Occasion: Occasion
+      OriginatorConversationId: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID: LHG31AA5TX
   MpesaAccountBalanceTimeoutRequestBody:
     title: MpesaAccountBalanceTimeoutRequestBody
     type: object
     properties:
-      Result:
-        type: object
-        properties:
-          ConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: 236543-276372-2
-          OriginatorConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            type: object
-            properties:
-              ReferenceItem:
-                type: object
-                example:
-                  QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
-                additionalProperties: true
-            example:
-              ReferenceItem:
-                QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
-          ResultCode:
-            type: integer
-            description: Numeric status code indicating the status of the transaction processing
-            example: 0
-            format: int64
-          ResultDesc:
-            type: string
-            description: Message from the API that gives the status of the request
-            example: Initiator information is invalid
-          ResultParameters:
-            type: object
-            properties:
-              ResultParameter:
-                type: array
-                items:
-                  $ref: '#/definitions/AccountBalanceParametersRequestBody'
-                example:
-                - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                  BOCompletedTime: "20170728095642"
-                - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                  BOCompletedTime: "20170728095642"
-                - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                  BOCompletedTime: "20170728095642"
-                - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                  BOCompletedTime: "20170728095642"
-            example:
-              ResultParameter:
-              - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                BOCompletedTime: "20170728095642"
-              - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-                BOCompletedTime: "20170728095642"
-          ResultType:
-            type: integer
-            description: Status code indicating whether transaction was already sent to your listener
-            default: 0
-            example: 0
-            format: int64
-          TransactionID:
-            type: string
-            description: Unique M-PESA transaction ID for every payment request.
-            example: LHG31AA5TX
-        example:
-          ConversationId: 236543-276372-2
-          OriginatorConversationId: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            ReferenceItem:
-              QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
-          ResultCode: 0
-          ResultDesc: Initiator information is invalid
-          ResultParameters:
-            ResultParameter:
-            - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-              BOCompletedTime: "20170728095642"
-            - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-              BOCompletedTime: "20170728095642"
-            - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-              BOCompletedTime: "20170728095642"
-            - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-              BOCompletedTime: "20170728095642"
-          ResultType: 0
-          TransactionID: LHG31AA5TX
+      ConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: 236543-276372-2
+      MpesaResultCode:
+        type: integer
+        description: Numeric status code indicating the status of the transaction processing
+        example: 0
+        format: int64
+      MpesaResultDesc:
+        type: string
+        description: Message from the API that gives the status of the request
+        example: Initiator information is invalid
+      MpesaResultParameters:
+        type: string
+        example: Itaque qui enim aliquam iste non voluptatem.
+      MpesaResultType:
+        type: integer
+        description: Status code indicating whether transaction was already sent to your listener
+        example: 0
+        format: int64
+      Occasion:
+        type: string
+        example: Occasion
+      OriginatorConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL:
+        type: string
+        description: Queue Timeout URL
+        example: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID:
+        type: string
+        description: Unique M-PESA transaction ID for every payment request.
+        example: LHG31AA5TX
     example:
-      Result:
-        ConversationId: 236543-276372-2
-        OriginatorConversationId: AG_2376487236_126732989KJHJKH
-        ReferenceData:
-          ReferenceItem:
-            QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
-        ResultCode: 0
-        ResultDesc: Initiator information is invalid
-        ResultParameters:
-          ResultParameter:
-          - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-            BOCompletedTime: "20170728095642"
-          - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-            BOCompletedTime: "20170728095642"
-          - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-            BOCompletedTime: "20170728095642"
-          - AccountBalance: Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00
-            BOCompletedTime: "20170728095642"
-        ResultType: 0
-        TransactionID: LHG31AA5TX
+      ConversationId: 236543-276372-2
+      MpesaResultCode: 0
+      MpesaResultDesc: Initiator information is invalid
+      MpesaResultParameters: Aspernatur consectetur fugit optio mollitia.
+      MpesaResultType: 0
+      Occasion: Occasion
+      OriginatorConversationId: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID: LHG31AA5TX
   MpesaB2CResultRequestBody:
     title: MpesaB2CResultRequestBody
     type: object
     properties:
-      ReferenceData:
-        type: object
-        properties:
-          ReferenceItem:
-            type: object
-            example:
-              QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit
-            additionalProperties: true
-        example:
-          ReferenceItem:
-            QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit
-      Result:
-        type: object
-        properties:
-          ConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: 236543-276372-2
-          OriginatorConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: AG_2376487236_126732989KJHJKH
-          ResultCode:
-            type: integer
-            description: Numeric status code indicating the status of the transaction processing
-            example: 0
-            format: int64
-          ResultDesc:
-            type: string
-            description: Message from the API that gives the status of the request
-            example: Initiator information is invalid
-          ResultType:
-            type: integer
-            description: Status code indicating whether transaction was already sent to your listener
-            default: 0
-            example: 0
-            format: int64
-          TransactionID:
-            type: string
-            description: Unique M-PESA transaction ID for every payment request.
-            example: LHG31AA5TX
-        example:
-          ConversationId: 236543-276372-2
-          OriginatorConversationId: AG_2376487236_126732989KJHJKH
-          ResultCode: 0
-          ResultDesc: Initiator information is invalid
-          ResultType: 0
-          TransactionID: LHG31AA5TX
-      ResultParameters:
-        type: object
-        properties:
-          ResultParameter:
-            type: array
-            items:
-              $ref: '#/definitions/B2CResultParametersRequestBody'
-            example:
-            - B2CChargesPaidAccountAvailableFunds: 236543.9
-              B2CRecipientIsRegisteredCustomer: "Y"
-              B2CUtilityAccountAvailableFunds: 23654.5
-              B2CWorkingAccountAvailableFunds: 2000
-              ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-              TransactionAmount: 8000
-              TransactionCompletedDateTime: 17.07.2017 10:54:57
-              TransactionReceipt: LGH3197RIB
-            - B2CChargesPaidAccountAvailableFunds: 236543.9
-              B2CRecipientIsRegisteredCustomer: "Y"
-              B2CUtilityAccountAvailableFunds: 23654.5
-              B2CWorkingAccountAvailableFunds: 2000
-              ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-              TransactionAmount: 8000
-              TransactionCompletedDateTime: 17.07.2017 10:54:57
-              TransactionReceipt: LGH3197RIB
-            - B2CChargesPaidAccountAvailableFunds: 236543.9
-              B2CRecipientIsRegisteredCustomer: "Y"
-              B2CUtilityAccountAvailableFunds: 23654.5
-              B2CWorkingAccountAvailableFunds: 2000
-              ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-              TransactionAmount: 8000
-              TransactionCompletedDateTime: 17.07.2017 10:54:57
-              TransactionReceipt: LGH3197RIB
-            - B2CChargesPaidAccountAvailableFunds: 236543.9
-              B2CRecipientIsRegisteredCustomer: "Y"
-              B2CUtilityAccountAvailableFunds: 23654.5
-              B2CWorkingAccountAvailableFunds: 2000
-              ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-              TransactionAmount: 8000
-              TransactionCompletedDateTime: 17.07.2017 10:54:57
-              TransactionReceipt: LGH3197RIB
-        example:
-          ResultParameter:
-          - B2CChargesPaidAccountAvailableFunds: 236543.9
-            B2CRecipientIsRegisteredCustomer: "Y"
-            B2CUtilityAccountAvailableFunds: 23654.5
-            B2CWorkingAccountAvailableFunds: 2000
-            ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-            TransactionAmount: 8000
-            TransactionCompletedDateTime: 17.07.2017 10:54:57
-            TransactionReceipt: LGH3197RIB
-          - B2CChargesPaidAccountAvailableFunds: 236543.9
-            B2CRecipientIsRegisteredCustomer: "Y"
-            B2CUtilityAccountAvailableFunds: 23654.5
-            B2CWorkingAccountAvailableFunds: 2000
-            ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-            TransactionAmount: 8000
-            TransactionCompletedDateTime: 17.07.2017 10:54:57
-            TransactionReceipt: LGH3197RIB
-          - B2CChargesPaidAccountAvailableFunds: 236543.9
-            B2CRecipientIsRegisteredCustomer: "Y"
-            B2CUtilityAccountAvailableFunds: 23654.5
-            B2CWorkingAccountAvailableFunds: 2000
-            ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-            TransactionAmount: 8000
-            TransactionCompletedDateTime: 17.07.2017 10:54:57
-            TransactionReceipt: LGH3197RIB
+      ConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: 236543-276372-2
+      MpesaResultCode:
+        type: integer
+        description: Numeric status code indicating the status of the transaction processing
+        example: 0
+        format: int64
+      MpesaResultDesc:
+        type: string
+        description: Message from the API that gives the status of the request
+        example: Initiator information is invalid
+      MpesaResultParameters:
+        type: string
+        example: Perferendis voluptas voluptas deleniti maxime.
+      MpesaResultType:
+        type: integer
+        description: Status code indicating whether transaction was already sent to your listener
+        example: 0
+        format: int64
+      Occasion:
+        type: string
+        example: Occasion
+      OriginatorConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL:
+        type: string
+        description: Queue Timeout URL
+        example: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID:
+        type: string
+        description: Unique M-PESA transaction ID for every payment request.
+        example: LHG31AA5TX
     example:
-      ReferenceData:
-        ReferenceItem:
-          QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit
-      Result:
-        ConversationId: 236543-276372-2
-        OriginatorConversationId: AG_2376487236_126732989KJHJKH
-        ResultCode: 0
-        ResultDesc: Initiator information is invalid
-        ResultType: 0
-        TransactionID: LHG31AA5TX
-      ResultParameters:
-        ResultParameter:
-        - B2CChargesPaidAccountAvailableFunds: 236543.9
-          B2CRecipientIsRegisteredCustomer: "Y"
-          B2CUtilityAccountAvailableFunds: 23654.5
-          B2CWorkingAccountAvailableFunds: 2000
-          ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-          TransactionAmount: 8000
-          TransactionCompletedDateTime: 17.07.2017 10:54:57
-          TransactionReceipt: LGH3197RIB
-        - B2CChargesPaidAccountAvailableFunds: 236543.9
-          B2CRecipientIsRegisteredCustomer: "Y"
-          B2CUtilityAccountAvailableFunds: 23654.5
-          B2CWorkingAccountAvailableFunds: 2000
-          ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-          TransactionAmount: 8000
-          TransactionCompletedDateTime: 17.07.2017 10:54:57
-          TransactionReceipt: LGH3197RIB
-        - B2CChargesPaidAccountAvailableFunds: 236543.9
-          B2CRecipientIsRegisteredCustomer: "Y"
-          B2CUtilityAccountAvailableFunds: 23654.5
-          B2CWorkingAccountAvailableFunds: 2000
-          ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-          TransactionAmount: 8000
-          TransactionCompletedDateTime: 17.07.2017 10:54:57
-          TransactionReceipt: LGH3197RIB
+      ConversationId: 236543-276372-2
+      MpesaResultCode: 0
+      MpesaResultDesc: Initiator information is invalid
+      MpesaResultParameters: Eaque est qui atque molestiae.
+      MpesaResultType: 0
+      Occasion: Occasion
+      OriginatorConversationId: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID: LHG31AA5TX
   MpesaB2CTimeoutRequestBody:
     title: MpesaB2CTimeoutRequestBody
     type: object
     properties:
-      ReferenceData:
-        type: object
-        properties:
-          ReferenceItem:
-            type: object
-            example:
-              QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit
-            additionalProperties: true
-        example:
-          ReferenceItem:
-            QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit
-      Result:
-        type: object
-        properties:
-          ConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: 236543-276372-2
-          OriginatorConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: AG_2376487236_126732989KJHJKH
-          ResultCode:
-            type: integer
-            description: Numeric status code indicating the status of the transaction processing
-            example: 0
-            format: int64
-          ResultDesc:
-            type: string
-            description: Message from the API that gives the status of the request
-            example: Initiator information is invalid
-          ResultType:
-            type: integer
-            description: Status code indicating whether transaction was already sent to your listener
-            default: 0
-            example: 0
-            format: int64
-          TransactionID:
-            type: string
-            description: Unique M-PESA transaction ID for every payment request.
-            example: LHG31AA5TX
-        example:
-          ConversationId: 236543-276372-2
-          OriginatorConversationId: AG_2376487236_126732989KJHJKH
-          ResultCode: 0
-          ResultDesc: Initiator information is invalid
-          ResultType: 0
-          TransactionID: LHG31AA5TX
-      ResultParameters:
-        type: object
-        properties:
-          ResultParameter:
-            type: array
-            items:
-              $ref: '#/definitions/B2CResultParametersRequestBody'
-            example:
-            - B2CChargesPaidAccountAvailableFunds: 236543.9
-              B2CRecipientIsRegisteredCustomer: "Y"
-              B2CUtilityAccountAvailableFunds: 23654.5
-              B2CWorkingAccountAvailableFunds: 2000
-              ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-              TransactionAmount: 8000
-              TransactionCompletedDateTime: 17.07.2017 10:54:57
-              TransactionReceipt: LGH3197RIB
-            - B2CChargesPaidAccountAvailableFunds: 236543.9
-              B2CRecipientIsRegisteredCustomer: "Y"
-              B2CUtilityAccountAvailableFunds: 23654.5
-              B2CWorkingAccountAvailableFunds: 2000
-              ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-              TransactionAmount: 8000
-              TransactionCompletedDateTime: 17.07.2017 10:54:57
-              TransactionReceipt: LGH3197RIB
-        example:
-          ResultParameter:
-          - B2CChargesPaidAccountAvailableFunds: 236543.9
-            B2CRecipientIsRegisteredCustomer: "Y"
-            B2CUtilityAccountAvailableFunds: 23654.5
-            B2CWorkingAccountAvailableFunds: 2000
-            ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-            TransactionAmount: 8000
-            TransactionCompletedDateTime: 17.07.2017 10:54:57
-            TransactionReceipt: LGH3197RIB
-          - B2CChargesPaidAccountAvailableFunds: 236543.9
-            B2CRecipientIsRegisteredCustomer: "Y"
-            B2CUtilityAccountAvailableFunds: 23654.5
-            B2CWorkingAccountAvailableFunds: 2000
-            ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-            TransactionAmount: 8000
-            TransactionCompletedDateTime: 17.07.2017 10:54:57
-            TransactionReceipt: LGH3197RIB
+      ConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: 236543-276372-2
+      MpesaResultCode:
+        type: integer
+        description: Numeric status code indicating the status of the transaction processing
+        example: 0
+        format: int64
+      MpesaResultDesc:
+        type: string
+        description: Message from the API that gives the status of the request
+        example: Initiator information is invalid
+      MpesaResultParameters:
+        type: string
+        example: Id iste.
+      MpesaResultType:
+        type: integer
+        description: Status code indicating whether transaction was already sent to your listener
+        example: 0
+        format: int64
+      Occasion:
+        type: string
+        example: Occasion
+      OriginatorConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL:
+        type: string
+        description: Queue Timeout URL
+        example: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID:
+        type: string
+        description: Unique M-PESA transaction ID for every payment request.
+        example: LHG31AA5TX
     example:
-      ReferenceData:
-        ReferenceItem:
-          QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit
-      Result:
-        ConversationId: 236543-276372-2
-        OriginatorConversationId: AG_2376487236_126732989KJHJKH
-        ResultCode: 0
-        ResultDesc: Initiator information is invalid
-        ResultType: 0
-        TransactionID: LHG31AA5TX
-      ResultParameters:
-        ResultParameter:
-        - B2CChargesPaidAccountAvailableFunds: 236543.9
-          B2CRecipientIsRegisteredCustomer: "Y"
-          B2CUtilityAccountAvailableFunds: 23654.5
-          B2CWorkingAccountAvailableFunds: 2000
-          ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-          TransactionAmount: 8000
-          TransactionCompletedDateTime: 17.07.2017 10:54:57
-          TransactionReceipt: LGH3197RIB
-        - B2CChargesPaidAccountAvailableFunds: 236543.9
-          B2CRecipientIsRegisteredCustomer: "Y"
-          B2CUtilityAccountAvailableFunds: 23654.5
-          B2CWorkingAccountAvailableFunds: 2000
-          ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-          TransactionAmount: 8000
-          TransactionCompletedDateTime: 17.07.2017 10:54:57
-          TransactionReceipt: LGH3197RIB
-        - B2CChargesPaidAccountAvailableFunds: 236543.9
-          B2CRecipientIsRegisteredCustomer: "Y"
-          B2CUtilityAccountAvailableFunds: 23654.5
-          B2CWorkingAccountAvailableFunds: 2000
-          ReceiverPartyPublicName: 254722000000 - Safaricom PLC
-          TransactionAmount: 8000
-          TransactionCompletedDateTime: 17.07.2017 10:54:57
-          TransactionReceipt: LGH3197RIB
+      ConversationId: 236543-276372-2
+      MpesaResultCode: 0
+      MpesaResultDesc: Initiator information is invalid
+      MpesaResultParameters: Aut omnis.
+      MpesaResultType: 0
+      Occasion: Occasion
+      OriginatorConversationId: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID: LHG31AA5TX
   MpesaC2BConfirmationRequestBody:
     title: MpesaC2BConfirmationRequestBody
     type: object
@@ -829,7 +459,7 @@ definitions:
       BillRefNumber:
         type: string
         description: Account number for which the customer is making the payment
-        example: w1o
+        example: ja4
         maxLength: 20
       BusinessShortCode:
         type: integer
@@ -842,7 +472,7 @@ definitions:
         example: John
       InvoiceNumber:
         type: string
-        example: Aperiam porro molestiae.
+        example: Perspiciatis veniam quod aliquam aspernatur et.
       LastName:
         type: string
         description: Last Name of the customer making payment.
@@ -850,7 +480,7 @@ definitions:
       MSISDN:
         type: integer
         description: Mobile number of the customer making the payment.
-        example: 553116540879448616
+        example: 8382161759082587839
         format: int64
       MiddleName:
         type: string
@@ -863,7 +493,7 @@ definitions:
         format: int64
       ThirdPartyTransID:
         type: string
-        example: Minima repellat sed beatae omnis exercitationem quod.
+        example: Est non inventore hic explicabo.
       TransAmount:
         type: integer
         description: The Amount transacted normally a numeric value
@@ -886,15 +516,15 @@ definitions:
         - Buy Goods
         - Pay Bill
     example:
-      BillRefNumber: ql2
+      BillRefNumber: aok
       BusinessShortCode: 654321
       FirstName: John
-      InvoiceNumber: Delectus itaque nihil.
+      InvoiceNumber: Voluptas eaque qui voluptatum non velit blanditiis.
       LastName: Jane
-      MSISDN: 6155933688297873645
+      MSISDN: 7043532469652892123
       MiddleName: Doe
       OrgAccountBalance: 30671
-      ThirdPartyTransID: Quas porro.
+      ThirdPartyTransID: Excepturi qui quam omnis.
       TransAmount: 100
       TransID: LHG31AA5TX
       TransTime: "20180713154301"
@@ -906,7 +536,7 @@ definitions:
       BillRefNumber:
         type: string
         description: Account number for which the customer is making the payment
-        example: t07
+        example: z5q
         maxLength: 20
       BusinessShortCode:
         type: integer
@@ -919,7 +549,7 @@ definitions:
         example: John
       InvoiceNumber:
         type: string
-        example: Omnis voluptas id iste cumque aut omnis.
+        example: Libero perferendis odio quam architecto aut iure.
       LastName:
         type: string
         description: Last Name of the customer making payment.
@@ -927,7 +557,7 @@ definitions:
       MSISDN:
         type: integer
         description: Mobile number of the customer making the payment.
-        example: 6936643202856870088
+        example: 6665340584457491473
         format: int64
       MiddleName:
         type: string
@@ -940,7 +570,7 @@ definitions:
         format: int64
       ThirdPartyTransID:
         type: string
-        example: Perferendis voluptas voluptas deleniti maxime.
+        example: Sit aperiam porro molestiae sint minima repellat.
       TransAmount:
         type: integer
         description: The Amount transacted normally a numeric value
@@ -958,701 +588,216 @@ definitions:
       TransactionType:
         type: string
         description: Transaction type specified during the payment request.
-        example: Buy Goods
+        example: Pay Bill
         enum:
         - Buy Goods
         - Pay Bill
     example:
-      BillRefNumber: 6p4
+      BillRefNumber: 97k
       BusinessShortCode: 654321
       FirstName: John
-      InvoiceNumber: Expedita et veritatis.
+      InvoiceNumber: Quisquam eos consequatur.
       LastName: Jane
-      MSISDN: 6934802946222159529
+      MSISDN: 2425652752716879239
       MiddleName: Doe
       OrgAccountBalance: 30671
-      ThirdPartyTransID: Tempora libero perferendis.
+      ThirdPartyTransID: Soluta delectus itaque nihil aspernatur quas.
       TransAmount: 100
       TransID: LHG31AA5TX
       TransTime: "20180713154301"
-      TransactionType: Pay Bill
+      TransactionType: Buy Goods
   MpesaReversalResultRequestBody:
     title: MpesaReversalResultRequestBody
     type: object
     properties:
-      Result:
-        type: object
-        properties:
-          ConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: 236543-276372-2
-          OriginatorConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            type: object
-            properties:
-              ReferenceItem:
-                type: object
-                example:
-                  QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit
-                additionalProperties: true
-            example:
-              ReferenceItem:
-                QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit
-          ResultCode:
-            type: integer
-            description: Numeric status code indicating the status of the transaction processing
-            example: 0
-            format: int64
-          ResultDesc:
-            type: string
-            description: Message from the API that gives the status of the request
-            example: Initiator information is invalid
-          ResultType:
-            type: integer
-            description: Status code indicating whether transaction was already sent to your listener
-            default: 0
-            example: 0
-            format: int64
-          TransactionID:
-            type: string
-            description: Unique M-PESA transaction ID for every payment request.
-            example: LHG31AA5TX
-        example:
-          ConversationId: 236543-276372-2
-          OriginatorConversationId: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            ReferenceItem:
-              QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit
-          ResultCode: 0
-          ResultDesc: Initiator information is invalid
-          ResultType: 0
-          TransactionID: LHG31AA5TX
+      ConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: 236543-276372-2
+      MpesaResultCode:
+        type: integer
+        description: Numeric status code indicating the status of the transaction processing
+        example: 0
+        format: int64
+      MpesaResultDesc:
+        type: string
+        description: Message from the API that gives the status of the request
+        example: Initiator information is invalid
+      MpesaResultType:
+        type: integer
+        description: Status code indicating whether transaction was already sent to your listener
+        example: 0
+        format: int64
+      Occasion:
+        type: string
+        example: Occasion
+      OriginatorConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL:
+        type: string
+        description: Queue Timeout URL
+        example: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID:
+        type: string
+        description: Unique M-PESA transaction ID for every payment request.
+        example: LHG31AA5TX
     example:
-      Result:
-        ConversationId: 236543-276372-2
-        OriginatorConversationId: AG_2376487236_126732989KJHJKH
-        ReferenceData:
-          ReferenceItem:
-            QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit
-        ResultCode: 0
-        ResultDesc: Initiator information is invalid
-        ResultType: 0
-        TransactionID: LHG31AA5TX
+      ConversationId: 236543-276372-2
+      MpesaResultCode: 0
+      MpesaResultDesc: Initiator information is invalid
+      MpesaResultType: 0
+      Occasion: Occasion
+      OriginatorConversationId: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID: LHG31AA5TX
   MpesaReversalTimeoutRequestBody:
     title: MpesaReversalTimeoutRequestBody
     type: object
     properties:
-      Result:
-        type: object
-        properties:
-          ConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: 236543-276372-2
-          OriginatorConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            type: object
-            properties:
-              ReferenceItem:
-                type: object
-                example:
-                  QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit
-                additionalProperties: true
-            example:
-              ReferenceItem:
-                QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit
-          ResultCode:
-            type: integer
-            description: Numeric status code indicating the status of the transaction processing
-            example: 0
-            format: int64
-          ResultDesc:
-            type: string
-            description: Message from the API that gives the status of the request
-            example: Initiator information is invalid
-          ResultType:
-            type: integer
-            description: Status code indicating whether transaction was already sent to your listener
-            default: 0
-            example: 0
-            format: int64
-          TransactionID:
-            type: string
-            description: Unique M-PESA transaction ID for every payment request.
-            example: LHG31AA5TX
-        example:
-          ConversationId: 236543-276372-2
-          OriginatorConversationId: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            ReferenceItem:
-              QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit
-          ResultCode: 0
-          ResultDesc: Initiator information is invalid
-          ResultType: 0
-          TransactionID: LHG31AA5TX
+      ConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: 236543-276372-2
+      MpesaResultCode:
+        type: integer
+        description: Numeric status code indicating the status of the transaction processing
+        example: 0
+        format: int64
+      MpesaResultDesc:
+        type: string
+        description: Message from the API that gives the status of the request
+        example: Initiator information is invalid
+      MpesaResultType:
+        type: integer
+        description: Status code indicating whether transaction was already sent to your listener
+        example: 0
+        format: int64
+      Occasion:
+        type: string
+        example: Occasion
+      OriginatorConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL:
+        type: string
+        description: Queue Timeout URL
+        example: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID:
+        type: string
+        description: Unique M-PESA transaction ID for every payment request.
+        example: LHG31AA5TX
     example:
-      Result:
-        ConversationId: 236543-276372-2
-        OriginatorConversationId: AG_2376487236_126732989KJHJKH
-        ReferenceData:
-          ReferenceItem:
-            QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit
-        ResultCode: 0
-        ResultDesc: Initiator information is invalid
-        ResultType: 0
-        TransactionID: LHG31AA5TX
+      ConversationId: 236543-276372-2
+      MpesaResultCode: 0
+      MpesaResultDesc: Initiator information is invalid
+      MpesaResultType: 0
+      Occasion: Occasion
+      OriginatorConversationId: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      TransactionID: LHG31AA5TX
   MpesaTransactionStatusResultRequestBody:
     title: MpesaTransactionStatusResultRequestBody
     type: object
     properties:
-      Result:
-        type: object
-        properties:
-          ConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: 236543-276372-2
-          OriginatorConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            type: object
-            properties:
-              ReferenceItem:
-                type: object
-                example:
-                  Occasion: Occasion
-                additionalProperties: true
-            example:
-              ReferenceItem:
-                Occasion: Occasion
-          ResultCode:
-            type: integer
-            description: Numeric status code indicating the status of the transaction processing
-            example: 0
-            format: int64
-          ResultDesc:
-            type: string
-            description: Message from the API that gives the status of the request
-            example: Initiator information is invalid
-          ResultParameters:
-            type: object
-            properties:
-              ResultParameter:
-                type: array
-                items:
-                  $ref: '#/definitions/TransactionStatusResultParameterRequestBody'
-                example:
-                - Amount: 10
-                  ConversationID: AG_20170727_00004492b1b6d0078fbe
-                  CreditPartyName: 254708374149 - John Doe
-                  DebitAccountType: Utility Account
-                  DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                  DebitPartyName: 600134 - Safaricom157
-                  FinalisedTime: "20170727101415"
-                  InitiatedTime: "20170727101415"
-                  Originator Conversation ID: 19455-773836-1
-                  ReasonType: Salary Payment via API
-                  ReceiptNo: LGR919G2AV
-                  TransactionReason: Transaction Reason
-                  TransactionStatus: Completed
-                - Amount: 10
-                  ConversationID: AG_20170727_00004492b1b6d0078fbe
-                  CreditPartyName: 254708374149 - John Doe
-                  DebitAccountType: Utility Account
-                  DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                  DebitPartyName: 600134 - Safaricom157
-                  FinalisedTime: "20170727101415"
-                  InitiatedTime: "20170727101415"
-                  Originator Conversation ID: 19455-773836-1
-                  ReasonType: Salary Payment via API
-                  ReceiptNo: LGR919G2AV
-                  TransactionReason: Transaction Reason
-                  TransactionStatus: Completed
-                - Amount: 10
-                  ConversationID: AG_20170727_00004492b1b6d0078fbe
-                  CreditPartyName: 254708374149 - John Doe
-                  DebitAccountType: Utility Account
-                  DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                  DebitPartyName: 600134 - Safaricom157
-                  FinalisedTime: "20170727101415"
-                  InitiatedTime: "20170727101415"
-                  Originator Conversation ID: 19455-773836-1
-                  ReasonType: Salary Payment via API
-                  ReceiptNo: LGR919G2AV
-                  TransactionReason: Transaction Reason
-                  TransactionStatus: Completed
-            example:
-              ResultParameter:
-              - Amount: 10
-                ConversationID: AG_20170727_00004492b1b6d0078fbe
-                CreditPartyName: 254708374149 - John Doe
-                DebitAccountType: Utility Account
-                DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                DebitPartyName: 600134 - Safaricom157
-                FinalisedTime: "20170727101415"
-                InitiatedTime: "20170727101415"
-                Originator Conversation ID: 19455-773836-1
-                ReasonType: Salary Payment via API
-                ReceiptNo: LGR919G2AV
-                TransactionReason: Transaction Reason
-                TransactionStatus: Completed
-              - Amount: 10
-                ConversationID: AG_20170727_00004492b1b6d0078fbe
-                CreditPartyName: 254708374149 - John Doe
-                DebitAccountType: Utility Account
-                DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                DebitPartyName: 600134 - Safaricom157
-                FinalisedTime: "20170727101415"
-                InitiatedTime: "20170727101415"
-                Originator Conversation ID: 19455-773836-1
-                ReasonType: Salary Payment via API
-                ReceiptNo: LGR919G2AV
-                TransactionReason: Transaction Reason
-                TransactionStatus: Completed
-              - Amount: 10
-                ConversationID: AG_20170727_00004492b1b6d0078fbe
-                CreditPartyName: 254708374149 - John Doe
-                DebitAccountType: Utility Account
-                DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                DebitPartyName: 600134 - Safaricom157
-                FinalisedTime: "20170727101415"
-                InitiatedTime: "20170727101415"
-                Originator Conversation ID: 19455-773836-1
-                ReasonType: Salary Payment via API
-                ReceiptNo: LGR919G2AV
-                TransactionReason: Transaction Reason
-                TransactionStatus: Completed
-              - Amount: 10
-                ConversationID: AG_20170727_00004492b1b6d0078fbe
-                CreditPartyName: 254708374149 - John Doe
-                DebitAccountType: Utility Account
-                DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                DebitPartyName: 600134 - Safaricom157
-                FinalisedTime: "20170727101415"
-                InitiatedTime: "20170727101415"
-                Originator Conversation ID: 19455-773836-1
-                ReasonType: Salary Payment via API
-                ReceiptNo: LGR919G2AV
-                TransactionReason: Transaction Reason
-                TransactionStatus: Completed
-          ResultType:
-            type: integer
-            description: Status code indicating whether transaction was already sent to your listener
-            default: 0
-            example: 0
-            format: int64
-          TransactionID:
-            type: string
-            description: Unique M-PESA transaction ID for every payment request.
-            example: LHG31AA5TX
-        example:
-          ConversationId: 236543-276372-2
-          OriginatorConversationId: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            ReferenceItem:
-              Occasion: Occasion
-          ResultCode: 0
-          ResultDesc: Initiator information is invalid
-          ResultParameters:
-            ResultParameter:
-            - Amount: 10
-              ConversationID: AG_20170727_00004492b1b6d0078fbe
-              CreditPartyName: 254708374149 - John Doe
-              DebitAccountType: Utility Account
-              DebitPartyCharges: Fee For B2C Payment|KES|33.00
-              DebitPartyName: 600134 - Safaricom157
-              FinalisedTime: "20170727101415"
-              InitiatedTime: "20170727101415"
-              Originator Conversation ID: 19455-773836-1
-              ReasonType: Salary Payment via API
-              ReceiptNo: LGR919G2AV
-              TransactionReason: Transaction Reason
-              TransactionStatus: Completed
-            - Amount: 10
-              ConversationID: AG_20170727_00004492b1b6d0078fbe
-              CreditPartyName: 254708374149 - John Doe
-              DebitAccountType: Utility Account
-              DebitPartyCharges: Fee For B2C Payment|KES|33.00
-              DebitPartyName: 600134 - Safaricom157
-              FinalisedTime: "20170727101415"
-              InitiatedTime: "20170727101415"
-              Originator Conversation ID: 19455-773836-1
-              ReasonType: Salary Payment via API
-              ReceiptNo: LGR919G2AV
-              TransactionReason: Transaction Reason
-              TransactionStatus: Completed
-            - Amount: 10
-              ConversationID: AG_20170727_00004492b1b6d0078fbe
-              CreditPartyName: 254708374149 - John Doe
-              DebitAccountType: Utility Account
-              DebitPartyCharges: Fee For B2C Payment|KES|33.00
-              DebitPartyName: 600134 - Safaricom157
-              FinalisedTime: "20170727101415"
-              InitiatedTime: "20170727101415"
-              Originator Conversation ID: 19455-773836-1
-              ReasonType: Salary Payment via API
-              ReceiptNo: LGR919G2AV
-              TransactionReason: Transaction Reason
-              TransactionStatus: Completed
-          ResultType: 0
-          TransactionID: LHG31AA5TX
+      ConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: 236543-276372-2
+      MpesaResultCode:
+        type: integer
+        description: Numeric status code indicating the status of the transaction processing
+        example: 0
+        format: int64
+      MpesaResultDesc:
+        type: string
+        description: Message from the API that gives the status of the request
+        example: Initiator information is invalid
+      MpesaResultType:
+        type: integer
+        description: Status code indicating whether transaction was already sent to your listener
+        example: 0
+        format: int64
+      Occasion:
+        type: string
+        example: Occasion
+      OriginatorConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL:
+        type: string
+        description: Queue Timeout URL
+        example: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      ResultParameters:
+        type: string
+        example: Consequatur magni tempora necessitatibus.
+      TransactionID:
+        type: string
+        description: Unique M-PESA transaction ID for every payment request.
+        example: LHG31AA5TX
     example:
-      Result:
-        ConversationId: 236543-276372-2
-        OriginatorConversationId: AG_2376487236_126732989KJHJKH
-        ReferenceData:
-          ReferenceItem:
-            Occasion: Occasion
-        ResultCode: 0
-        ResultDesc: Initiator information is invalid
-        ResultParameters:
-          ResultParameter:
-          - Amount: 10
-            ConversationID: AG_20170727_00004492b1b6d0078fbe
-            CreditPartyName: 254708374149 - John Doe
-            DebitAccountType: Utility Account
-            DebitPartyCharges: Fee For B2C Payment|KES|33.00
-            DebitPartyName: 600134 - Safaricom157
-            FinalisedTime: "20170727101415"
-            InitiatedTime: "20170727101415"
-            Originator Conversation ID: 19455-773836-1
-            ReasonType: Salary Payment via API
-            ReceiptNo: LGR919G2AV
-            TransactionReason: Transaction Reason
-            TransactionStatus: Completed
-          - Amount: 10
-            ConversationID: AG_20170727_00004492b1b6d0078fbe
-            CreditPartyName: 254708374149 - John Doe
-            DebitAccountType: Utility Account
-            DebitPartyCharges: Fee For B2C Payment|KES|33.00
-            DebitPartyName: 600134 - Safaricom157
-            FinalisedTime: "20170727101415"
-            InitiatedTime: "20170727101415"
-            Originator Conversation ID: 19455-773836-1
-            ReasonType: Salary Payment via API
-            ReceiptNo: LGR919G2AV
-            TransactionReason: Transaction Reason
-            TransactionStatus: Completed
-          - Amount: 10
-            ConversationID: AG_20170727_00004492b1b6d0078fbe
-            CreditPartyName: 254708374149 - John Doe
-            DebitAccountType: Utility Account
-            DebitPartyCharges: Fee For B2C Payment|KES|33.00
-            DebitPartyName: 600134 - Safaricom157
-            FinalisedTime: "20170727101415"
-            InitiatedTime: "20170727101415"
-            Originator Conversation ID: 19455-773836-1
-            ReasonType: Salary Payment via API
-            ReceiptNo: LGR919G2AV
-            TransactionReason: Transaction Reason
-            TransactionStatus: Completed
-          - Amount: 10
-            ConversationID: AG_20170727_00004492b1b6d0078fbe
-            CreditPartyName: 254708374149 - John Doe
-            DebitAccountType: Utility Account
-            DebitPartyCharges: Fee For B2C Payment|KES|33.00
-            DebitPartyName: 600134 - Safaricom157
-            FinalisedTime: "20170727101415"
-            InitiatedTime: "20170727101415"
-            Originator Conversation ID: 19455-773836-1
-            ReasonType: Salary Payment via API
-            ReceiptNo: LGR919G2AV
-            TransactionReason: Transaction Reason
-            TransactionStatus: Completed
-        ResultType: 0
-        TransactionID: LHG31AA5TX
+      ConversationId: 236543-276372-2
+      MpesaResultCode: 0
+      MpesaResultDesc: Initiator information is invalid
+      MpesaResultType: 0
+      Occasion: Occasion
+      OriginatorConversationId: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      ResultParameters: Nisi blanditiis alias mollitia iure quos omnis.
+      TransactionID: LHG31AA5TX
   MpesaTransactionStatusTimeoutRequestBody:
     title: MpesaTransactionStatusTimeoutRequestBody
     type: object
     properties:
-      Result:
-        type: object
-        properties:
-          ConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: 236543-276372-2
-          OriginatorConversationId:
-            type: string
-            description: Unique identifier for the transaction request.
-            example: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            type: object
-            properties:
-              ReferenceItem:
-                type: object
-                example:
-                  Occasion: Occasion
-                additionalProperties: true
-            example:
-              ReferenceItem:
-                Occasion: Occasion
-          ResultCode:
-            type: integer
-            description: Numeric status code indicating the status of the transaction processing
-            example: 0
-            format: int64
-          ResultDesc:
-            type: string
-            description: Message from the API that gives the status of the request
-            example: Initiator information is invalid
-          ResultParameters:
-            type: object
-            properties:
-              ResultParameter:
-                type: array
-                items:
-                  $ref: '#/definitions/TransactionStatusResultParameterRequestBody'
-                example:
-                - Amount: 10
-                  ConversationID: AG_20170727_00004492b1b6d0078fbe
-                  CreditPartyName: 254708374149 - John Doe
-                  DebitAccountType: Utility Account
-                  DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                  DebitPartyName: 600134 - Safaricom157
-                  FinalisedTime: "20170727101415"
-                  InitiatedTime: "20170727101415"
-                  Originator Conversation ID: 19455-773836-1
-                  ReasonType: Salary Payment via API
-                  ReceiptNo: LGR919G2AV
-                  TransactionReason: Transaction Reason
-                  TransactionStatus: Completed
-                - Amount: 10
-                  ConversationID: AG_20170727_00004492b1b6d0078fbe
-                  CreditPartyName: 254708374149 - John Doe
-                  DebitAccountType: Utility Account
-                  DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                  DebitPartyName: 600134 - Safaricom157
-                  FinalisedTime: "20170727101415"
-                  InitiatedTime: "20170727101415"
-                  Originator Conversation ID: 19455-773836-1
-                  ReasonType: Salary Payment via API
-                  ReceiptNo: LGR919G2AV
-                  TransactionReason: Transaction Reason
-                  TransactionStatus: Completed
-                - Amount: 10
-                  ConversationID: AG_20170727_00004492b1b6d0078fbe
-                  CreditPartyName: 254708374149 - John Doe
-                  DebitAccountType: Utility Account
-                  DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                  DebitPartyName: 600134 - Safaricom157
-                  FinalisedTime: "20170727101415"
-                  InitiatedTime: "20170727101415"
-                  Originator Conversation ID: 19455-773836-1
-                  ReasonType: Salary Payment via API
-                  ReceiptNo: LGR919G2AV
-                  TransactionReason: Transaction Reason
-                  TransactionStatus: Completed
-            example:
-              ResultParameter:
-              - Amount: 10
-                ConversationID: AG_20170727_00004492b1b6d0078fbe
-                CreditPartyName: 254708374149 - John Doe
-                DebitAccountType: Utility Account
-                DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                DebitPartyName: 600134 - Safaricom157
-                FinalisedTime: "20170727101415"
-                InitiatedTime: "20170727101415"
-                Originator Conversation ID: 19455-773836-1
-                ReasonType: Salary Payment via API
-                ReceiptNo: LGR919G2AV
-                TransactionReason: Transaction Reason
-                TransactionStatus: Completed
-              - Amount: 10
-                ConversationID: AG_20170727_00004492b1b6d0078fbe
-                CreditPartyName: 254708374149 - John Doe
-                DebitAccountType: Utility Account
-                DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                DebitPartyName: 600134 - Safaricom157
-                FinalisedTime: "20170727101415"
-                InitiatedTime: "20170727101415"
-                Originator Conversation ID: 19455-773836-1
-                ReasonType: Salary Payment via API
-                ReceiptNo: LGR919G2AV
-                TransactionReason: Transaction Reason
-                TransactionStatus: Completed
-              - Amount: 10
-                ConversationID: AG_20170727_00004492b1b6d0078fbe
-                CreditPartyName: 254708374149 - John Doe
-                DebitAccountType: Utility Account
-                DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                DebitPartyName: 600134 - Safaricom157
-                FinalisedTime: "20170727101415"
-                InitiatedTime: "20170727101415"
-                Originator Conversation ID: 19455-773836-1
-                ReasonType: Salary Payment via API
-                ReceiptNo: LGR919G2AV
-                TransactionReason: Transaction Reason
-                TransactionStatus: Completed
-              - Amount: 10
-                ConversationID: AG_20170727_00004492b1b6d0078fbe
-                CreditPartyName: 254708374149 - John Doe
-                DebitAccountType: Utility Account
-                DebitPartyCharges: Fee For B2C Payment|KES|33.00
-                DebitPartyName: 600134 - Safaricom157
-                FinalisedTime: "20170727101415"
-                InitiatedTime: "20170727101415"
-                Originator Conversation ID: 19455-773836-1
-                ReasonType: Salary Payment via API
-                ReceiptNo: LGR919G2AV
-                TransactionReason: Transaction Reason
-                TransactionStatus: Completed
-          ResultType:
-            type: integer
-            description: Status code indicating whether transaction was already sent to your listener
-            default: 0
-            example: 0
-            format: int64
-          TransactionID:
-            type: string
-            description: Unique M-PESA transaction ID for every payment request.
-            example: LHG31AA5TX
-        example:
-          ConversationId: 236543-276372-2
-          OriginatorConversationId: AG_2376487236_126732989KJHJKH
-          ReferenceData:
-            ReferenceItem:
-              Occasion: Occasion
-          ResultCode: 0
-          ResultDesc: Initiator information is invalid
-          ResultParameters:
-            ResultParameter:
-            - Amount: 10
-              ConversationID: AG_20170727_00004492b1b6d0078fbe
-              CreditPartyName: 254708374149 - John Doe
-              DebitAccountType: Utility Account
-              DebitPartyCharges: Fee For B2C Payment|KES|33.00
-              DebitPartyName: 600134 - Safaricom157
-              FinalisedTime: "20170727101415"
-              InitiatedTime: "20170727101415"
-              Originator Conversation ID: 19455-773836-1
-              ReasonType: Salary Payment via API
-              ReceiptNo: LGR919G2AV
-              TransactionReason: Transaction Reason
-              TransactionStatus: Completed
-            - Amount: 10
-              ConversationID: AG_20170727_00004492b1b6d0078fbe
-              CreditPartyName: 254708374149 - John Doe
-              DebitAccountType: Utility Account
-              DebitPartyCharges: Fee For B2C Payment|KES|33.00
-              DebitPartyName: 600134 - Safaricom157
-              FinalisedTime: "20170727101415"
-              InitiatedTime: "20170727101415"
-              Originator Conversation ID: 19455-773836-1
-              ReasonType: Salary Payment via API
-              ReceiptNo: LGR919G2AV
-              TransactionReason: Transaction Reason
-              TransactionStatus: Completed
-          ResultType: 0
-          TransactionID: LHG31AA5TX
-    example:
-      Result:
-        ConversationId: 236543-276372-2
-        OriginatorConversationId: AG_2376487236_126732989KJHJKH
-        ReferenceData:
-          ReferenceItem:
-            Occasion: Occasion
-        ResultCode: 0
-        ResultDesc: Initiator information is invalid
-        ResultParameters:
-          ResultParameter:
-          - Amount: 10
-            ConversationID: AG_20170727_00004492b1b6d0078fbe
-            CreditPartyName: 254708374149 - John Doe
-            DebitAccountType: Utility Account
-            DebitPartyCharges: Fee For B2C Payment|KES|33.00
-            DebitPartyName: 600134 - Safaricom157
-            FinalisedTime: "20170727101415"
-            InitiatedTime: "20170727101415"
-            Originator Conversation ID: 19455-773836-1
-            ReasonType: Salary Payment via API
-            ReceiptNo: LGR919G2AV
-            TransactionReason: Transaction Reason
-            TransactionStatus: Completed
-          - Amount: 10
-            ConversationID: AG_20170727_00004492b1b6d0078fbe
-            CreditPartyName: 254708374149 - John Doe
-            DebitAccountType: Utility Account
-            DebitPartyCharges: Fee For B2C Payment|KES|33.00
-            DebitPartyName: 600134 - Safaricom157
-            FinalisedTime: "20170727101415"
-            InitiatedTime: "20170727101415"
-            Originator Conversation ID: 19455-773836-1
-            ReasonType: Salary Payment via API
-            ReceiptNo: LGR919G2AV
-            TransactionReason: Transaction Reason
-            TransactionStatus: Completed
-        ResultType: 0
-        TransactionID: LHG31AA5TX
-  TransactionStatusResultParameterRequestBody:
-    title: TransactionStatusResultParameterRequestBody
-    type: object
-    properties:
-      Amount:
+      ConversationId:
+        type: string
+        description: Unique identifier for the transaction request.
+        example: 236543-276372-2
+      MpesaResultCode:
         type: integer
-        example: 10
+        description: Numeric status code indicating the status of the transaction processing
+        example: 0
         format: int64
-      ConversationID:
+      MpesaResultDesc:
         type: string
-        example: AG_20170727_00004492b1b6d0078fbe
-      CreditPartyName:
+        description: Message from the API that gives the status of the request
+        example: Initiator information is invalid
+      MpesaResultType:
+        type: integer
+        description: Status code indicating whether transaction was already sent to your listener
+        example: 0
+        format: int64
+      Occasion:
         type: string
-        example: 254708374149 - John Doe
-      DebitAccountType:
+        example: Occasion
+      OriginatorConversationId:
         type: string
-        example: Utility Account
-      DebitPartyCharges:
+        description: Unique identifier for the transaction request.
+        example: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL:
         type: string
-        example: Fee For B2C Payment|KES|33.00
-      DebitPartyName:
+        description: Queue Timeout URL
+        example: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      ResultParameters:
         type: string
-        example: 600134 - Safaricom157
-      FinalisedTime:
+        example: Ea suscipit.
+      TransactionID:
         type: string
-        example: "20170727101415"
-        format: date-time
-      InitiatedTime:
-        type: string
-        example: "20170727101415"
-        format: date-time
-      Originator Conversation ID:
-        type: string
-        example: 19455-773836-1
-      ReasonType:
-        type: string
-        example: Salary Payment via API
-      ReceiptNo:
-        type: string
-        example: LGR919G2AV
-      TransactionReason:
-        type: string
-        example: Transaction Reason
-      TransactionStatus:
-        type: string
-        example: Completed
+        description: Unique M-PESA transaction ID for every payment request.
+        example: LHG31AA5TX
     example:
-      Amount: 10
-      ConversationID: AG_20170727_00004492b1b6d0078fbe
-      CreditPartyName: 254708374149 - John Doe
-      DebitAccountType: Utility Account
-      DebitPartyCharges: Fee For B2C Payment|KES|33.00
-      DebitPartyName: 600134 - Safaricom157
-      FinalisedTime: "20170727101415"
-      InitiatedTime: "20170727101415"
-      Originator Conversation ID: 19455-773836-1
-      ReasonType: Salary Payment via API
-      ReceiptNo: LGR919G2AV
-      TransactionReason: Transaction Reason
-      TransactionStatus: Completed
+      ConversationId: 236543-276372-2
+      MpesaResultCode: 0
+      MpesaResultDesc: Initiator information is invalid
+      MpesaResultType: 0
+      Occasion: Occasion
+      OriginatorConversationId: AG_2376487236_126732989KJHJKH
+      QueueTimeoutURL: https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit
+      ResultParameters: Assumenda illo in commodi asperiores.
+      TransactionID: LHG31AA5TX
 externalDocs:
   description: Library Usage
   url: https://github.com/wondenge/mpesa-listener/blob/master/README.md

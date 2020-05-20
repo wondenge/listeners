@@ -9,201 +9,172 @@ package client
 
 import (
 	mpesa "github.com/wondenge/listeners/gen/mpesa"
-	goa "goa.design/goa/v3/pkg"
 )
 
 // AccountBalanceTimeoutRequestBody is the type of the "mpesa" service
 // "AccountBalanceTimeout" endpoint HTTP request body.
 type AccountBalanceTimeoutRequestBody struct {
-	Result *struct {
-		// Status code indicating whether transaction was already sent to your listener
-		ResultType int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		// Numeric status code indicating the status of the transaction processing
-		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		// Message from the API that gives the status of the request
-		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		// Unique identifier for the transaction request.
-		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
-		// Unique identifier for the transaction request.
-		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
-		// Unique M-PESA transaction ID for every payment request.
-		TransactionID    *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-		ResultParameters *struct {
-			ResultParameter []*AccountBalanceParametersRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
-		} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
-		ReferenceData *struct {
-			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
-		} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
-	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
+	MpesaResultParameters *string `form:"MpesaResultParameters,omitempty" json:"MpesaResultParameters,omitempty" xml:"MpesaResultParameters,omitempty"`
+	// Status code indicating whether transaction was already sent to your listener
+	MpesaResultType *int `form:"MpesaResultType,omitempty" json:"MpesaResultType,omitempty" xml:"MpesaResultType,omitempty"`
+	// Numeric status code indicating the status of the transaction processing
+	MpesaResultCode *int `form:"MpesaResultCode,omitempty" json:"MpesaResultCode,omitempty" xml:"MpesaResultCode,omitempty"`
+	// Message from the API that gives the status of the request
+	MpesaResultDesc *string `form:"MpesaResultDesc,omitempty" json:"MpesaResultDesc,omitempty" xml:"MpesaResultDesc,omitempty"`
+	// Unique identifier for the transaction request.
+	OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+	// Unique identifier for the transaction request.
+	ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+	// Unique M-PESA transaction ID for every payment request.
+	TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+	// Queue Timeout URL
+	QueueTimeoutURL *string `form:"QueueTimeoutURL,omitempty" json:"QueueTimeoutURL,omitempty" xml:"QueueTimeoutURL,omitempty"`
+	Occasion        *string `form:"Occasion,omitempty" json:"Occasion,omitempty" xml:"Occasion,omitempty"`
 }
 
 // AccountBalanceResultRequestBody is the type of the "mpesa" service
 // "AccountBalanceResult" endpoint HTTP request body.
 type AccountBalanceResultRequestBody struct {
-	Result *struct {
-		// Status code indicating whether transaction was already sent to your listener
-		ResultType int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		// Numeric status code indicating the status of the transaction processing
-		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		// Message from the API that gives the status of the request
-		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		// Unique identifier for the transaction request.
-		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
-		// Unique identifier for the transaction request.
-		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
-		// Unique M-PESA transaction ID for every payment request.
-		TransactionID    *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-		ResultParameters *struct {
-			ResultParameter []*AccountBalanceParametersRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
-		} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
-		ReferenceData *struct {
-			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
-		} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
-	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
+	MpesaResultParameters *string `form:"MpesaResultParameters,omitempty" json:"MpesaResultParameters,omitempty" xml:"MpesaResultParameters,omitempty"`
+	// Status code indicating whether transaction was already sent to your listener
+	MpesaResultType *int `form:"MpesaResultType,omitempty" json:"MpesaResultType,omitempty" xml:"MpesaResultType,omitempty"`
+	// Numeric status code indicating the status of the transaction processing
+	MpesaResultCode *int `form:"MpesaResultCode,omitempty" json:"MpesaResultCode,omitempty" xml:"MpesaResultCode,omitempty"`
+	// Message from the API that gives the status of the request
+	MpesaResultDesc *string `form:"MpesaResultDesc,omitempty" json:"MpesaResultDesc,omitempty" xml:"MpesaResultDesc,omitempty"`
+	// Unique identifier for the transaction request.
+	OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+	// Unique identifier for the transaction request.
+	ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+	// Unique M-PESA transaction ID for every payment request.
+	TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+	// Queue Timeout URL
+	QueueTimeoutURL *string `form:"QueueTimeoutURL,omitempty" json:"QueueTimeoutURL,omitempty" xml:"QueueTimeoutURL,omitempty"`
+	Occasion        *string `form:"Occasion,omitempty" json:"Occasion,omitempty" xml:"Occasion,omitempty"`
 }
 
 // TransactionStatusTimeoutRequestBody is the type of the "mpesa" service
 // "TransactionStatusTimeout" endpoint HTTP request body.
 type TransactionStatusTimeoutRequestBody struct {
-	Result *struct {
-		// Status code indicating whether transaction was already sent to your listener
-		ResultType int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		// Numeric status code indicating the status of the transaction processing
-		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		// Message from the API that gives the status of the request
-		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		// Unique identifier for the transaction request.
-		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
-		// Unique identifier for the transaction request.
-		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
-		// Unique M-PESA transaction ID for every payment request.
-		TransactionID    *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-		ResultParameters *struct {
-			ResultParameter []*TransactionStatusResultParameterRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
-		} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
-		ReferenceData *struct {
-			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
-		} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
-	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
+	ResultParameters *string `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
+	// Status code indicating whether transaction was already sent to your listener
+	MpesaResultType *int `form:"MpesaResultType,omitempty" json:"MpesaResultType,omitempty" xml:"MpesaResultType,omitempty"`
+	// Numeric status code indicating the status of the transaction processing
+	MpesaResultCode *int `form:"MpesaResultCode,omitempty" json:"MpesaResultCode,omitempty" xml:"MpesaResultCode,omitempty"`
+	// Message from the API that gives the status of the request
+	MpesaResultDesc *string `form:"MpesaResultDesc,omitempty" json:"MpesaResultDesc,omitempty" xml:"MpesaResultDesc,omitempty"`
+	// Unique identifier for the transaction request.
+	OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+	// Unique identifier for the transaction request.
+	ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+	// Unique M-PESA transaction ID for every payment request.
+	TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+	// Queue Timeout URL
+	QueueTimeoutURL *string `form:"QueueTimeoutURL,omitempty" json:"QueueTimeoutURL,omitempty" xml:"QueueTimeoutURL,omitempty"`
+	Occasion        *string `form:"Occasion,omitempty" json:"Occasion,omitempty" xml:"Occasion,omitempty"`
 }
 
 // TransactionStatusResultRequestBody is the type of the "mpesa" service
 // "TransactionStatusResult" endpoint HTTP request body.
 type TransactionStatusResultRequestBody struct {
-	Result *struct {
-		// Status code indicating whether transaction was already sent to your listener
-		ResultType int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		// Numeric status code indicating the status of the transaction processing
-		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		// Message from the API that gives the status of the request
-		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		// Unique identifier for the transaction request.
-		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
-		// Unique identifier for the transaction request.
-		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
-		// Unique M-PESA transaction ID for every payment request.
-		TransactionID    *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-		ResultParameters *struct {
-			ResultParameter []*TransactionStatusResultParameterRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
-		} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
-		ReferenceData *struct {
-			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
-		} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
-	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
+	ResultParameters *string `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
+	// Status code indicating whether transaction was already sent to your listener
+	MpesaResultType *int `form:"MpesaResultType,omitempty" json:"MpesaResultType,omitempty" xml:"MpesaResultType,omitempty"`
+	// Numeric status code indicating the status of the transaction processing
+	MpesaResultCode *int `form:"MpesaResultCode,omitempty" json:"MpesaResultCode,omitempty" xml:"MpesaResultCode,omitempty"`
+	// Message from the API that gives the status of the request
+	MpesaResultDesc *string `form:"MpesaResultDesc,omitempty" json:"MpesaResultDesc,omitempty" xml:"MpesaResultDesc,omitempty"`
+	// Unique identifier for the transaction request.
+	OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+	// Unique identifier for the transaction request.
+	ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+	// Unique M-PESA transaction ID for every payment request.
+	TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+	// Queue Timeout URL
+	QueueTimeoutURL *string `form:"QueueTimeoutURL,omitempty" json:"QueueTimeoutURL,omitempty" xml:"QueueTimeoutURL,omitempty"`
+	Occasion        *string `form:"Occasion,omitempty" json:"Occasion,omitempty" xml:"Occasion,omitempty"`
 }
 
 // ReversalTimeoutRequestBody is the type of the "mpesa" service
 // "ReversalTimeout" endpoint HTTP request body.
 type ReversalTimeoutRequestBody struct {
-	Result *struct {
-		// Status code indicating whether transaction was already sent to your listener
-		ResultType int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		// Numeric status code indicating the status of the transaction processing
-		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		// Message from the API that gives the status of the request
-		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		// Unique identifier for the transaction request.
-		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
-		// Unique identifier for the transaction request.
-		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
-		// Unique M-PESA transaction ID for every payment request.
-		TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-		ReferenceData *struct {
-			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
-		} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
-	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
+	// Status code indicating whether transaction was already sent to your listener
+	MpesaResultType *int `form:"MpesaResultType,omitempty" json:"MpesaResultType,omitempty" xml:"MpesaResultType,omitempty"`
+	// Numeric status code indicating the status of the transaction processing
+	MpesaResultCode *int `form:"MpesaResultCode,omitempty" json:"MpesaResultCode,omitempty" xml:"MpesaResultCode,omitempty"`
+	// Message from the API that gives the status of the request
+	MpesaResultDesc *string `form:"MpesaResultDesc,omitempty" json:"MpesaResultDesc,omitempty" xml:"MpesaResultDesc,omitempty"`
+	// Unique identifier for the transaction request.
+	OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+	// Unique identifier for the transaction request.
+	ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+	// Unique M-PESA transaction ID for every payment request.
+	TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+	// Queue Timeout URL
+	QueueTimeoutURL *string `form:"QueueTimeoutURL,omitempty" json:"QueueTimeoutURL,omitempty" xml:"QueueTimeoutURL,omitempty"`
+	Occasion        *string `form:"Occasion,omitempty" json:"Occasion,omitempty" xml:"Occasion,omitempty"`
 }
 
 // ReversalResultRequestBody is the type of the "mpesa" service
 // "ReversalResult" endpoint HTTP request body.
 type ReversalResultRequestBody struct {
-	Result *struct {
-		// Status code indicating whether transaction was already sent to your listener
-		ResultType int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		// Numeric status code indicating the status of the transaction processing
-		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		// Message from the API that gives the status of the request
-		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		// Unique identifier for the transaction request.
-		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
-		// Unique identifier for the transaction request.
-		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
-		// Unique M-PESA transaction ID for every payment request.
-		TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-		ReferenceData *struct {
-			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
-		} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
-	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
+	// Status code indicating whether transaction was already sent to your listener
+	MpesaResultType *int `form:"MpesaResultType,omitempty" json:"MpesaResultType,omitempty" xml:"MpesaResultType,omitempty"`
+	// Numeric status code indicating the status of the transaction processing
+	MpesaResultCode *int `form:"MpesaResultCode,omitempty" json:"MpesaResultCode,omitempty" xml:"MpesaResultCode,omitempty"`
+	// Message from the API that gives the status of the request
+	MpesaResultDesc *string `form:"MpesaResultDesc,omitempty" json:"MpesaResultDesc,omitempty" xml:"MpesaResultDesc,omitempty"`
+	// Unique identifier for the transaction request.
+	OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+	// Unique identifier for the transaction request.
+	ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+	// Unique M-PESA transaction ID for every payment request.
+	TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+	// Queue Timeout URL
+	QueueTimeoutURL *string `form:"QueueTimeoutURL,omitempty" json:"QueueTimeoutURL,omitempty" xml:"QueueTimeoutURL,omitempty"`
+	Occasion        *string `form:"Occasion,omitempty" json:"Occasion,omitempty" xml:"Occasion,omitempty"`
 }
 
 // B2CTimeoutRequestBody is the type of the "mpesa" service "B2CTimeout"
 // endpoint HTTP request body.
 type B2CTimeoutRequestBody struct {
-	Result *struct {
-		// Status code indicating whether transaction was already sent to your listener
-		ResultType int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		// Numeric status code indicating the status of the transaction processing
-		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		// Message from the API that gives the status of the request
-		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		// Unique identifier for the transaction request.
-		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
-		// Unique identifier for the transaction request.
-		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
-		// Unique M-PESA transaction ID for every payment request.
-		TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
-	ResultParameters *struct {
-		ResultParameter []*B2CResultParametersRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
-	} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
-	ReferenceData *struct {
-		ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
-	} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
+	MpesaResultParameters *string `form:"MpesaResultParameters,omitempty" json:"MpesaResultParameters,omitempty" xml:"MpesaResultParameters,omitempty"`
+	// Status code indicating whether transaction was already sent to your listener
+	MpesaResultType *int `form:"MpesaResultType,omitempty" json:"MpesaResultType,omitempty" xml:"MpesaResultType,omitempty"`
+	// Numeric status code indicating the status of the transaction processing
+	MpesaResultCode *int `form:"MpesaResultCode,omitempty" json:"MpesaResultCode,omitempty" xml:"MpesaResultCode,omitempty"`
+	// Message from the API that gives the status of the request
+	MpesaResultDesc *string `form:"MpesaResultDesc,omitempty" json:"MpesaResultDesc,omitempty" xml:"MpesaResultDesc,omitempty"`
+	// Unique identifier for the transaction request.
+	OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+	// Unique identifier for the transaction request.
+	ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+	// Unique M-PESA transaction ID for every payment request.
+	TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+	// Queue Timeout URL
+	QueueTimeoutURL *string `form:"QueueTimeoutURL,omitempty" json:"QueueTimeoutURL,omitempty" xml:"QueueTimeoutURL,omitempty"`
+	Occasion        *string `form:"Occasion,omitempty" json:"Occasion,omitempty" xml:"Occasion,omitempty"`
 }
 
 // B2CResultRequestBody is the type of the "mpesa" service "B2CResult" endpoint
 // HTTP request body.
 type B2CResultRequestBody struct {
-	Result *struct {
-		// Status code indicating whether transaction was already sent to your listener
-		ResultType int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		// Numeric status code indicating the status of the transaction processing
-		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		// Message from the API that gives the status of the request
-		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		// Unique identifier for the transaction request.
-		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
-		// Unique identifier for the transaction request.
-		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
-		// Unique M-PESA transaction ID for every payment request.
-		TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
-	ResultParameters *struct {
-		ResultParameter []*B2CResultParametersRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
-	} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
-	ReferenceData *struct {
-		ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
-	} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
+	MpesaResultParameters *string `form:"MpesaResultParameters,omitempty" json:"MpesaResultParameters,omitempty" xml:"MpesaResultParameters,omitempty"`
+	// Status code indicating whether transaction was already sent to your listener
+	MpesaResultType *int `form:"MpesaResultType,omitempty" json:"MpesaResultType,omitempty" xml:"MpesaResultType,omitempty"`
+	// Numeric status code indicating the status of the transaction processing
+	MpesaResultCode *int `form:"MpesaResultCode,omitempty" json:"MpesaResultCode,omitempty" xml:"MpesaResultCode,omitempty"`
+	// Message from the API that gives the status of the request
+	MpesaResultDesc *string `form:"MpesaResultDesc,omitempty" json:"MpesaResultDesc,omitempty" xml:"MpesaResultDesc,omitempty"`
+	// Unique identifier for the transaction request.
+	OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+	// Unique identifier for the transaction request.
+	ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+	// Unique M-PESA transaction ID for every payment request.
+	TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+	// Queue Timeout URL
+	QueueTimeoutURL *string `form:"QueueTimeoutURL,omitempty" json:"QueueTimeoutURL,omitempty" xml:"QueueTimeoutURL,omitempty"`
+	Occasion        *string `form:"Occasion,omitempty" json:"Occasion,omitempty" xml:"Occasion,omitempty"`
 }
 
 // C2BValidationRequestBody is the type of the "mpesa" service "C2BValidation"
@@ -266,111 +237,19 @@ type C2BConfirmationRequestBody struct {
 	LastName *string `form:"LastName,omitempty" json:"LastName,omitempty" xml:"LastName,omitempty"`
 }
 
-// AccountBalanceParametersRequestBody is used to define fields on request body
-// types.
-type AccountBalanceParametersRequestBody struct {
-	AccountBalance  *string `form:"AccountBalance,omitempty" json:"AccountBalance,omitempty" xml:"AccountBalance,omitempty"`
-	BOCompletedTime *string `form:"BOCompletedTime,omitempty" json:"BOCompletedTime,omitempty" xml:"BOCompletedTime,omitempty"`
-}
-
-// TransactionStatusResultParameterRequestBody is used to define fields on
-// request body types.
-type TransactionStatusResultParameterRequestBody struct {
-	ReceiptNo                *string `form:"ReceiptNo,omitempty" json:"ReceiptNo,omitempty" xml:"ReceiptNo,omitempty"`
-	ConversationID           *string `form:"ConversationID,omitempty" json:"ConversationID,omitempty" xml:"ConversationID,omitempty"`
-	FinalisedTime            *string `form:"FinalisedTime,omitempty" json:"FinalisedTime,omitempty" xml:"FinalisedTime,omitempty"`
-	Amount                   *int    `form:"Amount,omitempty" json:"Amount,omitempty" xml:"Amount,omitempty"`
-	TransactionStatus        *string `form:"TransactionStatus,omitempty" json:"TransactionStatus,omitempty" xml:"TransactionStatus,omitempty"`
-	ReasonType               *string `form:"ReasonType,omitempty" json:"ReasonType,omitempty" xml:"ReasonType,omitempty"`
-	TransactionReason        *string `form:"TransactionReason,omitempty" json:"TransactionReason,omitempty" xml:"TransactionReason,omitempty"`
-	DebitPartyCharges        *string `form:"DebitPartyCharges,omitempty" json:"DebitPartyCharges,omitempty" xml:"DebitPartyCharges,omitempty"`
-	DebitAccountType         *string `form:"DebitAccountType,omitempty" json:"DebitAccountType,omitempty" xml:"DebitAccountType,omitempty"`
-	InitiatedTime            *string `form:"InitiatedTime,omitempty" json:"InitiatedTime,omitempty" xml:"InitiatedTime,omitempty"`
-	OriginatorConversationID *string `form:"Originator Conversation ID,omitempty" json:"Originator Conversation ID,omitempty" xml:"Originator Conversation ID,omitempty"`
-	CreditPartyName          *string `form:"CreditPartyName,omitempty" json:"CreditPartyName,omitempty" xml:"CreditPartyName,omitempty"`
-	DebitPartyName           *string `form:"DebitPartyName,omitempty" json:"DebitPartyName,omitempty" xml:"DebitPartyName,omitempty"`
-}
-
-// B2CResultParametersRequestBody is used to define fields on request body
-// types.
-type B2CResultParametersRequestBody struct {
-	// This is a unique M-PESA transaction ID for every payment request.
-	TransactionReceipt *string `form:"TransactionReceipt,omitempty" json:"TransactionReceipt,omitempty" xml:"TransactionReceipt,omitempty"`
-	// This is the amount that was transacted.
-	TransactionAmount *int `form:"TransactionAmount,omitempty" json:"TransactionAmount,omitempty" xml:"TransactionAmount,omitempty"`
-	// Available balance of the Working account under the B2C shortcode used in the
-	// transaction.
-	B2CWorkingAccountAvailableFunds *float64 `form:"B2CWorkingAccountAvailableFunds,omitempty" json:"B2CWorkingAccountAvailableFunds,omitempty" xml:"B2CWorkingAccountAvailableFunds,omitempty"`
-	// Available balance of the Utility account under the B2C shortcode used in the
-	// transaction.
-	B2CUtilityAccountAvailableFunds *float64 `form:"B2CUtilityAccountAvailableFunds,omitempty" json:"B2CUtilityAccountAvailableFunds,omitempty" xml:"B2CUtilityAccountAvailableFunds,omitempty"`
-	// This is the date and time that the transaction completed M-PESA.
-	TransactionCompletedDateTime *string `form:"TransactionCompletedDateTime,omitempty" json:"TransactionCompletedDateTime,omitempty" xml:"TransactionCompletedDateTime,omitempty"`
-	// This is the name and phone number of the customer who received the payment.
-	ReceiverPartyPublicName *string `form:"ReceiverPartyPublicName,omitempty" json:"ReceiverPartyPublicName,omitempty" xml:"ReceiverPartyPublicName,omitempty"`
-	// Available balance of the Charges Paid account under the B2C shortcode used
-	// in the transaction.
-	B2CChargesPaidAccountAvailableFunds *float64 `form:"B2CChargesPaidAccountAvailableFunds,omitempty" json:"B2CChargesPaidAccountAvailableFunds,omitempty" xml:"B2CChargesPaidAccountAvailableFunds,omitempty"`
-	// Key indicating whether customer is registered on M-PESA
-	B2CRecipientIsRegisteredCustomer *string `form:"B2CRecipientIsRegisteredCustomer,omitempty" json:"B2CRecipientIsRegisteredCustomer,omitempty" xml:"B2CRecipientIsRegisteredCustomer,omitempty"`
-}
-
 // NewAccountBalanceTimeoutRequestBody builds the HTTP request body from the
 // payload of the "AccountBalanceTimeout" endpoint of the "mpesa" service.
 func NewAccountBalanceTimeoutRequestBody(p *mpesa.AccountBalanceResult) *AccountBalanceTimeoutRequestBody {
-	body := &AccountBalanceTimeoutRequestBody{}
-	if p.Result != nil {
-		body.Result = &struct {
-			// Status code indicating whether transaction was already sent to your listener
-			ResultType *int
-			// Numeric status code indicating the status of the transaction processing
-			ResultCode *int
-			// Message from the API that gives the status of the request
-			ResultDesc *string
-			// Unique identifier for the transaction request.
-			OriginatorConversationID *string
-			// Unique identifier for the transaction request.
-			ConversationID *string
-			// Unique M-PESA transaction ID for every payment request.
-			TransactionID    *string
-			ResultParameters *struct {
-				ResultParameter []*AccountBalanceParametersRequestBody
-			}
-			ReferenceData *struct {
-				ReferenceItem map[string]string
-			}
-		}{
-			ResultType:               p.Result.ResultType,
-			ResultCode:               p.Result.ResultCode,
-			ResultDesc:               p.Result.ResultDesc,
-			OriginatorConversationID: p.Result.OriginatorConversationID,
-			ConversationID:           p.Result.ConversationID,
-			TransactionID:            p.Result.TransactionID,
-		}
-		if p.Result.ResultParameters != nil {
-			body.Result.ResultParameters = &struct {
-				ResultParameter []*AccountBalanceParametersRequestBody
-			}{}
-			if p.Result.ResultParameters.ResultParameter != nil {
-				body.Result.ResultParameters.ResultParameter = make([]*AccountBalanceParametersRequestBody, len(p.Result.ResultParameters.ResultParameter))
-				for i, val := range p.Result.ResultParameters.ResultParameter {
-					body.Result.ResultParameters.ResultParameter[i] = marshalMpesaAccountBalanceParametersToAccountBalanceParametersRequestBody(val)
-				}
-			}
-		}
-		if p.Result.ReferenceData != nil {
-			body.Result.ReferenceData = &struct {
-				ReferenceItem map[string]string
-			}{}
-			if p.Result.ReferenceData.ReferenceItem != nil {
-				body.Result.ReferenceData.ReferenceItem = make(map[string]string, len(p.Result.ReferenceData.ReferenceItem))
-				for key, val := range p.Result.ReferenceData.ReferenceItem {
-					tk := key
-					tv := val
-					body.Result.ReferenceData.ReferenceItem[tk] = tv
-				}
-			}
-		}
+	body := &AccountBalanceTimeoutRequestBody{
+		MpesaResultParameters:    p.MpesaResultParameters,
+		MpesaResultType:          p.MpesaResultType,
+		MpesaResultCode:          p.MpesaResultCode,
+		MpesaResultDesc:          p.MpesaResultDesc,
+		OriginatorConversationID: p.OriginatorConversationID,
+		ConversationID:           p.ConversationID,
+		TransactionID:            p.TransactionID,
+		QueueTimeoutURL:          p.QueueTimeoutURL,
+		Occasion:                 p.Occasion,
 	}
 	return body
 }
@@ -378,59 +257,16 @@ func NewAccountBalanceTimeoutRequestBody(p *mpesa.AccountBalanceResult) *Account
 // NewAccountBalanceResultRequestBody builds the HTTP request body from the
 // payload of the "AccountBalanceResult" endpoint of the "mpesa" service.
 func NewAccountBalanceResultRequestBody(p *mpesa.AccountBalanceResult) *AccountBalanceResultRequestBody {
-	body := &AccountBalanceResultRequestBody{}
-	if p.Result != nil {
-		body.Result = &struct {
-			// Status code indicating whether transaction was already sent to your listener
-			ResultType *int
-			// Numeric status code indicating the status of the transaction processing
-			ResultCode *int
-			// Message from the API that gives the status of the request
-			ResultDesc *string
-			// Unique identifier for the transaction request.
-			OriginatorConversationID *string
-			// Unique identifier for the transaction request.
-			ConversationID *string
-			// Unique M-PESA transaction ID for every payment request.
-			TransactionID    *string
-			ResultParameters *struct {
-				ResultParameter []*AccountBalanceParametersRequestBody
-			}
-			ReferenceData *struct {
-				ReferenceItem map[string]string
-			}
-		}{
-			ResultType:               p.Result.ResultType,
-			ResultCode:               p.Result.ResultCode,
-			ResultDesc:               p.Result.ResultDesc,
-			OriginatorConversationID: p.Result.OriginatorConversationID,
-			ConversationID:           p.Result.ConversationID,
-			TransactionID:            p.Result.TransactionID,
-		}
-		if p.Result.ResultParameters != nil {
-			body.Result.ResultParameters = &struct {
-				ResultParameter []*AccountBalanceParametersRequestBody
-			}{}
-			if p.Result.ResultParameters.ResultParameter != nil {
-				body.Result.ResultParameters.ResultParameter = make([]*AccountBalanceParametersRequestBody, len(p.Result.ResultParameters.ResultParameter))
-				for i, val := range p.Result.ResultParameters.ResultParameter {
-					body.Result.ResultParameters.ResultParameter[i] = marshalMpesaAccountBalanceParametersToAccountBalanceParametersRequestBody(val)
-				}
-			}
-		}
-		if p.Result.ReferenceData != nil {
-			body.Result.ReferenceData = &struct {
-				ReferenceItem map[string]string
-			}{}
-			if p.Result.ReferenceData.ReferenceItem != nil {
-				body.Result.ReferenceData.ReferenceItem = make(map[string]string, len(p.Result.ReferenceData.ReferenceItem))
-				for key, val := range p.Result.ReferenceData.ReferenceItem {
-					tk := key
-					tv := val
-					body.Result.ReferenceData.ReferenceItem[tk] = tv
-				}
-			}
-		}
+	body := &AccountBalanceResultRequestBody{
+		MpesaResultParameters:    p.MpesaResultParameters,
+		MpesaResultType:          p.MpesaResultType,
+		MpesaResultCode:          p.MpesaResultCode,
+		MpesaResultDesc:          p.MpesaResultDesc,
+		OriginatorConversationID: p.OriginatorConversationID,
+		ConversationID:           p.ConversationID,
+		TransactionID:            p.TransactionID,
+		QueueTimeoutURL:          p.QueueTimeoutURL,
+		Occasion:                 p.Occasion,
 	}
 	return body
 }
@@ -438,59 +274,16 @@ func NewAccountBalanceResultRequestBody(p *mpesa.AccountBalanceResult) *AccountB
 // NewTransactionStatusTimeoutRequestBody builds the HTTP request body from the
 // payload of the "TransactionStatusTimeout" endpoint of the "mpesa" service.
 func NewTransactionStatusTimeoutRequestBody(p *mpesa.TransactionStatusResult) *TransactionStatusTimeoutRequestBody {
-	body := &TransactionStatusTimeoutRequestBody{}
-	if p.Result != nil {
-		body.Result = &struct {
-			// Status code indicating whether transaction was already sent to your listener
-			ResultType *int
-			// Numeric status code indicating the status of the transaction processing
-			ResultCode *int
-			// Message from the API that gives the status of the request
-			ResultDesc *string
-			// Unique identifier for the transaction request.
-			OriginatorConversationID *string
-			// Unique identifier for the transaction request.
-			ConversationID *string
-			// Unique M-PESA transaction ID for every payment request.
-			TransactionID    *string
-			ResultParameters *struct {
-				ResultParameter []*TransactionStatusResultParameterRequestBody
-			}
-			ReferenceData *struct {
-				ReferenceItem map[string]string
-			}
-		}{
-			ResultType:               p.Result.ResultType,
-			ResultCode:               p.Result.ResultCode,
-			ResultDesc:               p.Result.ResultDesc,
-			OriginatorConversationID: p.Result.OriginatorConversationID,
-			ConversationID:           p.Result.ConversationID,
-			TransactionID:            p.Result.TransactionID,
-		}
-		if p.Result.ResultParameters != nil {
-			body.Result.ResultParameters = &struct {
-				ResultParameter []*TransactionStatusResultParameterRequestBody
-			}{}
-			if p.Result.ResultParameters.ResultParameter != nil {
-				body.Result.ResultParameters.ResultParameter = make([]*TransactionStatusResultParameterRequestBody, len(p.Result.ResultParameters.ResultParameter))
-				for i, val := range p.Result.ResultParameters.ResultParameter {
-					body.Result.ResultParameters.ResultParameter[i] = marshalMpesaTransactionStatusResultParameterToTransactionStatusResultParameterRequestBody(val)
-				}
-			}
-		}
-		if p.Result.ReferenceData != nil {
-			body.Result.ReferenceData = &struct {
-				ReferenceItem map[string]string
-			}{}
-			if p.Result.ReferenceData.ReferenceItem != nil {
-				body.Result.ReferenceData.ReferenceItem = make(map[string]string, len(p.Result.ReferenceData.ReferenceItem))
-				for key, val := range p.Result.ReferenceData.ReferenceItem {
-					tk := key
-					tv := val
-					body.Result.ReferenceData.ReferenceItem[tk] = tv
-				}
-			}
-		}
+	body := &TransactionStatusTimeoutRequestBody{
+		ResultParameters:         p.ResultParameters,
+		MpesaResultType:          p.MpesaResultType,
+		MpesaResultCode:          p.MpesaResultCode,
+		MpesaResultDesc:          p.MpesaResultDesc,
+		OriginatorConversationID: p.OriginatorConversationID,
+		ConversationID:           p.ConversationID,
+		TransactionID:            p.TransactionID,
+		QueueTimeoutURL:          p.QueueTimeoutURL,
+		Occasion:                 p.Occasion,
 	}
 	return body
 }
@@ -498,59 +291,16 @@ func NewTransactionStatusTimeoutRequestBody(p *mpesa.TransactionStatusResult) *T
 // NewTransactionStatusResultRequestBody builds the HTTP request body from the
 // payload of the "TransactionStatusResult" endpoint of the "mpesa" service.
 func NewTransactionStatusResultRequestBody(p *mpesa.TransactionStatusResult) *TransactionStatusResultRequestBody {
-	body := &TransactionStatusResultRequestBody{}
-	if p.Result != nil {
-		body.Result = &struct {
-			// Status code indicating whether transaction was already sent to your listener
-			ResultType *int
-			// Numeric status code indicating the status of the transaction processing
-			ResultCode *int
-			// Message from the API that gives the status of the request
-			ResultDesc *string
-			// Unique identifier for the transaction request.
-			OriginatorConversationID *string
-			// Unique identifier for the transaction request.
-			ConversationID *string
-			// Unique M-PESA transaction ID for every payment request.
-			TransactionID    *string
-			ResultParameters *struct {
-				ResultParameter []*TransactionStatusResultParameterRequestBody
-			}
-			ReferenceData *struct {
-				ReferenceItem map[string]string
-			}
-		}{
-			ResultType:               p.Result.ResultType,
-			ResultCode:               p.Result.ResultCode,
-			ResultDesc:               p.Result.ResultDesc,
-			OriginatorConversationID: p.Result.OriginatorConversationID,
-			ConversationID:           p.Result.ConversationID,
-			TransactionID:            p.Result.TransactionID,
-		}
-		if p.Result.ResultParameters != nil {
-			body.Result.ResultParameters = &struct {
-				ResultParameter []*TransactionStatusResultParameterRequestBody
-			}{}
-			if p.Result.ResultParameters.ResultParameter != nil {
-				body.Result.ResultParameters.ResultParameter = make([]*TransactionStatusResultParameterRequestBody, len(p.Result.ResultParameters.ResultParameter))
-				for i, val := range p.Result.ResultParameters.ResultParameter {
-					body.Result.ResultParameters.ResultParameter[i] = marshalMpesaTransactionStatusResultParameterToTransactionStatusResultParameterRequestBody(val)
-				}
-			}
-		}
-		if p.Result.ReferenceData != nil {
-			body.Result.ReferenceData = &struct {
-				ReferenceItem map[string]string
-			}{}
-			if p.Result.ReferenceData.ReferenceItem != nil {
-				body.Result.ReferenceData.ReferenceItem = make(map[string]string, len(p.Result.ReferenceData.ReferenceItem))
-				for key, val := range p.Result.ReferenceData.ReferenceItem {
-					tk := key
-					tv := val
-					body.Result.ReferenceData.ReferenceItem[tk] = tv
-				}
-			}
-		}
+	body := &TransactionStatusResultRequestBody{
+		ResultParameters:         p.ResultParameters,
+		MpesaResultType:          p.MpesaResultType,
+		MpesaResultCode:          p.MpesaResultCode,
+		MpesaResultDesc:          p.MpesaResultDesc,
+		OriginatorConversationID: p.OriginatorConversationID,
+		ConversationID:           p.ConversationID,
+		TransactionID:            p.TransactionID,
+		QueueTimeoutURL:          p.QueueTimeoutURL,
+		Occasion:                 p.Occasion,
 	}
 	return body
 }
@@ -558,45 +308,15 @@ func NewTransactionStatusResultRequestBody(p *mpesa.TransactionStatusResult) *Tr
 // NewReversalTimeoutRequestBody builds the HTTP request body from the payload
 // of the "ReversalTimeout" endpoint of the "mpesa" service.
 func NewReversalTimeoutRequestBody(p *mpesa.ReversalResult) *ReversalTimeoutRequestBody {
-	body := &ReversalTimeoutRequestBody{}
-	if p.Result != nil {
-		body.Result = &struct {
-			// Status code indicating whether transaction was already sent to your listener
-			ResultType *int
-			// Numeric status code indicating the status of the transaction processing
-			ResultCode *int
-			// Message from the API that gives the status of the request
-			ResultDesc *string
-			// Unique identifier for the transaction request.
-			OriginatorConversationID *string
-			// Unique identifier for the transaction request.
-			ConversationID *string
-			// Unique M-PESA transaction ID for every payment request.
-			TransactionID *string
-			ReferenceData *struct {
-				ReferenceItem map[string]string
-			}
-		}{
-			ResultType:               p.Result.ResultType,
-			ResultCode:               p.Result.ResultCode,
-			ResultDesc:               p.Result.ResultDesc,
-			OriginatorConversationID: p.Result.OriginatorConversationID,
-			ConversationID:           p.Result.ConversationID,
-			TransactionID:            p.Result.TransactionID,
-		}
-		if p.Result.ReferenceData != nil {
-			body.Result.ReferenceData = &struct {
-				ReferenceItem map[string]string
-			}{}
-			if p.Result.ReferenceData.ReferenceItem != nil {
-				body.Result.ReferenceData.ReferenceItem = make(map[string]string, len(p.Result.ReferenceData.ReferenceItem))
-				for key, val := range p.Result.ReferenceData.ReferenceItem {
-					tk := key
-					tv := val
-					body.Result.ReferenceData.ReferenceItem[tk] = tv
-				}
-			}
-		}
+	body := &ReversalTimeoutRequestBody{
+		MpesaResultType:          p.MpesaResultType,
+		MpesaResultCode:          p.MpesaResultCode,
+		MpesaResultDesc:          p.MpesaResultDesc,
+		OriginatorConversationID: p.OriginatorConversationID,
+		ConversationID:           p.ConversationID,
+		TransactionID:            p.TransactionID,
+		QueueTimeoutURL:          p.QueueTimeoutURL,
+		Occasion:                 p.Occasion,
 	}
 	return body
 }
@@ -604,45 +324,15 @@ func NewReversalTimeoutRequestBody(p *mpesa.ReversalResult) *ReversalTimeoutRequ
 // NewReversalResultRequestBody builds the HTTP request body from the payload
 // of the "ReversalResult" endpoint of the "mpesa" service.
 func NewReversalResultRequestBody(p *mpesa.ReversalResult) *ReversalResultRequestBody {
-	body := &ReversalResultRequestBody{}
-	if p.Result != nil {
-		body.Result = &struct {
-			// Status code indicating whether transaction was already sent to your listener
-			ResultType *int
-			// Numeric status code indicating the status of the transaction processing
-			ResultCode *int
-			// Message from the API that gives the status of the request
-			ResultDesc *string
-			// Unique identifier for the transaction request.
-			OriginatorConversationID *string
-			// Unique identifier for the transaction request.
-			ConversationID *string
-			// Unique M-PESA transaction ID for every payment request.
-			TransactionID *string
-			ReferenceData *struct {
-				ReferenceItem map[string]string
-			}
-		}{
-			ResultType:               p.Result.ResultType,
-			ResultCode:               p.Result.ResultCode,
-			ResultDesc:               p.Result.ResultDesc,
-			OriginatorConversationID: p.Result.OriginatorConversationID,
-			ConversationID:           p.Result.ConversationID,
-			TransactionID:            p.Result.TransactionID,
-		}
-		if p.Result.ReferenceData != nil {
-			body.Result.ReferenceData = &struct {
-				ReferenceItem map[string]string
-			}{}
-			if p.Result.ReferenceData.ReferenceItem != nil {
-				body.Result.ReferenceData.ReferenceItem = make(map[string]string, len(p.Result.ReferenceData.ReferenceItem))
-				for key, val := range p.Result.ReferenceData.ReferenceItem {
-					tk := key
-					tv := val
-					body.Result.ReferenceData.ReferenceItem[tk] = tv
-				}
-			}
-		}
+	body := &ReversalResultRequestBody{
+		MpesaResultType:          p.MpesaResultType,
+		MpesaResultCode:          p.MpesaResultCode,
+		MpesaResultDesc:          p.MpesaResultDesc,
+		OriginatorConversationID: p.OriginatorConversationID,
+		ConversationID:           p.ConversationID,
+		TransactionID:            p.TransactionID,
+		QueueTimeoutURL:          p.QueueTimeoutURL,
+		Occasion:                 p.Occasion,
 	}
 	return body
 }
@@ -650,53 +340,16 @@ func NewReversalResultRequestBody(p *mpesa.ReversalResult) *ReversalResultReques
 // NewB2CTimeoutRequestBody builds the HTTP request body from the payload of
 // the "B2CTimeout" endpoint of the "mpesa" service.
 func NewB2CTimeoutRequestBody(p *mpesa.B2CPaymentResult) *B2CTimeoutRequestBody {
-	body := &B2CTimeoutRequestBody{}
-	if p.Result != nil {
-		body.Result = &struct {
-			// Status code indicating whether transaction was already sent to your listener
-			ResultType *int
-			// Numeric status code indicating the status of the transaction processing
-			ResultCode *int
-			// Message from the API that gives the status of the request
-			ResultDesc *string
-			// Unique identifier for the transaction request.
-			OriginatorConversationID *string
-			// Unique identifier for the transaction request.
-			ConversationID *string
-			// Unique M-PESA transaction ID for every payment request.
-			TransactionID *string
-		}{
-			ResultType:               p.Result.ResultType,
-			ResultCode:               p.Result.ResultCode,
-			ResultDesc:               p.Result.ResultDesc,
-			OriginatorConversationID: p.Result.OriginatorConversationID,
-			ConversationID:           p.Result.ConversationID,
-			TransactionID:            p.Result.TransactionID,
-		}
-	}
-	if p.ResultParameters != nil {
-		body.ResultParameters = &struct {
-			ResultParameter []*B2CResultParametersRequestBody
-		}{}
-		if p.ResultParameters.ResultParameter != nil {
-			body.ResultParameters.ResultParameter = make([]*B2CResultParametersRequestBody, len(p.ResultParameters.ResultParameter))
-			for i, val := range p.ResultParameters.ResultParameter {
-				body.ResultParameters.ResultParameter[i] = marshalMpesaB2CResultParametersToB2CResultParametersRequestBody(val)
-			}
-		}
-	}
-	if p.ReferenceData != nil {
-		body.ReferenceData = &struct {
-			ReferenceItem map[string]string
-		}{}
-		if p.ReferenceData.ReferenceItem != nil {
-			body.ReferenceData.ReferenceItem = make(map[string]string, len(p.ReferenceData.ReferenceItem))
-			for key, val := range p.ReferenceData.ReferenceItem {
-				tk := key
-				tv := val
-				body.ReferenceData.ReferenceItem[tk] = tv
-			}
-		}
+	body := &B2CTimeoutRequestBody{
+		MpesaResultParameters:    p.MpesaResultParameters,
+		MpesaResultType:          p.MpesaResultType,
+		MpesaResultCode:          p.MpesaResultCode,
+		MpesaResultDesc:          p.MpesaResultDesc,
+		OriginatorConversationID: p.OriginatorConversationID,
+		ConversationID:           p.ConversationID,
+		TransactionID:            p.TransactionID,
+		QueueTimeoutURL:          p.QueueTimeoutURL,
+		Occasion:                 p.Occasion,
 	}
 	return body
 }
@@ -704,53 +357,16 @@ func NewB2CTimeoutRequestBody(p *mpesa.B2CPaymentResult) *B2CTimeoutRequestBody 
 // NewB2CResultRequestBody builds the HTTP request body from the payload of the
 // "B2CResult" endpoint of the "mpesa" service.
 func NewB2CResultRequestBody(p *mpesa.B2CPaymentResult) *B2CResultRequestBody {
-	body := &B2CResultRequestBody{}
-	if p.Result != nil {
-		body.Result = &struct {
-			// Status code indicating whether transaction was already sent to your listener
-			ResultType *int
-			// Numeric status code indicating the status of the transaction processing
-			ResultCode *int
-			// Message from the API that gives the status of the request
-			ResultDesc *string
-			// Unique identifier for the transaction request.
-			OriginatorConversationID *string
-			// Unique identifier for the transaction request.
-			ConversationID *string
-			// Unique M-PESA transaction ID for every payment request.
-			TransactionID *string
-		}{
-			ResultType:               p.Result.ResultType,
-			ResultCode:               p.Result.ResultCode,
-			ResultDesc:               p.Result.ResultDesc,
-			OriginatorConversationID: p.Result.OriginatorConversationID,
-			ConversationID:           p.Result.ConversationID,
-			TransactionID:            p.Result.TransactionID,
-		}
-	}
-	if p.ResultParameters != nil {
-		body.ResultParameters = &struct {
-			ResultParameter []*B2CResultParametersRequestBody
-		}{}
-		if p.ResultParameters.ResultParameter != nil {
-			body.ResultParameters.ResultParameter = make([]*B2CResultParametersRequestBody, len(p.ResultParameters.ResultParameter))
-			for i, val := range p.ResultParameters.ResultParameter {
-				body.ResultParameters.ResultParameter[i] = marshalMpesaB2CResultParametersToB2CResultParametersRequestBody(val)
-			}
-		}
-	}
-	if p.ReferenceData != nil {
-		body.ReferenceData = &struct {
-			ReferenceItem map[string]string
-		}{}
-		if p.ReferenceData.ReferenceItem != nil {
-			body.ReferenceData.ReferenceItem = make(map[string]string, len(p.ReferenceData.ReferenceItem))
-			for key, val := range p.ReferenceData.ReferenceItem {
-				tk := key
-				tv := val
-				body.ReferenceData.ReferenceItem[tk] = tv
-			}
-		}
+	body := &B2CResultRequestBody{
+		MpesaResultParameters:    p.MpesaResultParameters,
+		MpesaResultType:          p.MpesaResultType,
+		MpesaResultCode:          p.MpesaResultCode,
+		MpesaResultDesc:          p.MpesaResultDesc,
+		OriginatorConversationID: p.OriginatorConversationID,
+		ConversationID:           p.ConversationID,
+		TransactionID:            p.TransactionID,
+		QueueTimeoutURL:          p.QueueTimeoutURL,
+		Occasion:                 p.Occasion,
 	}
 	return body
 }
@@ -795,48 +411,4 @@ func NewC2BConfirmationRequestBody(p *mpesa.ConfirmationResult) *C2BConfirmation
 		LastName:          p.LastName,
 	}
 	return body
-}
-
-// ValidateAccountBalanceParametersRequestBody runs the validations defined on
-// AccountBalanceParametersRequestBody
-func ValidateAccountBalanceParametersRequestBody(body *AccountBalanceParametersRequestBody) (err error) {
-	if body.BOCompletedTime != nil {
-		err = goa.MergeErrors(err, goa.ValidateFormat("body.BOCompletedTime", *body.BOCompletedTime, goa.FormatDateTime))
-	}
-	return
-}
-
-// ValidateTransactionStatusResultParameterRequestBody runs the validations
-// defined on TransactionStatusResultParameterRequestBody
-func ValidateTransactionStatusResultParameterRequestBody(body *TransactionStatusResultParameterRequestBody) (err error) {
-	if body.FinalisedTime != nil {
-		err = goa.MergeErrors(err, goa.ValidateFormat("body.FinalisedTime", *body.FinalisedTime, goa.FormatDateTime))
-	}
-	if body.InitiatedTime != nil {
-		err = goa.MergeErrors(err, goa.ValidateFormat("body.InitiatedTime", *body.InitiatedTime, goa.FormatDateTime))
-	}
-	return
-}
-
-// ValidateB2CResultParametersRequestBody runs the validations defined on
-// B2CResultParametersRequestBody
-func ValidateB2CResultParametersRequestBody(body *B2CResultParametersRequestBody) (err error) {
-	if body.TransactionReceipt != nil {
-		err = goa.MergeErrors(err, goa.ValidatePattern("body.TransactionReceipt", *body.TransactionReceipt, "[a-zA-Z]+"))
-	}
-	if body.TransactionCompletedDateTime != nil {
-		err = goa.MergeErrors(err, goa.ValidateFormat("body.TransactionCompletedDateTime", *body.TransactionCompletedDateTime, goa.FormatDateTime))
-	}
-	if body.ReceiverPartyPublicName != nil {
-		err = goa.MergeErrors(err, goa.ValidatePattern("body.ReceiverPartyPublicName", *body.ReceiverPartyPublicName, "[a-zA-Z]+"))
-	}
-	if body.B2CRecipientIsRegisteredCustomer != nil {
-		if !(*body.B2CRecipientIsRegisteredCustomer == "Y" || *body.B2CRecipientIsRegisteredCustomer == "N") {
-			err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.B2CRecipientIsRegisteredCustomer", *body.B2CRecipientIsRegisteredCustomer, []interface{}{"Y", "N"}))
-		}
-	}
-	if body.B2CRecipientIsRegisteredCustomer != nil {
-		err = goa.MergeErrors(err, goa.ValidatePattern("body.B2CRecipientIsRegisteredCustomer", *body.B2CRecipientIsRegisteredCustomer, "[a-zA-Z]+"))
-	}
-	return
 }
