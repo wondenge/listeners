@@ -14,10 +14,13 @@ import (
 	health "github.com/wondenge/listeners/gen/health"
 	healthkitsvr "github.com/wondenge/listeners/gen/http/health/kitserver"
 	healthsvr "github.com/wondenge/listeners/gen/http/health/server"
+	jengakitsvr "github.com/wondenge/listeners/gen/http/jenga/kitserver"
+	jengasvr "github.com/wondenge/listeners/gen/http/jenga/server"
 	mpesakitsvr "github.com/wondenge/listeners/gen/http/mpesa/kitserver"
 	mpesasvr "github.com/wondenge/listeners/gen/http/mpesa/server"
 	swaggerkitsvr "github.com/wondenge/listeners/gen/http/swagger/kitserver"
 	swaggersvr "github.com/wondenge/listeners/gen/http/swagger/server"
+	jenga "github.com/wondenge/listeners/gen/jenga"
 	mpesa "github.com/wondenge/listeners/gen/mpesa"
 	goahttp "goa.design/goa/v3/http"
 	httpmdlwr "goa.design/goa/v3/http/middleware"
@@ -26,7 +29,7 @@ import (
 
 // handleHTTPServer starts configures and starts a HTTP server on the given
 // URL. It shuts down the server if any error is received in the error channel.
-func handleHTTPServer(ctx context.Context, u *url.URL, healthEndpoints *health.Endpoints, mpesaEndpoints *mpesa.Endpoints, wg *sync.WaitGroup, errc chan error, logger log.Logger, debug bool) {
+func handleHTTPServer(ctx context.Context, u *url.URL, healthEndpoints *health.Endpoints, mpesaEndpoints *mpesa.Endpoints, jengaEndpoints *jenga.Endpoints, wg *sync.WaitGroup, errc chan error, logger log.Logger, debug bool) {
 
 	// Provide the transport specific request decoder and response encoder.
 	// The goa http package has built-in support for JSON, XML and gob.
@@ -63,6 +66,9 @@ func handleHTTPServer(ctx context.Context, u *url.URL, healthEndpoints *health.E
 		mpesaC2BValidationHandler                   *kithttp.Server
 		mpesaC2BConfirmationHandler                 *kithttp.Server
 		mpesaServer                                 *mpesasvr.Server
+		jengaPublishHandler                         *kithttp.Server
+		jengaAlertsHandler                          *kithttp.Server
+		jengaServer                                 *jengasvr.Server
 	)
 	{
 		eh := errorHandler(logger)
@@ -124,6 +130,17 @@ func handleHTTPServer(ctx context.Context, u *url.URL, healthEndpoints *health.E
 			mpesakitsvr.EncodeC2BConfirmationResponse(enc),
 		)
 		mpesaServer = mpesasvr.New(mpesaEndpoints, mux, dec, enc, eh, nil)
+		jengaPublishHandler = kithttp.NewServer(
+			endpoint.Endpoint(jengaEndpoints.Publish),
+			jengakitsvr.DecodePublishRequest(mux, dec),
+			jengakitsvr.EncodePublishResponse(enc),
+		)
+		jengaAlertsHandler = kithttp.NewServer(
+			endpoint.Endpoint(jengaEndpoints.Alerts),
+			jengakitsvr.DecodeAlertsRequest(mux, dec),
+			jengakitsvr.EncodeAlertsResponse(enc),
+		)
+		jengaServer = jengasvr.New(jengaEndpoints, mux, dec, enc, eh, nil)
 	}
 
 	// Configure the mux.
@@ -139,6 +156,8 @@ func handleHTTPServer(ctx context.Context, u *url.URL, healthEndpoints *health.E
 	mpesakitsvr.MountB2CResultHandler(mux, mpesaB2CResultHandler)
 	mpesakitsvr.MountC2BValidationHandler(mux, mpesaC2BValidationHandler)
 	mpesakitsvr.MountC2BConfirmationHandler(mux, mpesaC2BConfirmationHandler)
+	jengakitsvr.MountPublishHandler(mux, jengaPublishHandler)
+	jengakitsvr.MountAlertsHandler(mux, jengaAlertsHandler)
 
 	// Wrap the multiplexer with additional middlewares. Middlewares mounted
 	// here apply to all the service endpoints.
@@ -158,6 +177,9 @@ func handleHTTPServer(ctx context.Context, u *url.URL, healthEndpoints *health.E
 		logger.Log("info", fmt.Sprintf("HTTP %q mounted on %s %s", m.Method, m.Verb, m.Pattern))
 	}
 	for _, m := range mpesaServer.Mounts {
+		logger.Log("info", fmt.Sprintf("HTTP %q mounted on %s %s", m.Method, m.Verb, m.Pattern))
+	}
+	for _, m := range jengaServer.Mounts {
 		logger.Log("info", fmt.Sprintf("HTTP %q mounted on %s %s", m.Method, m.Verb, m.Pattern))
 	}
 

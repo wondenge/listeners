@@ -15,6 +15,7 @@ import (
 
 	"github.com/go-kit/kit/endpoint"
 	healthc "github.com/wondenge/listeners/gen/http/health/client"
+	jengac "github.com/wondenge/listeners/gen/http/jenga/client"
 	mpesac "github.com/wondenge/listeners/gen/http/mpesa/client"
 	goahttp "goa.design/goa/v3/http"
 )
@@ -25,6 +26,7 @@ import (
 //
 func UsageCommands() string {
 	return `health show
+jenga (publish|alerts)
 mpesa (account-balance-timeout|account-balance-result|transaction-status-timeout|transaction-status-result|reversal-timeout|reversal-result|b2-c-timeout|b2-c-result|c2-b-validation|c2-b-confirmation)
 `
 }
@@ -32,11 +34,21 @@ mpesa (account-balance-timeout|account-balance-result|transaction-status-timeout
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + ` health show` + "\n" +
+		os.Args[0] + ` jenga publish --body '{
+      "additionalInfo": "Additional information",
+      "message": "254796778039 Peter Test ",
+      "mobileNumber": "254796778039",
+      "resultCode": "0",
+      "resultDescription": "The service request is processed successfully.",
+      "rrn": " 190508120533 ",
+      "service": "Mpesa",
+      "tranID": " NC84PQMWGZ"
+   }' --auth "Et eius recusandae facere."` + "\n" +
 		os.Args[0] + ` mpesa account-balance-timeout --body '{
       "ConversationId": "236543-276372-2",
       "MpesaResultCode": 0,
       "MpesaResultDesc": "Initiator information is invalid",
-      "MpesaResultParameters": "Et omnis doloremque et molestiae esse ut.",
+      "MpesaResultParameters": "Atque omnis at consequatur corporis fuga.",
       "MpesaResultType": 0,
       "Occasion": "Occasion",
       "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
@@ -59,6 +71,16 @@ func ParseEndpoint(
 		healthFlags = flag.NewFlagSet("health", flag.ContinueOnError)
 
 		healthShowFlags = flag.NewFlagSet("show", flag.ExitOnError)
+
+		jengaFlags = flag.NewFlagSet("jenga", flag.ContinueOnError)
+
+		jengaPublishFlags    = flag.NewFlagSet("publish", flag.ExitOnError)
+		jengaPublishBodyFlag = jengaPublishFlags.String("body", "REQUIRED", "")
+		jengaPublishAuthFlag = jengaPublishFlags.String("auth", "", "")
+
+		jengaAlertsFlags    = flag.NewFlagSet("alerts", flag.ExitOnError)
+		jengaAlertsBodyFlag = jengaAlertsFlags.String("body", "REQUIRED", "")
+		jengaAlertsAuthFlag = jengaAlertsFlags.String("auth", "", "")
 
 		mpesaFlags = flag.NewFlagSet("mpesa", flag.ContinueOnError)
 
@@ -95,6 +117,10 @@ func ParseEndpoint(
 	healthFlags.Usage = healthUsage
 	healthShowFlags.Usage = healthShowUsage
 
+	jengaFlags.Usage = jengaUsage
+	jengaPublishFlags.Usage = jengaPublishUsage
+	jengaAlertsFlags.Usage = jengaAlertsUsage
+
 	mpesaFlags.Usage = mpesaUsage
 	mpesaAccountBalanceTimeoutFlags.Usage = mpesaAccountBalanceTimeoutUsage
 	mpesaAccountBalanceResultFlags.Usage = mpesaAccountBalanceResultUsage
@@ -124,6 +150,8 @@ func ParseEndpoint(
 		switch svcn {
 		case "health":
 			svcf = healthFlags
+		case "jenga":
+			svcf = jengaFlags
 		case "mpesa":
 			svcf = mpesaFlags
 		default:
@@ -145,6 +173,16 @@ func ParseEndpoint(
 			switch epn {
 			case "show":
 				epf = healthShowFlags
+
+			}
+
+		case "jenga":
+			switch epn {
+			case "publish":
+				epf = jengaPublishFlags
+
+			case "alerts":
+				epf = jengaAlertsFlags
 
 			}
 
@@ -208,6 +246,16 @@ func ParseEndpoint(
 			case "show":
 				endpoint = c.Show()
 				data = nil
+			}
+		case "jenga":
+			c := jengac.NewClient(scheme, host, doer, enc, dec, restore)
+			switch epn {
+			case "publish":
+				endpoint = c.Publish()
+				data, err = jengac.BuildPublishPayload(*jengaPublishBodyFlag, *jengaPublishAuthFlag)
+			case "alerts":
+				endpoint = c.Alerts()
+				data, err = jengac.BuildAlertsPayload(*jengaAlertsBodyFlag, *jengaAlertsAuthFlag)
 			}
 		case "mpesa":
 			c := mpesac.NewClient(scheme, host, doer, enc, dec, restore)
@@ -275,6 +323,68 @@ Example:
 `, os.Args[0])
 }
 
+// jengaUsage displays the usage of the jenga command and its subcommands.
+func jengaUsage() {
+	fmt.Fprintf(os.Stderr, `Service is the jenga service interface.
+Usage:
+    %s [globalflags] jenga COMMAND [flags]
+
+COMMAND:
+    publish: Equity Bank Mpesa Async Callback
+    alerts: Account Alerts of monies in and out of your Equity Bank account
+
+Additional help:
+    %s jenga COMMAND --help
+`, os.Args[0], os.Args[0])
+}
+func jengaPublishUsage() {
+	fmt.Fprintf(os.Stderr, `%s [flags] jenga publish -body JSON -auth STRING
+
+Equity Bank Mpesa Async Callback
+    -body JSON: 
+    -auth STRING: 
+
+Example:
+    `+os.Args[0]+` jenga publish --body '{
+      "additionalInfo": "Additional information",
+      "message": "254796778039 Peter Test ",
+      "mobileNumber": "254796778039",
+      "resultCode": "0",
+      "resultDescription": "The service request is processed successfully.",
+      "rrn": " 190508120533 ",
+      "service": "Mpesa",
+      "tranID": " NC84PQMWGZ"
+   }' --auth "Et eius recusandae facere."
+`, os.Args[0])
+}
+
+func jengaAlertsUsage() {
+	fmt.Fprintf(os.Stderr, `%s [flags] jenga alerts -body JSON -auth STRING
+
+Account Alerts of monies in and out of your Equity Bank account
+    -body JSON: 
+    -auth STRING: 
+
+Example:
+    `+os.Args[0]+` jenga alerts --body '{
+      "account": "0111234241028",
+      "additionalInfo": "MPS 254723000000 MKR35QEKV7 A N Other/537620",
+      "amount": "10",
+      "billNumber": "A N Other",
+      "date": "2018-11-27 00:00:00.0",
+      "mobileNumber": "254796778039",
+      "name": "A N Other",
+      "orderAmount": "10",
+      "paymentMode": "TPG",
+      "reference": "Consequatur qui qui itaque.",
+      "servedBy": "EQ",
+      "serviceCharge": "10",
+      "till": "Reprehenderit est pariatur odio ut.",
+      "transactionType": "C"
+   }' --auth "Repellat odit aspernatur voluptas consectetur quia non."
+`, os.Args[0])
+}
+
 // mpesaUsage displays the usage of the mpesa command and its subcommands.
 func mpesaUsage() {
 	fmt.Fprintf(os.Stderr, `Service is the mpesa service interface.
@@ -308,7 +418,7 @@ Example:
       "ConversationId": "236543-276372-2",
       "MpesaResultCode": 0,
       "MpesaResultDesc": "Initiator information is invalid",
-      "MpesaResultParameters": "Et omnis doloremque et molestiae esse ut.",
+      "MpesaResultParameters": "Atque omnis at consequatur corporis fuga.",
       "MpesaResultType": 0,
       "Occasion": "Occasion",
       "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
@@ -329,7 +439,7 @@ Example:
       "ConversationId": "236543-276372-2",
       "MpesaResultCode": 0,
       "MpesaResultDesc": "Initiator information is invalid",
-      "MpesaResultParameters": "Saepe amet quasi et esse in est.",
+      "MpesaResultParameters": "Rem ducimus enim qui aliquid.",
       "MpesaResultType": 0,
       "Occasion": "Occasion",
       "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
@@ -354,7 +464,7 @@ Example:
       "Occasion": "Occasion",
       "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
       "QueueTimeoutURL": "https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit",
-      "ResultParameters": "Reprehenderit est pariatur odio ut.",
+      "ResultParameters": "Vel qui dolorem.",
       "TransactionID": "LHG31AA5TX"
    }'
 `, os.Args[0])
@@ -375,7 +485,7 @@ Example:
       "Occasion": "Occasion",
       "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
       "QueueTimeoutURL": "https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit",
-      "ResultParameters": "Quod atque natus ducimus quos aperiam.",
+      "ResultParameters": "Iusto cum voluptates quo qui dolor eligendi.",
       "TransactionID": "LHG31AA5TX"
    }'
 `, os.Args[0])
@@ -432,7 +542,7 @@ Example:
       "ConversationId": "236543-276372-2",
       "MpesaResultCode": 0,
       "MpesaResultDesc": "Initiator information is invalid",
-      "MpesaResultParameters": "Vel qui dolorem.",
+      "MpesaResultParameters": "Ut voluptatem dolores qui reprehenderit.",
       "MpesaResultType": 0,
       "Occasion": "Occasion",
       "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
@@ -453,7 +563,7 @@ Example:
       "ConversationId": "236543-276372-2",
       "MpesaResultCode": 0,
       "MpesaResultDesc": "Initiator information is invalid",
-      "MpesaResultParameters": "Iusto cum voluptates quo qui dolor eligendi.",
+      "MpesaResultParameters": "Expedita qui eius dolorem voluptatem ullam delectus.",
       "MpesaResultType": 0,
       "Occasion": "Occasion",
       "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
@@ -471,15 +581,15 @@ C2B Validation URL
 
 Example:
     `+os.Args[0]+` mpesa c2-b-validation --body '{
-      "BillRefNumber": "d73",
+      "BillRefNumber": "fcj",
       "BusinessShortCode": 654321,
       "FirstName": "John",
-      "InvoiceNumber": "Voluptatum nihil optio eius quia a.",
+      "InvoiceNumber": "Rem totam reprehenderit itaque eos.",
       "LastName": "Jane",
-      "MSISDN": 8294826480937208011,
+      "MSISDN": 3458945962503183300,
       "MiddleName": "Doe",
       "OrgAccountBalance": 30671,
-      "ThirdPartyTransID": "Explicabo impedit aliquid soluta occaecati.",
+      "ThirdPartyTransID": "Non fugit ullam laborum vero.",
       "TransAmount": 100,
       "TransID": "LHG31AA5TX",
       "TransTime": "20180713154301",
@@ -496,15 +606,15 @@ C2B Confirmation URL
 
 Example:
     `+os.Args[0]+` mpesa c2-b-confirmation --body '{
-      "BillRefNumber": "2cc",
+      "BillRefNumber": "knp",
       "BusinessShortCode": 654321,
       "FirstName": "John",
-      "InvoiceNumber": "Aliquam occaecati expedita at ut esse hic.",
+      "InvoiceNumber": "Nisi blanditiis alias mollitia iure quos omnis.",
       "LastName": "Jane",
-      "MSISDN": 163450310905465007,
+      "MSISDN": 2582828271847030372,
       "MiddleName": "Doe",
       "OrgAccountBalance": 30671,
-      "ThirdPartyTransID": "Repudiandae voluptatem ipsam.",
+      "ThirdPartyTransID": "Id iste.",
       "TransAmount": 100,
       "TransID": "LHG31AA5TX",
       "TransTime": "20180713154301",

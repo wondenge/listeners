@@ -28,7 +28,7 @@ var _ = API("listener", func() {
 	})
 	Server("listener", func() {
 		Description("listener hosts all Listener Services.")
-		Services("swagger", "health", "mpesa")
+		Services("swagger", "health", "mpesa", "jenga")
 		Host("local", func() {
 			Description("Localhost")
 			URI("http://localhost:3000")

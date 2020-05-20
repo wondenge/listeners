@@ -1,6 +1,10 @@
-# Listeners
+# Listeners : Golang HTTP service
 
-Golang HTTP service listening for Callback and Timeout URLs.
+This is a Golang HTTP service listening for Callbacks and Timeouts from the following API providers.
+
+- Daraja API
+
+# Daraja API Endpoints
 
 # Usage
 

@@ -22,7 +22,7 @@ func BuildAccountBalanceTimeoutPayload(mpesaAccountBalanceTimeoutBody string) (*
 	{
 		err = json.Unmarshal([]byte(mpesaAccountBalanceTimeoutBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultParameters\": \"Et omnis doloremque et molestiae esse ut.\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultParameters\": \"Atque omnis at consequatur corporis fuga.\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
 		}
 	}
 	v := &mpesa.AccountBalanceResult{
@@ -48,7 +48,7 @@ func BuildAccountBalanceResultEndpointPayload(mpesaAccountBalanceResultBody stri
 	{
 		err = json.Unmarshal([]byte(mpesaAccountBalanceResultBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultParameters\": \"Saepe amet quasi et esse in est.\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultParameters\": \"Rem ducimus enim qui aliquid.\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
 		}
 	}
 	v := &mpesa.AccountBalanceResult{
@@ -74,7 +74,7 @@ func BuildTransactionStatusTimeoutPayload(mpesaTransactionStatusTimeoutBody stri
 	{
 		err = json.Unmarshal([]byte(mpesaTransactionStatusTimeoutBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"ResultParameters\": \"Reprehenderit est pariatur odio ut.\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"ResultParameters\": \"Vel qui dolorem.\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
 		}
 	}
 	v := &mpesa.TransactionStatusResult{
@@ -100,7 +100,7 @@ func BuildTransactionStatusResultEndpointPayload(mpesaTransactionStatusResultBod
 	{
 		err = json.Unmarshal([]byte(mpesaTransactionStatusResultBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"ResultParameters\": \"Quod atque natus ducimus quos aperiam.\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"ResultParameters\": \"Iusto cum voluptates quo qui dolor eligendi.\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
 		}
 	}
 	v := &mpesa.TransactionStatusResult{
@@ -176,7 +176,7 @@ func BuildB2CTimeoutPayload(mpesaB2CTimeoutBody string) (*mpesa.B2CPaymentResult
 	{
 		err = json.Unmarshal([]byte(mpesaB2CTimeoutBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultParameters\": \"Vel qui dolorem.\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultParameters\": \"Ut voluptatem dolores qui reprehenderit.\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
 		}
 	}
 	v := &mpesa.B2CPaymentResult{
@@ -202,7 +202,7 @@ func BuildB2CResultPayload(mpesaB2CResultBody string) (*mpesa.B2CPaymentResult, 
 	{
 		err = json.Unmarshal([]byte(mpesaB2CResultBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultParameters\": \"Iusto cum voluptates quo qui dolor eligendi.\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationId\": \"236543-276372-2\",\n      \"MpesaResultCode\": 0,\n      \"MpesaResultDesc\": \"Initiator information is invalid\",\n      \"MpesaResultParameters\": \"Expedita qui eius dolorem voluptatem ullam delectus.\",\n      \"MpesaResultType\": 0,\n      \"Occasion\": \"Occasion\",\n      \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n      \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\",\n      \"TransactionID\": \"LHG31AA5TX\"\n   }'")
 		}
 	}
 	v := &mpesa.B2CPaymentResult{
@@ -228,7 +228,7 @@ func BuildC2BValidationPayload(mpesaC2BValidationBody string) (*mpesa.Validation
 	{
 		err = json.Unmarshal([]byte(mpesaC2BValidationBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"BillRefNumber\": \"d73\",\n      \"BusinessShortCode\": 654321,\n      \"FirstName\": \"John\",\n      \"InvoiceNumber\": \"Voluptatum nihil optio eius quia a.\",\n      \"LastName\": \"Jane\",\n      \"MSISDN\": 8294826480937208011,\n      \"MiddleName\": \"Doe\",\n      \"OrgAccountBalance\": 30671,\n      \"ThirdPartyTransID\": \"Explicabo impedit aliquid soluta occaecati.\",\n      \"TransAmount\": 100,\n      \"TransID\": \"LHG31AA5TX\",\n      \"TransTime\": \"20180713154301\",\n      \"TransactionType\": \"Pay Bill\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"BillRefNumber\": \"fcj\",\n      \"BusinessShortCode\": 654321,\n      \"FirstName\": \"John\",\n      \"InvoiceNumber\": \"Rem totam reprehenderit itaque eos.\",\n      \"LastName\": \"Jane\",\n      \"MSISDN\": 3458945962503183300,\n      \"MiddleName\": \"Doe\",\n      \"OrgAccountBalance\": 30671,\n      \"ThirdPartyTransID\": \"Non fugit ullam laborum vero.\",\n      \"TransAmount\": 100,\n      \"TransID\": \"LHG31AA5TX\",\n      \"TransTime\": \"20180713154301\",\n      \"TransactionType\": \"Pay Bill\"\n   }'")
 		}
 	}
 	v := &mpesa.ValidationResult{
@@ -258,7 +258,7 @@ func BuildC2BConfirmationPayload(mpesaC2BConfirmationBody string) (*mpesa.Confir
 	{
 		err = json.Unmarshal([]byte(mpesaC2BConfirmationBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"BillRefNumber\": \"2cc\",\n      \"BusinessShortCode\": 654321,\n      \"FirstName\": \"John\",\n      \"InvoiceNumber\": \"Aliquam occaecati expedita at ut esse hic.\",\n      \"LastName\": \"Jane\",\n      \"MSISDN\": 163450310905465007,\n      \"MiddleName\": \"Doe\",\n      \"OrgAccountBalance\": 30671,\n      \"ThirdPartyTransID\": \"Repudiandae voluptatem ipsam.\",\n      \"TransAmount\": 100,\n      \"TransID\": \"LHG31AA5TX\",\n      \"TransTime\": \"20180713154301\",\n      \"TransactionType\": \"Buy Goods\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"BillRefNumber\": \"knp\",\n      \"BusinessShortCode\": 654321,\n      \"FirstName\": \"John\",\n      \"InvoiceNumber\": \"Nisi blanditiis alias mollitia iure quos omnis.\",\n      \"LastName\": \"Jane\",\n      \"MSISDN\": 2582828271847030372,\n      \"MiddleName\": \"Doe\",\n      \"OrgAccountBalance\": 30671,\n      \"ThirdPartyTransID\": \"Id iste.\",\n      \"TransAmount\": 100,\n      \"TransID\": \"LHG31AA5TX\",\n      \"TransTime\": \"20180713154301\",\n      \"TransactionType\": \"Buy Goods\"\n   }'")
 		}
 	}
 	v := &mpesa.ConfirmationResult{

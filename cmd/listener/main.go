@@ -13,6 +13,7 @@ import (
 	"github.com/go-kit/kit/log"
 	listener "github.com/wondenge/listeners"
 	health "github.com/wondenge/listeners/gen/health"
+	jenga "github.com/wondenge/listeners/gen/jenga"
 	mpesa "github.com/wondenge/listeners/gen/mpesa"
 )
 
@@ -42,10 +43,12 @@ func main() {
 	var (
 		healthSvc health.Service
 		mpesaSvc  mpesa.Service
+		jengaSvc  jenga.Service
 	)
 	{
 		healthSvc = listener.NewHealth(logger)
 		mpesaSvc = listener.NewMpesa(logger)
+		jengaSvc = listener.NewJenga(logger)
 	}
 
 	// Wrap the services in endpoints that can be invoked from other services
@@ -53,10 +56,12 @@ func main() {
 	var (
 		healthEndpoints *health.Endpoints
 		mpesaEndpoints  *mpesa.Endpoints
+		jengaEndpoints  *jenga.Endpoints
 	)
 	{
 		healthEndpoints = health.NewEndpoints(healthSvc)
 		mpesaEndpoints = mpesa.NewEndpoints(mpesaSvc)
+		jengaEndpoints = jenga.NewEndpoints(jengaSvc)
 	}
 
 	// Create channel used by both the signal handler and server goroutines
@@ -96,7 +101,7 @@ func main() {
 			} else if u.Port() == "" {
 				u.Host += ":80"
 			}
-			handleHTTPServer(ctx, u, healthEndpoints, mpesaEndpoints, &wg, errc, logger, *dbgF)
+			handleHTTPServer(ctx, u, healthEndpoints, mpesaEndpoints, jengaEndpoints, &wg, errc, logger, *dbgF)
 		}
 
 	default:
