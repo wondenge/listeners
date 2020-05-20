@@ -14,22 +14,41 @@ var ReversalResult = Type("ReversalResult", func() {
 	Description("Successful Reversal Callback")
 	Attribute("Result", func() {
 		Attribute("ResultType", Int, func() {
+			Description("Status code indicating whether transaction was already sent to your listener")
+			Default(0)
 			Example(0)
 		})
+
+		// 0 means success.
+		// Any other code means an error occurred
+		// or the transaction failed.
 		Attribute("ResultCode", Int, func() {
+			Description("Numeric status code indicating the status of the transaction processing")
 			Example(0)
 		})
+
+		// Usually maps to a specific result code value
 		Attribute("ResultDesc", String, func() {
-			Example("The service request has been accepted successfully.")
+			Description("Message from the API that gives the status of the request")
+			Example("Service request is has bee accepted successfully")
+			Example("Initiator information is invalid")
 		})
-		Attribute("OriginatorConversationID", String, func() {
-			Example("10819-695089-1")
+
+		// returned by API proxy upon successful request submission.
+		Attribute("OriginatorConversationId", String, func() {
+			Description("Unique identifier for the transaction request.")
+			Example("AG_2376487236_126732989KJHJKH")
 		})
-		Attribute("ConversationID", String, func() {
-			Example("AG_20170727_00004efadacd98a01d15")
+
+		// returned by the M-Pesa upon successful request submission.
+		Attribute("ConversationId", String, func() {
+			Description("Unique identifier for the transaction request.")
+			Example("236543-276372-2")
 		})
+		// Same value is sent to customer over SMS upon successful processing.
 		Attribute("TransactionID", String, func() {
-			Example("LGR019G3J2")
+			Description("Unique M-PESA transaction ID for every payment request.")
+			Example("LHG31AA5TX")
 		})
 		Attribute("ReferenceData", func() {
 			Attribute("ReferenceItem", MapOf(String, String), func() {
