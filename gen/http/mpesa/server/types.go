@@ -17,69 +17,71 @@ import (
 // AccountBalanceTimeoutRequestBody is the type of the "mpesa" service
 // "AccountBalanceTimeout" endpoint HTTP request body.
 type AccountBalanceTimeoutRequestBody struct {
-	ResultType               *int    `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-	ResultCode               *int    `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-	ResultDesc               *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-	OriginatorConversationID *string `form:"OriginatorConversationID,omitempty" json:"OriginatorConversationID,omitempty" xml:"OriginatorConversationID,omitempty"`
-	ConversationID           *string `form:"ConversationID,omitempty" json:"ConversationID,omitempty" xml:"ConversationID,omitempty"`
-	TransactionID            *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-	ResultParameters         *struct {
-		ResultParameter *struct {
-			AccountBalance  map[string]string `form:"AccountBalance,omitempty" json:"AccountBalance,omitempty" xml:"AccountBalance,omitempty"`
-			BOCompletedTime map[string]string `form:"BOCompletedTime,omitempty" json:"BOCompletedTime,omitempty" xml:"BOCompletedTime,omitempty"`
-		} `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
-	} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
-	ReferenceData *struct {
-		ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
-	} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
+	Result *struct {
+		// Status code indicating whether transaction was already sent to your listener
+		ResultType *int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
+		// Numeric status code indicating the status of the transaction processing
+		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
+		// Message from the API that gives the status of the request
+		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
+		// Unique identifier for the transaction request.
+		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+		// Unique identifier for the transaction request.
+		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+		// Unique M-PESA transaction ID for every payment request.
+		TransactionID    *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+		ResultParameters *struct {
+			ResultParameter []*AccountBalanceParametersRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
+		} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
+		ReferenceData *struct {
+			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
+		} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
+	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
 }
 
 // AccountBalanceResultRequestBody is the type of the "mpesa" service
 // "AccountBalanceResult" endpoint HTTP request body.
 type AccountBalanceResultRequestBody struct {
-	ResultType               *int    `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-	ResultCode               *int    `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-	ResultDesc               *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-	OriginatorConversationID *string `form:"OriginatorConversationID,omitempty" json:"OriginatorConversationID,omitempty" xml:"OriginatorConversationID,omitempty"`
-	ConversationID           *string `form:"ConversationID,omitempty" json:"ConversationID,omitempty" xml:"ConversationID,omitempty"`
-	TransactionID            *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-	ResultParameters         *struct {
-		ResultParameter *struct {
-			AccountBalance  map[string]string `form:"AccountBalance,omitempty" json:"AccountBalance,omitempty" xml:"AccountBalance,omitempty"`
-			BOCompletedTime map[string]string `form:"BOCompletedTime,omitempty" json:"BOCompletedTime,omitempty" xml:"BOCompletedTime,omitempty"`
-		} `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
-	} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
-	ReferenceData *struct {
-		ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
-	} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
+	Result *struct {
+		// Status code indicating whether transaction was already sent to your listener
+		ResultType *int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
+		// Numeric status code indicating the status of the transaction processing
+		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
+		// Message from the API that gives the status of the request
+		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
+		// Unique identifier for the transaction request.
+		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+		// Unique identifier for the transaction request.
+		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+		// Unique M-PESA transaction ID for every payment request.
+		TransactionID    *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+		ResultParameters *struct {
+			ResultParameter []*AccountBalanceParametersRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
+		} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
+		ReferenceData *struct {
+			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
+		} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
+	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
 }
 
 // TransactionStatusTimeoutRequestBody is the type of the "mpesa" service
 // "TransactionStatusTimeout" endpoint HTTP request body.
 type TransactionStatusTimeoutRequestBody struct {
 	Result *struct {
-		ResultType               *int    `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		ResultCode               *int    `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		ResultDesc               *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		OriginatorConversationID *string `form:"OriginatorConversationID,omitempty" json:"OriginatorConversationID,omitempty" xml:"OriginatorConversationID,omitempty"`
-		ConversationID           *string `form:"ConversationID,omitempty" json:"ConversationID,omitempty" xml:"ConversationID,omitempty"`
-		TransactionID            *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-		ResultParameters         *struct {
-			ResultParameter *struct {
-				ReceiptNo                map[string]string `form:"ReceiptNo,omitempty" json:"ReceiptNo,omitempty" xml:"ReceiptNo,omitempty"`
-				ConversationID           map[string]string `form:"Conversation ID,omitempty" json:"Conversation ID,omitempty" xml:"Conversation ID,omitempty"`
-				FinalisedTime            map[string]int    `form:"FinalisedTime,omitempty" json:"FinalisedTime,omitempty" xml:"FinalisedTime,omitempty"`
-				Amount                   map[string]int    `form:"Amount,omitempty" json:"Amount,omitempty" xml:"Amount,omitempty"`
-				TransactionStatus        map[string]string `form:"TransactionStatus,omitempty" json:"TransactionStatus,omitempty" xml:"TransactionStatus,omitempty"`
-				ReasonType               map[string]string `form:"ReasonType,omitempty" json:"ReasonType,omitempty" xml:"ReasonType,omitempty"`
-				TransactionReason        map[string]string `form:"TransactionReason,omitempty" json:"TransactionReason,omitempty" xml:"TransactionReason,omitempty"`
-				DebitPartyCharges        map[string]string `form:"DebitPartyCharges,omitempty" json:"DebitPartyCharges,omitempty" xml:"DebitPartyCharges,omitempty"`
-				DebitAccountType         map[string]string `form:"DebitAccountType,omitempty" json:"DebitAccountType,omitempty" xml:"DebitAccountType,omitempty"`
-				InitiatedTime            map[string]int    `form:"InitiatedTime,omitempty" json:"InitiatedTime,omitempty" xml:"InitiatedTime,omitempty"`
-				OriginatorConversationID map[string]string `form:"Originator Conversation ID,omitempty" json:"Originator Conversation ID,omitempty" xml:"Originator Conversation ID,omitempty"`
-				CreditPartyName          map[string]string `form:"CreditPartyName,omitempty" json:"CreditPartyName,omitempty" xml:"CreditPartyName,omitempty"`
-				DebitPartyName           map[string]string `form:"DebitPartyName,omitempty" json:"DebitPartyName,omitempty" xml:"DebitPartyName,omitempty"`
-			} `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
+		// Status code indicating whether transaction was already sent to your listener
+		ResultType *int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
+		// Numeric status code indicating the status of the transaction processing
+		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
+		// Message from the API that gives the status of the request
+		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
+		// Unique identifier for the transaction request.
+		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+		// Unique identifier for the transaction request.
+		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+		// Unique M-PESA transaction ID for every payment request.
+		TransactionID    *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+		ResultParameters *struct {
+			ResultParameter []*TransactionStatusResultParameterRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
 		} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
 		ReferenceData *struct {
 			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
@@ -91,28 +93,20 @@ type TransactionStatusTimeoutRequestBody struct {
 // "TransactionStatusResult" endpoint HTTP request body.
 type TransactionStatusResultRequestBody struct {
 	Result *struct {
-		ResultType               *int    `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		ResultCode               *int    `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		ResultDesc               *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		OriginatorConversationID *string `form:"OriginatorConversationID,omitempty" json:"OriginatorConversationID,omitempty" xml:"OriginatorConversationID,omitempty"`
-		ConversationID           *string `form:"ConversationID,omitempty" json:"ConversationID,omitempty" xml:"ConversationID,omitempty"`
-		TransactionID            *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-		ResultParameters         *struct {
-			ResultParameter *struct {
-				ReceiptNo                map[string]string `form:"ReceiptNo,omitempty" json:"ReceiptNo,omitempty" xml:"ReceiptNo,omitempty"`
-				ConversationID           map[string]string `form:"Conversation ID,omitempty" json:"Conversation ID,omitempty" xml:"Conversation ID,omitempty"`
-				FinalisedTime            map[string]int    `form:"FinalisedTime,omitempty" json:"FinalisedTime,omitempty" xml:"FinalisedTime,omitempty"`
-				Amount                   map[string]int    `form:"Amount,omitempty" json:"Amount,omitempty" xml:"Amount,omitempty"`
-				TransactionStatus        map[string]string `form:"TransactionStatus,omitempty" json:"TransactionStatus,omitempty" xml:"TransactionStatus,omitempty"`
-				ReasonType               map[string]string `form:"ReasonType,omitempty" json:"ReasonType,omitempty" xml:"ReasonType,omitempty"`
-				TransactionReason        map[string]string `form:"TransactionReason,omitempty" json:"TransactionReason,omitempty" xml:"TransactionReason,omitempty"`
-				DebitPartyCharges        map[string]string `form:"DebitPartyCharges,omitempty" json:"DebitPartyCharges,omitempty" xml:"DebitPartyCharges,omitempty"`
-				DebitAccountType         map[string]string `form:"DebitAccountType,omitempty" json:"DebitAccountType,omitempty" xml:"DebitAccountType,omitempty"`
-				InitiatedTime            map[string]int    `form:"InitiatedTime,omitempty" json:"InitiatedTime,omitempty" xml:"InitiatedTime,omitempty"`
-				OriginatorConversationID map[string]string `form:"Originator Conversation ID,omitempty" json:"Originator Conversation ID,omitempty" xml:"Originator Conversation ID,omitempty"`
-				CreditPartyName          map[string]string `form:"CreditPartyName,omitempty" json:"CreditPartyName,omitempty" xml:"CreditPartyName,omitempty"`
-				DebitPartyName           map[string]string `form:"DebitPartyName,omitempty" json:"DebitPartyName,omitempty" xml:"DebitPartyName,omitempty"`
-			} `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
+		// Status code indicating whether transaction was already sent to your listener
+		ResultType *int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
+		// Numeric status code indicating the status of the transaction processing
+		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
+		// Message from the API that gives the status of the request
+		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
+		// Unique identifier for the transaction request.
+		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+		// Unique identifier for the transaction request.
+		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+		// Unique M-PESA transaction ID for every payment request.
+		TransactionID    *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+		ResultParameters *struct {
+			ResultParameter []*TransactionStatusResultParameterRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
 		} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
 		ReferenceData *struct {
 			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
@@ -124,13 +118,19 @@ type TransactionStatusResultRequestBody struct {
 // "ReversalTimeout" endpoint HTTP request body.
 type ReversalTimeoutRequestBody struct {
 	Result *struct {
-		ResultType               *int    `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		ResultCode               *int    `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		ResultDesc               *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		OriginatorConversationID *string `form:"OriginatorConversationID,omitempty" json:"OriginatorConversationID,omitempty" xml:"OriginatorConversationID,omitempty"`
-		ConversationID           *string `form:"ConversationID,omitempty" json:"ConversationID,omitempty" xml:"ConversationID,omitempty"`
-		TransactionID            *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-		ReferenceData            *struct {
+		// Status code indicating whether transaction was already sent to your listener
+		ResultType *int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
+		// Numeric status code indicating the status of the transaction processing
+		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
+		// Message from the API that gives the status of the request
+		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
+		// Unique identifier for the transaction request.
+		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+		// Unique identifier for the transaction request.
+		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+		// Unique M-PESA transaction ID for every payment request.
+		TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+		ReferenceData *struct {
 			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
 		} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
 	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
@@ -140,13 +140,19 @@ type ReversalTimeoutRequestBody struct {
 // "ReversalResult" endpoint HTTP request body.
 type ReversalResultRequestBody struct {
 	Result *struct {
-		ResultType               *int    `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		ResultCode               *int    `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
-		ResultDesc               *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		OriginatorConversationID *string `form:"OriginatorConversationID,omitempty" json:"OriginatorConversationID,omitempty" xml:"OriginatorConversationID,omitempty"`
-		ConversationID           *string `form:"ConversationID,omitempty" json:"ConversationID,omitempty" xml:"ConversationID,omitempty"`
-		TransactionID            *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
-		ReferenceData            *struct {
+		// Status code indicating whether transaction was already sent to your listener
+		ResultType *int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
+		// Numeric status code indicating the status of the transaction processing
+		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
+		// Message from the API that gives the status of the request
+		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
+		// Unique identifier for the transaction request.
+		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
+		// Unique identifier for the transaction request.
+		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
+		// Unique M-PESA transaction ID for every payment request.
+		TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
+		ReferenceData *struct {
 			ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
 		} `form:"ReferenceData,omitempty" json:"ReferenceData,omitempty" xml:"ReferenceData,omitempty"`
 	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
@@ -156,42 +162,21 @@ type ReversalResultRequestBody struct {
 // endpoint HTTP request body.
 type B2CTimeoutRequestBody struct {
 	Result *struct {
-		// Status code that indicates whether the transaction was already sent
+		// Status code indicating whether transaction was already sent to your listener
 		ResultType *int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		// Numeric status code that indicates the status of the transaction processing
+		// Numeric status code indicating the status of the transaction processing
 		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
 		// Message from the API that gives the status of the request
 		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		// Global unique identifier for the transaction request.
+		// Unique identifier for the transaction request.
 		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
-		// Global unique identifier for the transaction request.
+		// Unique identifier for the transaction request.
 		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
 		// Unique M-PESA transaction ID for every payment request.
 		TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
 	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
 	ResultParameters *struct {
-		ResultParameter *struct {
-			// This is a unique M-PESA transaction ID for every payment request.
-			TransactionReceipt map[string]string `form:"TransactionReceipt,omitempty" json:"TransactionReceipt,omitempty" xml:"TransactionReceipt,omitempty"`
-			// This is the amount that was transacted.
-			TransactionAmount map[string]int `form:"TransactionAmount,omitempty" json:"TransactionAmount,omitempty" xml:"TransactionAmount,omitempty"`
-			// Available balance of the Working account under the B2C shortcode used in the
-			// transaction.
-			B2CWorkingAccountAvailableFunds map[string]int `form:"B2CWorkingAccountAvailableFunds,omitempty" json:"B2CWorkingAccountAvailableFunds,omitempty" xml:"B2CWorkingAccountAvailableFunds,omitempty"`
-			// Available balance of the Utility account under the B2C shortcode used in the
-			// transaction.
-			B2CUtilityAccountAvailableFunds map[string]int `form:"B2CUtilityAccountAvailableFunds,omitempty" json:"B2CUtilityAccountAvailableFunds,omitempty" xml:"B2CUtilityAccountAvailableFunds,omitempty"`
-			// This is the date and time that the transaction completed M-PESA.
-			TransactionCompletedDateTime map[string]string `form:"TransactionCompletedDateTime,omitempty" json:"TransactionCompletedDateTime,omitempty" xml:"TransactionCompletedDateTime,omitempty"`
-			// This is the name and phone number of the customer who received the payment.
-			ReceiverPartyPublicName map[string]string `form:"ReceiverPartyPublicName,omitempty" json:"ReceiverPartyPublicName,omitempty" xml:"ReceiverPartyPublicName,omitempty"`
-			// Available balance of the Charges Paid account under the B2C shortcode used
-			// in the transaction.
-			B2CChargesPaidAccountAvailableFunds map[string]int `form:"B2CChargesPaidAccountAvailableFunds,omitempty" json:"B2CChargesPaidAccountAvailableFunds,omitempty" xml:"B2CChargesPaidAccountAvailableFunds,omitempty"`
-			// This is a key that indicates whether the customer is a M-PESA registered
-			// customer or not
-			B2CRecipientIsRegisteredCustomer map[string]string `form:"B2CRecipientIsRegisteredCustomer,omitempty" json:"B2CRecipientIsRegisteredCustomer,omitempty" xml:"B2CRecipientIsRegisteredCustomer,omitempty"`
-		} `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
+		ResultParameter []*B2CResultParametersRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
 	} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
 	ReferenceData *struct {
 		ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
@@ -202,42 +187,21 @@ type B2CTimeoutRequestBody struct {
 // HTTP request body.
 type B2CResultRequestBody struct {
 	Result *struct {
-		// Status code that indicates whether the transaction was already sent
+		// Status code indicating whether transaction was already sent to your listener
 		ResultType *int `form:"ResultType,omitempty" json:"ResultType,omitempty" xml:"ResultType,omitempty"`
-		// Numeric status code that indicates the status of the transaction processing
+		// Numeric status code indicating the status of the transaction processing
 		ResultCode *int `form:"ResultCode,omitempty" json:"ResultCode,omitempty" xml:"ResultCode,omitempty"`
 		// Message from the API that gives the status of the request
 		ResultDesc *string `form:"ResultDesc,omitempty" json:"ResultDesc,omitempty" xml:"ResultDesc,omitempty"`
-		// Global unique identifier for the transaction request.
+		// Unique identifier for the transaction request.
 		OriginatorConversationID *string `form:"OriginatorConversationId,omitempty" json:"OriginatorConversationId,omitempty" xml:"OriginatorConversationId,omitempty"`
-		// Global unique identifier for the transaction request.
+		// Unique identifier for the transaction request.
 		ConversationID *string `form:"ConversationId,omitempty" json:"ConversationId,omitempty" xml:"ConversationId,omitempty"`
 		// Unique M-PESA transaction ID for every payment request.
 		TransactionID *string `form:"TransactionID,omitempty" json:"TransactionID,omitempty" xml:"TransactionID,omitempty"`
 	} `form:"Result,omitempty" json:"Result,omitempty" xml:"Result,omitempty"`
 	ResultParameters *struct {
-		ResultParameter *struct {
-			// This is a unique M-PESA transaction ID for every payment request.
-			TransactionReceipt map[string]string `form:"TransactionReceipt,omitempty" json:"TransactionReceipt,omitempty" xml:"TransactionReceipt,omitempty"`
-			// This is the amount that was transacted.
-			TransactionAmount map[string]int `form:"TransactionAmount,omitempty" json:"TransactionAmount,omitempty" xml:"TransactionAmount,omitempty"`
-			// Available balance of the Working account under the B2C shortcode used in the
-			// transaction.
-			B2CWorkingAccountAvailableFunds map[string]int `form:"B2CWorkingAccountAvailableFunds,omitempty" json:"B2CWorkingAccountAvailableFunds,omitempty" xml:"B2CWorkingAccountAvailableFunds,omitempty"`
-			// Available balance of the Utility account under the B2C shortcode used in the
-			// transaction.
-			B2CUtilityAccountAvailableFunds map[string]int `form:"B2CUtilityAccountAvailableFunds,omitempty" json:"B2CUtilityAccountAvailableFunds,omitempty" xml:"B2CUtilityAccountAvailableFunds,omitempty"`
-			// This is the date and time that the transaction completed M-PESA.
-			TransactionCompletedDateTime map[string]string `form:"TransactionCompletedDateTime,omitempty" json:"TransactionCompletedDateTime,omitempty" xml:"TransactionCompletedDateTime,omitempty"`
-			// This is the name and phone number of the customer who received the payment.
-			ReceiverPartyPublicName map[string]string `form:"ReceiverPartyPublicName,omitempty" json:"ReceiverPartyPublicName,omitempty" xml:"ReceiverPartyPublicName,omitempty"`
-			// Available balance of the Charges Paid account under the B2C shortcode used
-			// in the transaction.
-			B2CChargesPaidAccountAvailableFunds map[string]int `form:"B2CChargesPaidAccountAvailableFunds,omitempty" json:"B2CChargesPaidAccountAvailableFunds,omitempty" xml:"B2CChargesPaidAccountAvailableFunds,omitempty"`
-			// This is a key that indicates whether the customer is a M-PESA registered
-			// customer or not
-			B2CRecipientIsRegisteredCustomer map[string]string `form:"B2CRecipientIsRegisteredCustomer,omitempty" json:"B2CRecipientIsRegisteredCustomer,omitempty" xml:"B2CRecipientIsRegisteredCustomer,omitempty"`
-		} `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
+		ResultParameter []*B2CResultParametersRequestBody `form:"ResultParameter,omitempty" json:"ResultParameter,omitempty" xml:"ResultParameter,omitempty"`
 	} `form:"ResultParameters,omitempty" json:"ResultParameters,omitempty" xml:"ResultParameters,omitempty"`
 	ReferenceData *struct {
 		ReferenceItem map[string]string `form:"ReferenceItem,omitempty" json:"ReferenceItem,omitempty" xml:"ReferenceItem,omitempty"`
@@ -247,7 +211,7 @@ type B2CResultRequestBody struct {
 // C2BValidationRequestBody is the type of the "mpesa" service "C2BValidation"
 // endpoint HTTP request body.
 type C2BValidationRequestBody struct {
-	// The transaction type specified during the payment request.
+	// Transaction type specified during the payment request.
 	TransactionType *string `form:"TransactionType,omitempty" json:"TransactionType,omitempty" xml:"TransactionType,omitempty"`
 	// Unique M-Pesa transaction ID for every payment request
 	TransID *string `form:"TransID,omitempty" json:"TransID,omitempty" xml:"TransID,omitempty"`
@@ -277,7 +241,7 @@ type C2BValidationRequestBody struct {
 // C2BConfirmationRequestBody is the type of the "mpesa" service
 // "C2BConfirmation" endpoint HTTP request body.
 type C2BConfirmationRequestBody struct {
-	// The transaction type specified during the payment request.
+	// Transaction type specified during the payment request.
 	TransactionType *string `form:"TransactionType,omitempty" json:"TransactionType,omitempty" xml:"TransactionType,omitempty"`
 	// Unique M-Pesa transaction ID for every payment request
 	TransID *string `form:"TransID,omitempty" json:"TransID,omitempty" xml:"TransID,omitempty"`
@@ -304,57 +268,114 @@ type C2BConfirmationRequestBody struct {
 	LastName *string `form:"LastName,omitempty" json:"LastName,omitempty" xml:"LastName,omitempty"`
 }
 
+// AccountBalanceParametersRequestBody is used to define fields on request body
+// types.
+type AccountBalanceParametersRequestBody struct {
+	AccountBalance  *string `form:"AccountBalance,omitempty" json:"AccountBalance,omitempty" xml:"AccountBalance,omitempty"`
+	BOCompletedTime *string `form:"BOCompletedTime,omitempty" json:"BOCompletedTime,omitempty" xml:"BOCompletedTime,omitempty"`
+}
+
+// TransactionStatusResultParameterRequestBody is used to define fields on
+// request body types.
+type TransactionStatusResultParameterRequestBody struct {
+	ReceiptNo                *string `form:"ReceiptNo,omitempty" json:"ReceiptNo,omitempty" xml:"ReceiptNo,omitempty"`
+	ConversationID           *string `form:"ConversationID,omitempty" json:"ConversationID,omitempty" xml:"ConversationID,omitempty"`
+	FinalisedTime            *string `form:"FinalisedTime,omitempty" json:"FinalisedTime,omitempty" xml:"FinalisedTime,omitempty"`
+	Amount                   *int    `form:"Amount,omitempty" json:"Amount,omitempty" xml:"Amount,omitempty"`
+	TransactionStatus        *string `form:"TransactionStatus,omitempty" json:"TransactionStatus,omitempty" xml:"TransactionStatus,omitempty"`
+	ReasonType               *string `form:"ReasonType,omitempty" json:"ReasonType,omitempty" xml:"ReasonType,omitempty"`
+	TransactionReason        *string `form:"TransactionReason,omitempty" json:"TransactionReason,omitempty" xml:"TransactionReason,omitempty"`
+	DebitPartyCharges        *string `form:"DebitPartyCharges,omitempty" json:"DebitPartyCharges,omitempty" xml:"DebitPartyCharges,omitempty"`
+	DebitAccountType         *string `form:"DebitAccountType,omitempty" json:"DebitAccountType,omitempty" xml:"DebitAccountType,omitempty"`
+	InitiatedTime            *string `form:"InitiatedTime,omitempty" json:"InitiatedTime,omitempty" xml:"InitiatedTime,omitempty"`
+	OriginatorConversationID *string `form:"Originator Conversation ID,omitempty" json:"Originator Conversation ID,omitempty" xml:"Originator Conversation ID,omitempty"`
+	CreditPartyName          *string `form:"CreditPartyName,omitempty" json:"CreditPartyName,omitempty" xml:"CreditPartyName,omitempty"`
+	DebitPartyName           *string `form:"DebitPartyName,omitempty" json:"DebitPartyName,omitempty" xml:"DebitPartyName,omitempty"`
+}
+
+// B2CResultParametersRequestBody is used to define fields on request body
+// types.
+type B2CResultParametersRequestBody struct {
+	// This is a unique M-PESA transaction ID for every payment request.
+	TransactionReceipt *string `form:"TransactionReceipt,omitempty" json:"TransactionReceipt,omitempty" xml:"TransactionReceipt,omitempty"`
+	// This is the amount that was transacted.
+	TransactionAmount *int `form:"TransactionAmount,omitempty" json:"TransactionAmount,omitempty" xml:"TransactionAmount,omitempty"`
+	// Available balance of the Working account under the B2C shortcode used in the
+	// transaction.
+	B2CWorkingAccountAvailableFunds *float64 `form:"B2CWorkingAccountAvailableFunds,omitempty" json:"B2CWorkingAccountAvailableFunds,omitempty" xml:"B2CWorkingAccountAvailableFunds,omitempty"`
+	// Available balance of the Utility account under the B2C shortcode used in the
+	// transaction.
+	B2CUtilityAccountAvailableFunds *float64 `form:"B2CUtilityAccountAvailableFunds,omitempty" json:"B2CUtilityAccountAvailableFunds,omitempty" xml:"B2CUtilityAccountAvailableFunds,omitempty"`
+	// This is the date and time that the transaction completed M-PESA.
+	TransactionCompletedDateTime *string `form:"TransactionCompletedDateTime,omitempty" json:"TransactionCompletedDateTime,omitempty" xml:"TransactionCompletedDateTime,omitempty"`
+	// This is the name and phone number of the customer who received the payment.
+	ReceiverPartyPublicName *string `form:"ReceiverPartyPublicName,omitempty" json:"ReceiverPartyPublicName,omitempty" xml:"ReceiverPartyPublicName,omitempty"`
+	// Available balance of the Charges Paid account under the B2C shortcode used
+	// in the transaction.
+	B2CChargesPaidAccountAvailableFunds *float64 `form:"B2CChargesPaidAccountAvailableFunds,omitempty" json:"B2CChargesPaidAccountAvailableFunds,omitempty" xml:"B2CChargesPaidAccountAvailableFunds,omitempty"`
+	// Key indicating whether customer is registered on M-PESA
+	B2CRecipientIsRegisteredCustomer *string `form:"B2CRecipientIsRegisteredCustomer,omitempty" json:"B2CRecipientIsRegisteredCustomer,omitempty" xml:"B2CRecipientIsRegisteredCustomer,omitempty"`
+}
+
 // NewAccountBalanceTimeoutAccountBalanceResult builds a mpesa service
 // AccountBalanceTimeout endpoint payload.
 func NewAccountBalanceTimeoutAccountBalanceResult(body *AccountBalanceTimeoutRequestBody) *mpesa.AccountBalanceResult {
-	v := &mpesa.AccountBalanceResult{
-		ResultType:               body.ResultType,
-		ResultCode:               body.ResultCode,
-		ResultDesc:               body.ResultDesc,
-		OriginatorConversationID: body.OriginatorConversationID,
-		ConversationID:           body.ConversationID,
-		TransactionID:            body.TransactionID,
-	}
-	if body.ResultParameters != nil {
-		v.ResultParameters = &struct {
-			ResultParameter *struct {
-				AccountBalance  map[string]string
-				BOCompletedTime map[string]string
+	v := &mpesa.AccountBalanceResult{}
+	if body.Result != nil {
+		v.Result = &struct {
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
+			OriginatorConversationID *string
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID    *string
+			ResultParameters *struct {
+				ResultParameter []*AccountBalanceParameters
 			}
-		}{}
-		if body.ResultParameters.ResultParameter != nil {
-			v.ResultParameters.ResultParameter = &struct {
-				AccountBalance  map[string]string
-				BOCompletedTime map[string]string
+			ReferenceData *struct {
+				ReferenceItem map[string]string
+			}
+		}{
+			ResultCode:               body.Result.ResultCode,
+			ResultDesc:               body.Result.ResultDesc,
+			OriginatorConversationID: body.Result.OriginatorConversationID,
+			ConversationID:           body.Result.ConversationID,
+			TransactionID:            body.Result.TransactionID,
+		}
+		if body.Result.ResultType != nil {
+			v.Result.ResultType = *body.Result.ResultType
+		}
+		if body.Result.ResultType == nil {
+			v.Result.ResultType = 0
+		}
+		if body.Result.ResultParameters != nil {
+			v.Result.ResultParameters = &struct {
+				ResultParameter []*AccountBalanceParameters
 			}{}
-			if body.ResultParameters.ResultParameter.AccountBalance != nil {
-				v.ResultParameters.ResultParameter.AccountBalance = make(map[string]string, len(body.ResultParameters.ResultParameter.AccountBalance))
-				for key, val := range body.ResultParameters.ResultParameter.AccountBalance {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.AccountBalance[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.BOCompletedTime != nil {
-				v.ResultParameters.ResultParameter.BOCompletedTime = make(map[string]string, len(body.ResultParameters.ResultParameter.BOCompletedTime))
-				for key, val := range body.ResultParameters.ResultParameter.BOCompletedTime {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.BOCompletedTime[tk] = tv
+			if body.Result.ResultParameters.ResultParameter != nil {
+				v.Result.ResultParameters.ResultParameter = make([]*mpesa.AccountBalanceParameters, len(body.Result.ResultParameters.ResultParameter))
+				for i, val := range body.Result.ResultParameters.ResultParameter {
+					v.Result.ResultParameters.ResultParameter[i] = unmarshalAccountBalanceParametersRequestBodyToMpesaAccountBalanceParameters(val)
 				}
 			}
 		}
-	}
-	if body.ReferenceData != nil {
-		v.ReferenceData = &struct {
-			ReferenceItem map[string]string
-		}{}
-		if body.ReferenceData.ReferenceItem != nil {
-			v.ReferenceData.ReferenceItem = make(map[string]string, len(body.ReferenceData.ReferenceItem))
-			for key, val := range body.ReferenceData.ReferenceItem {
-				tk := key
-				tv := val
-				v.ReferenceData.ReferenceItem[tk] = tv
+		if body.Result.ReferenceData != nil {
+			v.Result.ReferenceData = &struct {
+				ReferenceItem map[string]string
+			}{}
+			if body.Result.ReferenceData.ReferenceItem != nil {
+				v.Result.ReferenceData.ReferenceItem = make(map[string]string, len(body.Result.ReferenceData.ReferenceItem))
+				for key, val := range body.Result.ReferenceData.ReferenceItem {
+					tk := key
+					tv := val
+					v.Result.ReferenceData.ReferenceItem[tk] = tv
+				}
 			}
 		}
 	}
@@ -365,54 +386,62 @@ func NewAccountBalanceTimeoutAccountBalanceResult(body *AccountBalanceTimeoutReq
 // NewAccountBalanceResult builds a mpesa service AccountBalanceResult endpoint
 // payload.
 func NewAccountBalanceResult(body *AccountBalanceResultRequestBody) *mpesa.AccountBalanceResult {
-	v := &mpesa.AccountBalanceResult{
-		ResultType:               body.ResultType,
-		ResultCode:               body.ResultCode,
-		ResultDesc:               body.ResultDesc,
-		OriginatorConversationID: body.OriginatorConversationID,
-		ConversationID:           body.ConversationID,
-		TransactionID:            body.TransactionID,
-	}
-	if body.ResultParameters != nil {
-		v.ResultParameters = &struct {
-			ResultParameter *struct {
-				AccountBalance  map[string]string
-				BOCompletedTime map[string]string
+	v := &mpesa.AccountBalanceResult{}
+	if body.Result != nil {
+		v.Result = &struct {
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
+			OriginatorConversationID *string
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID    *string
+			ResultParameters *struct {
+				ResultParameter []*AccountBalanceParameters
 			}
-		}{}
-		if body.ResultParameters.ResultParameter != nil {
-			v.ResultParameters.ResultParameter = &struct {
-				AccountBalance  map[string]string
-				BOCompletedTime map[string]string
+			ReferenceData *struct {
+				ReferenceItem map[string]string
+			}
+		}{
+			ResultCode:               body.Result.ResultCode,
+			ResultDesc:               body.Result.ResultDesc,
+			OriginatorConversationID: body.Result.OriginatorConversationID,
+			ConversationID:           body.Result.ConversationID,
+			TransactionID:            body.Result.TransactionID,
+		}
+		if body.Result.ResultType != nil {
+			v.Result.ResultType = *body.Result.ResultType
+		}
+		if body.Result.ResultType == nil {
+			v.Result.ResultType = 0
+		}
+		if body.Result.ResultParameters != nil {
+			v.Result.ResultParameters = &struct {
+				ResultParameter []*AccountBalanceParameters
 			}{}
-			if body.ResultParameters.ResultParameter.AccountBalance != nil {
-				v.ResultParameters.ResultParameter.AccountBalance = make(map[string]string, len(body.ResultParameters.ResultParameter.AccountBalance))
-				for key, val := range body.ResultParameters.ResultParameter.AccountBalance {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.AccountBalance[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.BOCompletedTime != nil {
-				v.ResultParameters.ResultParameter.BOCompletedTime = make(map[string]string, len(body.ResultParameters.ResultParameter.BOCompletedTime))
-				for key, val := range body.ResultParameters.ResultParameter.BOCompletedTime {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.BOCompletedTime[tk] = tv
+			if body.Result.ResultParameters.ResultParameter != nil {
+				v.Result.ResultParameters.ResultParameter = make([]*mpesa.AccountBalanceParameters, len(body.Result.ResultParameters.ResultParameter))
+				for i, val := range body.Result.ResultParameters.ResultParameter {
+					v.Result.ResultParameters.ResultParameter[i] = unmarshalAccountBalanceParametersRequestBodyToMpesaAccountBalanceParameters(val)
 				}
 			}
 		}
-	}
-	if body.ReferenceData != nil {
-		v.ReferenceData = &struct {
-			ReferenceItem map[string]string
-		}{}
-		if body.ReferenceData.ReferenceItem != nil {
-			v.ReferenceData.ReferenceItem = make(map[string]string, len(body.ReferenceData.ReferenceItem))
-			for key, val := range body.ReferenceData.ReferenceItem {
-				tk := key
-				tv := val
-				v.ReferenceData.ReferenceItem[tk] = tv
+		if body.Result.ReferenceData != nil {
+			v.Result.ReferenceData = &struct {
+				ReferenceItem map[string]string
+			}{}
+			if body.Result.ReferenceData.ReferenceItem != nil {
+				v.Result.ReferenceData.ReferenceItem = make(map[string]string, len(body.Result.ReferenceData.ReferenceItem))
+				for key, val := range body.Result.ReferenceData.ReferenceItem {
+					tk := key
+					tv := val
+					v.Result.ReferenceData.ReferenceItem[tk] = tv
+				}
 			}
 		}
 	}
@@ -426,177 +455,45 @@ func NewTransactionStatusTimeoutTransactionStatusResult(body *TransactionStatusT
 	v := &mpesa.TransactionStatusResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			ResultType               *int
-			ResultCode               *int
-			ResultDesc               *string
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			ConversationID           *string
-			TransactionID            *string
-			ResultParameters         *struct {
-				ResultParameter *struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID    *string
+			ResultParameters *struct {
+				ResultParameter []*TransactionStatusResultParameter
 			}
 			ReferenceData *struct {
 				ReferenceItem map[string]string
 			}
 		}{
-			ResultType:               body.Result.ResultType,
 			ResultCode:               body.Result.ResultCode,
 			ResultDesc:               body.Result.ResultDesc,
 			OriginatorConversationID: body.Result.OriginatorConversationID,
 			ConversationID:           body.Result.ConversationID,
 			TransactionID:            body.Result.TransactionID,
 		}
+		if body.Result.ResultType != nil {
+			v.Result.ResultType = *body.Result.ResultType
+		}
+		if body.Result.ResultType == nil {
+			v.Result.ResultType = 0
+		}
 		if body.Result.ResultParameters != nil {
 			v.Result.ResultParameters = &struct {
-				ResultParameter *struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}
+				ResultParameter []*TransactionStatusResultParameter
 			}{}
 			if body.Result.ResultParameters.ResultParameter != nil {
-				v.Result.ResultParameters.ResultParameter = &struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}{}
-				if body.Result.ResultParameters.ResultParameter.ReceiptNo != nil {
-					v.Result.ResultParameters.ResultParameter.ReceiptNo = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ReceiptNo))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ReceiptNo {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ReceiptNo[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.ConversationID != nil {
-					v.Result.ResultParameters.ResultParameter.ConversationID = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ConversationID))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ConversationID {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ConversationID[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.FinalisedTime != nil {
-					v.Result.ResultParameters.ResultParameter.FinalisedTime = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.FinalisedTime))
-					for key, val := range body.Result.ResultParameters.ResultParameter.FinalisedTime {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.FinalisedTime[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.Amount != nil {
-					v.Result.ResultParameters.ResultParameter.Amount = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.Amount))
-					for key, val := range body.Result.ResultParameters.ResultParameter.Amount {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.Amount[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.TransactionStatus != nil {
-					v.Result.ResultParameters.ResultParameter.TransactionStatus = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.TransactionStatus))
-					for key, val := range body.Result.ResultParameters.ResultParameter.TransactionStatus {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.TransactionStatus[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.ReasonType != nil {
-					v.Result.ResultParameters.ResultParameter.ReasonType = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ReasonType))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ReasonType {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ReasonType[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.TransactionReason != nil {
-					v.Result.ResultParameters.ResultParameter.TransactionReason = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.TransactionReason))
-					for key, val := range body.Result.ResultParameters.ResultParameter.TransactionReason {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.TransactionReason[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitPartyCharges != nil {
-					v.Result.ResultParameters.ResultParameter.DebitPartyCharges = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitPartyCharges))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitPartyCharges {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitPartyCharges[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitAccountType != nil {
-					v.Result.ResultParameters.ResultParameter.DebitAccountType = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitAccountType))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitAccountType {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitAccountType[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.InitiatedTime != nil {
-					v.Result.ResultParameters.ResultParameter.InitiatedTime = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.InitiatedTime))
-					for key, val := range body.Result.ResultParameters.ResultParameter.InitiatedTime {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.InitiatedTime[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.OriginatorConversationID != nil {
-					v.Result.ResultParameters.ResultParameter.OriginatorConversationID = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.OriginatorConversationID))
-					for key, val := range body.Result.ResultParameters.ResultParameter.OriginatorConversationID {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.OriginatorConversationID[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.CreditPartyName != nil {
-					v.Result.ResultParameters.ResultParameter.CreditPartyName = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.CreditPartyName))
-					for key, val := range body.Result.ResultParameters.ResultParameter.CreditPartyName {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.CreditPartyName[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitPartyName != nil {
-					v.Result.ResultParameters.ResultParameter.DebitPartyName = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitPartyName))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitPartyName {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitPartyName[tk] = tv
-					}
+				v.Result.ResultParameters.ResultParameter = make([]*mpesa.TransactionStatusResultParameter, len(body.Result.ResultParameters.ResultParameter))
+				for i, val := range body.Result.ResultParameters.ResultParameter {
+					v.Result.ResultParameters.ResultParameter[i] = unmarshalTransactionStatusResultParameterRequestBodyToMpesaTransactionStatusResultParameter(val)
 				}
 			}
 		}
@@ -624,177 +521,45 @@ func NewTransactionStatusResult(body *TransactionStatusResultRequestBody) *mpesa
 	v := &mpesa.TransactionStatusResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			ResultType               *int
-			ResultCode               *int
-			ResultDesc               *string
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			ConversationID           *string
-			TransactionID            *string
-			ResultParameters         *struct {
-				ResultParameter *struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID    *string
+			ResultParameters *struct {
+				ResultParameter []*TransactionStatusResultParameter
 			}
 			ReferenceData *struct {
 				ReferenceItem map[string]string
 			}
 		}{
-			ResultType:               body.Result.ResultType,
 			ResultCode:               body.Result.ResultCode,
 			ResultDesc:               body.Result.ResultDesc,
 			OriginatorConversationID: body.Result.OriginatorConversationID,
 			ConversationID:           body.Result.ConversationID,
 			TransactionID:            body.Result.TransactionID,
 		}
+		if body.Result.ResultType != nil {
+			v.Result.ResultType = *body.Result.ResultType
+		}
+		if body.Result.ResultType == nil {
+			v.Result.ResultType = 0
+		}
 		if body.Result.ResultParameters != nil {
 			v.Result.ResultParameters = &struct {
-				ResultParameter *struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}
+				ResultParameter []*TransactionStatusResultParameter
 			}{}
 			if body.Result.ResultParameters.ResultParameter != nil {
-				v.Result.ResultParameters.ResultParameter = &struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}{}
-				if body.Result.ResultParameters.ResultParameter.ReceiptNo != nil {
-					v.Result.ResultParameters.ResultParameter.ReceiptNo = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ReceiptNo))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ReceiptNo {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ReceiptNo[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.ConversationID != nil {
-					v.Result.ResultParameters.ResultParameter.ConversationID = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ConversationID))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ConversationID {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ConversationID[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.FinalisedTime != nil {
-					v.Result.ResultParameters.ResultParameter.FinalisedTime = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.FinalisedTime))
-					for key, val := range body.Result.ResultParameters.ResultParameter.FinalisedTime {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.FinalisedTime[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.Amount != nil {
-					v.Result.ResultParameters.ResultParameter.Amount = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.Amount))
-					for key, val := range body.Result.ResultParameters.ResultParameter.Amount {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.Amount[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.TransactionStatus != nil {
-					v.Result.ResultParameters.ResultParameter.TransactionStatus = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.TransactionStatus))
-					for key, val := range body.Result.ResultParameters.ResultParameter.TransactionStatus {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.TransactionStatus[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.ReasonType != nil {
-					v.Result.ResultParameters.ResultParameter.ReasonType = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ReasonType))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ReasonType {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ReasonType[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.TransactionReason != nil {
-					v.Result.ResultParameters.ResultParameter.TransactionReason = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.TransactionReason))
-					for key, val := range body.Result.ResultParameters.ResultParameter.TransactionReason {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.TransactionReason[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitPartyCharges != nil {
-					v.Result.ResultParameters.ResultParameter.DebitPartyCharges = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitPartyCharges))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitPartyCharges {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitPartyCharges[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitAccountType != nil {
-					v.Result.ResultParameters.ResultParameter.DebitAccountType = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitAccountType))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitAccountType {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitAccountType[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.InitiatedTime != nil {
-					v.Result.ResultParameters.ResultParameter.InitiatedTime = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.InitiatedTime))
-					for key, val := range body.Result.ResultParameters.ResultParameter.InitiatedTime {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.InitiatedTime[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.OriginatorConversationID != nil {
-					v.Result.ResultParameters.ResultParameter.OriginatorConversationID = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.OriginatorConversationID))
-					for key, val := range body.Result.ResultParameters.ResultParameter.OriginatorConversationID {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.OriginatorConversationID[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.CreditPartyName != nil {
-					v.Result.ResultParameters.ResultParameter.CreditPartyName = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.CreditPartyName))
-					for key, val := range body.Result.ResultParameters.ResultParameter.CreditPartyName {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.CreditPartyName[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitPartyName != nil {
-					v.Result.ResultParameters.ResultParameter.DebitPartyName = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitPartyName))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitPartyName {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitPartyName[tk] = tv
-					}
+				v.Result.ResultParameters.ResultParameter = make([]*mpesa.TransactionStatusResultParameter, len(body.Result.ResultParameters.ResultParameter))
+				for i, val := range body.Result.ResultParameters.ResultParameter {
+					v.Result.ResultParameters.ResultParameter[i] = unmarshalTransactionStatusResultParameterRequestBodyToMpesaTransactionStatusResultParameter(val)
 				}
 			}
 		}
@@ -822,22 +587,33 @@ func NewReversalTimeoutReversalResult(body *ReversalTimeoutRequestBody) *mpesa.R
 	v := &mpesa.ReversalResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			ResultType               *int
-			ResultCode               *int
-			ResultDesc               *string
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			ConversationID           *string
-			TransactionID            *string
-			ReferenceData            *struct {
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID *string
+			ReferenceData *struct {
 				ReferenceItem map[string]string
 			}
 		}{
-			ResultType:               body.Result.ResultType,
 			ResultCode:               body.Result.ResultCode,
 			ResultDesc:               body.Result.ResultDesc,
 			OriginatorConversationID: body.Result.OriginatorConversationID,
 			ConversationID:           body.Result.ConversationID,
 			TransactionID:            body.Result.TransactionID,
+		}
+		if body.Result.ResultType != nil {
+			v.Result.ResultType = *body.Result.ResultType
+		}
+		if body.Result.ResultType == nil {
+			v.Result.ResultType = 0
 		}
 		if body.Result.ReferenceData != nil {
 			v.Result.ReferenceData = &struct {
@@ -862,22 +638,33 @@ func NewReversalResult(body *ReversalResultRequestBody) *mpesa.ReversalResult {
 	v := &mpesa.ReversalResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			ResultType               *int
-			ResultCode               *int
-			ResultDesc               *string
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			ConversationID           *string
-			TransactionID            *string
-			ReferenceData            *struct {
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID *string
+			ReferenceData *struct {
 				ReferenceItem map[string]string
 			}
 		}{
-			ResultType:               body.Result.ResultType,
 			ResultCode:               body.Result.ResultCode,
 			ResultDesc:               body.Result.ResultDesc,
 			OriginatorConversationID: body.Result.OriginatorConversationID,
 			ConversationID:           body.Result.ConversationID,
 			TransactionID:            body.Result.TransactionID,
+		}
+		if body.Result.ResultType != nil {
+			v.Result.ResultType = *body.Result.ResultType
+		}
+		if body.Result.ResultType == nil {
+			v.Result.ResultType = 0
 		}
 		if body.Result.ReferenceData != nil {
 			v.Result.ReferenceData = &struct {
@@ -903,15 +690,15 @@ func NewB2CTimeoutB2CPaymentResult(body *B2CTimeoutRequestBody) *mpesa.B2CPaymen
 	v := &mpesa.B2CPaymentResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			// Status code that indicates whether the transaction was already sent
+			// Status code indicating whether transaction was already sent to your listener
 			ResultType *int
-			// Numeric status code that indicates the status of the transaction processing
+			// Numeric status code indicating the status of the transaction processing
 			ResultCode *int
 			// Message from the API that gives the status of the request
 			ResultDesc *string
-			// Global unique identifier for the transaction request.
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			// Global unique identifier for the transaction request.
+			// Unique identifier for the transaction request.
 			ConversationID *string
 			// Unique M-PESA transaction ID for every payment request.
 			TransactionID *string
@@ -931,115 +718,12 @@ func NewB2CTimeoutB2CPaymentResult(body *B2CTimeoutRequestBody) *mpesa.B2CPaymen
 	}
 	if body.ResultParameters != nil {
 		v.ResultParameters = &struct {
-			ResultParameter *struct {
-				// This is a unique M-PESA transaction ID for every payment request.
-				TransactionReceipt map[string]string
-				// This is the amount that was transacted.
-				TransactionAmount map[string]int
-				// Available balance of the Working account under the B2C shortcode used in the
-				// transaction.
-				B2CWorkingAccountAvailableFunds map[string]int
-				// Available balance of the Utility account under the B2C shortcode used in the
-				// transaction.
-				B2CUtilityAccountAvailableFunds map[string]int
-				// This is the date and time that the transaction completed M-PESA.
-				TransactionCompletedDateTime map[string]string
-				// This is the name and phone number of the customer who received the payment.
-				ReceiverPartyPublicName map[string]string
-				// Available balance of the Charges Paid account under the B2C shortcode used
-				// in the transaction.
-				B2CChargesPaidAccountAvailableFunds map[string]int
-				// This is a key that indicates whether the customer is a M-PESA registered
-				// customer or not
-				B2CRecipientIsRegisteredCustomer map[string]string
-			}
+			ResultParameter []*B2CResultParameters
 		}{}
 		if body.ResultParameters.ResultParameter != nil {
-			v.ResultParameters.ResultParameter = &struct {
-				// This is a unique M-PESA transaction ID for every payment request.
-				TransactionReceipt map[string]string
-				// This is the amount that was transacted.
-				TransactionAmount map[string]int
-				// Available balance of the Working account under the B2C shortcode used in the
-				// transaction.
-				B2CWorkingAccountAvailableFunds map[string]int
-				// Available balance of the Utility account under the B2C shortcode used in the
-				// transaction.
-				B2CUtilityAccountAvailableFunds map[string]int
-				// This is the date and time that the transaction completed M-PESA.
-				TransactionCompletedDateTime map[string]string
-				// This is the name and phone number of the customer who received the payment.
-				ReceiverPartyPublicName map[string]string
-				// Available balance of the Charges Paid account under the B2C shortcode used
-				// in the transaction.
-				B2CChargesPaidAccountAvailableFunds map[string]int
-				// This is a key that indicates whether the customer is a M-PESA registered
-				// customer or not
-				B2CRecipientIsRegisteredCustomer map[string]string
-			}{}
-			if body.ResultParameters.ResultParameter.TransactionReceipt != nil {
-				v.ResultParameters.ResultParameter.TransactionReceipt = make(map[string]string, len(body.ResultParameters.ResultParameter.TransactionReceipt))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionReceipt {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionReceipt[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.TransactionAmount != nil {
-				v.ResultParameters.ResultParameter.TransactionAmount = make(map[string]int, len(body.ResultParameters.ResultParameter.TransactionAmount))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionAmount {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionAmount[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.TransactionCompletedDateTime != nil {
-				v.ResultParameters.ResultParameter.TransactionCompletedDateTime = make(map[string]string, len(body.ResultParameters.ResultParameter.TransactionCompletedDateTime))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionCompletedDateTime {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionCompletedDateTime[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.ReceiverPartyPublicName != nil {
-				v.ResultParameters.ResultParameter.ReceiverPartyPublicName = make(map[string]string, len(body.ResultParameters.ResultParameter.ReceiverPartyPublicName))
-				for key, val := range body.ResultParameters.ResultParameter.ReceiverPartyPublicName {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.ReceiverPartyPublicName[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer != nil {
-				v.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer = make(map[string]string, len(body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer))
-				for key, val := range body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer[tk] = tv
-				}
+			v.ResultParameters.ResultParameter = make([]*mpesa.B2CResultParameters, len(body.ResultParameters.ResultParameter))
+			for i, val := range body.ResultParameters.ResultParameter {
+				v.ResultParameters.ResultParameter[i] = unmarshalB2CResultParametersRequestBodyToMpesaB2CResultParameters(val)
 			}
 		}
 	}
@@ -1066,15 +750,15 @@ func NewB2CResultB2CPaymentResult(body *B2CResultRequestBody) *mpesa.B2CPaymentR
 	v := &mpesa.B2CPaymentResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			// Status code that indicates whether the transaction was already sent
+			// Status code indicating whether transaction was already sent to your listener
 			ResultType *int
-			// Numeric status code that indicates the status of the transaction processing
+			// Numeric status code indicating the status of the transaction processing
 			ResultCode *int
 			// Message from the API that gives the status of the request
 			ResultDesc *string
-			// Global unique identifier for the transaction request.
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			// Global unique identifier for the transaction request.
+			// Unique identifier for the transaction request.
 			ConversationID *string
 			// Unique M-PESA transaction ID for every payment request.
 			TransactionID *string
@@ -1094,115 +778,12 @@ func NewB2CResultB2CPaymentResult(body *B2CResultRequestBody) *mpesa.B2CPaymentR
 	}
 	if body.ResultParameters != nil {
 		v.ResultParameters = &struct {
-			ResultParameter *struct {
-				// This is a unique M-PESA transaction ID for every payment request.
-				TransactionReceipt map[string]string
-				// This is the amount that was transacted.
-				TransactionAmount map[string]int
-				// Available balance of the Working account under the B2C shortcode used in the
-				// transaction.
-				B2CWorkingAccountAvailableFunds map[string]int
-				// Available balance of the Utility account under the B2C shortcode used in the
-				// transaction.
-				B2CUtilityAccountAvailableFunds map[string]int
-				// This is the date and time that the transaction completed M-PESA.
-				TransactionCompletedDateTime map[string]string
-				// This is the name and phone number of the customer who received the payment.
-				ReceiverPartyPublicName map[string]string
-				// Available balance of the Charges Paid account under the B2C shortcode used
-				// in the transaction.
-				B2CChargesPaidAccountAvailableFunds map[string]int
-				// This is a key that indicates whether the customer is a M-PESA registered
-				// customer or not
-				B2CRecipientIsRegisteredCustomer map[string]string
-			}
+			ResultParameter []*B2CResultParameters
 		}{}
 		if body.ResultParameters.ResultParameter != nil {
-			v.ResultParameters.ResultParameter = &struct {
-				// This is a unique M-PESA transaction ID for every payment request.
-				TransactionReceipt map[string]string
-				// This is the amount that was transacted.
-				TransactionAmount map[string]int
-				// Available balance of the Working account under the B2C shortcode used in the
-				// transaction.
-				B2CWorkingAccountAvailableFunds map[string]int
-				// Available balance of the Utility account under the B2C shortcode used in the
-				// transaction.
-				B2CUtilityAccountAvailableFunds map[string]int
-				// This is the date and time that the transaction completed M-PESA.
-				TransactionCompletedDateTime map[string]string
-				// This is the name and phone number of the customer who received the payment.
-				ReceiverPartyPublicName map[string]string
-				// Available balance of the Charges Paid account under the B2C shortcode used
-				// in the transaction.
-				B2CChargesPaidAccountAvailableFunds map[string]int
-				// This is a key that indicates whether the customer is a M-PESA registered
-				// customer or not
-				B2CRecipientIsRegisteredCustomer map[string]string
-			}{}
-			if body.ResultParameters.ResultParameter.TransactionReceipt != nil {
-				v.ResultParameters.ResultParameter.TransactionReceipt = make(map[string]string, len(body.ResultParameters.ResultParameter.TransactionReceipt))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionReceipt {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionReceipt[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.TransactionAmount != nil {
-				v.ResultParameters.ResultParameter.TransactionAmount = make(map[string]int, len(body.ResultParameters.ResultParameter.TransactionAmount))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionAmount {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionAmount[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.TransactionCompletedDateTime != nil {
-				v.ResultParameters.ResultParameter.TransactionCompletedDateTime = make(map[string]string, len(body.ResultParameters.ResultParameter.TransactionCompletedDateTime))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionCompletedDateTime {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionCompletedDateTime[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.ReceiverPartyPublicName != nil {
-				v.ResultParameters.ResultParameter.ReceiverPartyPublicName = make(map[string]string, len(body.ResultParameters.ResultParameter.ReceiverPartyPublicName))
-				for key, val := range body.ResultParameters.ResultParameter.ReceiverPartyPublicName {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.ReceiverPartyPublicName[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer != nil {
-				v.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer = make(map[string]string, len(body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer))
-				for key, val := range body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer[tk] = tv
-				}
+			v.ResultParameters.ResultParameter = make([]*mpesa.B2CResultParameters, len(body.ResultParameters.ResultParameter))
+			for i, val := range body.ResultParameters.ResultParameter {
+				v.ResultParameters.ResultParameter[i] = unmarshalB2CResultParametersRequestBodyToMpesaB2CResultParameters(val)
 			}
 		}
 	}
@@ -1270,29 +851,23 @@ func NewC2BConfirmationConfirmationResult(body *C2BConfirmationRequestBody) *mpe
 // ValidateAccountBalanceTimeoutRequestBody runs the validations defined on
 // AccountBalanceTimeoutRequestBody
 func ValidateAccountBalanceTimeoutRequestBody(body *AccountBalanceTimeoutRequestBody) (err error) {
-	if body.ResultParameters != nil {
-		if body.ResultParameters.ResultParameter != nil {
-			for k, v := range body.ResultParameters.ResultParameter.AccountBalance {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.AccountBalance.key", k, utf8.RuneCountInString(k), 1, true))
+	if body.Result != nil {
+		if body.Result.ResultParameters != nil {
+			for _, e := range body.Result.ResultParameters.ResultParameter {
+				if e != nil {
+					if err2 := ValidateAccountBalanceParametersRequestBody(e); err2 != nil {
+						err = goa.MergeErrors(err, err2)
+					}
 				}
-				err = goa.MergeErrors(err, goa.ValidatePattern("body.ResultParameters.ResultParameter.AccountBalance[key]", v, "[a-zA-Z]+"))
-			}
-			for k, v := range body.ResultParameters.ResultParameter.BOCompletedTime {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.BOCompletedTime.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-				err = goa.MergeErrors(err, goa.ValidateFormat("body.ResultParameters.ResultParameter.BOCompletedTime[key]", v, goa.FormatDateTime))
-
 			}
 		}
-	}
-	if body.ReferenceData != nil {
-		for k, v := range body.ReferenceData.ReferenceItem {
-			if utf8.RuneCountInString(k) < 1 {
-				err = goa.MergeErrors(err, goa.InvalidLengthError("body.ReferenceData.ReferenceItem.key", k, utf8.RuneCountInString(k), 1, true))
+		if body.Result.ReferenceData != nil {
+			for k, v := range body.Result.ReferenceData.ReferenceItem {
+				if utf8.RuneCountInString(k) < 1 {
+					err = goa.MergeErrors(err, goa.InvalidLengthError("body.Result.ReferenceData.ReferenceItem.key", k, utf8.RuneCountInString(k), 1, true))
+				}
+				err = goa.MergeErrors(err, goa.ValidatePattern("body.Result.ReferenceData.ReferenceItem[key]", v, "[a-zA-Z]+"))
 			}
-			err = goa.MergeErrors(err, goa.ValidatePattern("body.ReferenceData.ReferenceItem[key]", v, "[a-zA-Z]+"))
 		}
 	}
 	return
@@ -1301,29 +876,23 @@ func ValidateAccountBalanceTimeoutRequestBody(body *AccountBalanceTimeoutRequest
 // ValidateAccountBalanceResultRequestBody runs the validations defined on
 // AccountBalanceResultRequestBody
 func ValidateAccountBalanceResultRequestBody(body *AccountBalanceResultRequestBody) (err error) {
-	if body.ResultParameters != nil {
-		if body.ResultParameters.ResultParameter != nil {
-			for k, v := range body.ResultParameters.ResultParameter.AccountBalance {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.AccountBalance.key", k, utf8.RuneCountInString(k), 1, true))
+	if body.Result != nil {
+		if body.Result.ResultParameters != nil {
+			for _, e := range body.Result.ResultParameters.ResultParameter {
+				if e != nil {
+					if err2 := ValidateAccountBalanceParametersRequestBody(e); err2 != nil {
+						err = goa.MergeErrors(err, err2)
+					}
 				}
-				err = goa.MergeErrors(err, goa.ValidatePattern("body.ResultParameters.ResultParameter.AccountBalance[key]", v, "[a-zA-Z]+"))
-			}
-			for k, v := range body.ResultParameters.ResultParameter.BOCompletedTime {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.BOCompletedTime.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-				err = goa.MergeErrors(err, goa.ValidateFormat("body.ResultParameters.ResultParameter.BOCompletedTime[key]", v, goa.FormatDateTime))
-
 			}
 		}
-	}
-	if body.ReferenceData != nil {
-		for k, v := range body.ReferenceData.ReferenceItem {
-			if utf8.RuneCountInString(k) < 1 {
-				err = goa.MergeErrors(err, goa.InvalidLengthError("body.ReferenceData.ReferenceItem.key", k, utf8.RuneCountInString(k), 1, true))
+		if body.Result.ReferenceData != nil {
+			for k, v := range body.Result.ReferenceData.ReferenceItem {
+				if utf8.RuneCountInString(k) < 1 {
+					err = goa.MergeErrors(err, goa.InvalidLengthError("body.Result.ReferenceData.ReferenceItem.key", k, utf8.RuneCountInString(k), 1, true))
+				}
+				err = goa.MergeErrors(err, goa.ValidatePattern("body.Result.ReferenceData.ReferenceItem[key]", v, "[a-zA-Z]+"))
 			}
-			err = goa.MergeErrors(err, goa.ValidatePattern("body.ReferenceData.ReferenceItem[key]", v, "[a-zA-Z]+"))
 		}
 	}
 	return
@@ -1333,6 +902,15 @@ func ValidateAccountBalanceResultRequestBody(body *AccountBalanceResultRequestBo
 // TransactionStatusTimeoutRequestBody
 func ValidateTransactionStatusTimeoutRequestBody(body *TransactionStatusTimeoutRequestBody) (err error) {
 	if body.Result != nil {
+		if body.Result.ResultParameters != nil {
+			for _, e := range body.Result.ResultParameters.ResultParameter {
+				if e != nil {
+					if err2 := ValidateTransactionStatusResultParameterRequestBody(e); err2 != nil {
+						err = goa.MergeErrors(err, err2)
+					}
+				}
+			}
+		}
 		if body.Result.ReferenceData != nil {
 			for k, v := range body.Result.ReferenceData.ReferenceItem {
 				if utf8.RuneCountInString(k) < 1 {
@@ -1349,6 +927,15 @@ func ValidateTransactionStatusTimeoutRequestBody(body *TransactionStatusTimeoutR
 // TransactionStatusResultRequestBody
 func ValidateTransactionStatusResultRequestBody(body *TransactionStatusResultRequestBody) (err error) {
 	if body.Result != nil {
+		if body.Result.ResultParameters != nil {
+			for _, e := range body.Result.ResultParameters.ResultParameter {
+				if e != nil {
+					if err2 := ValidateTransactionStatusResultParameterRequestBody(e); err2 != nil {
+						err = goa.MergeErrors(err, err2)
+					}
+				}
+			}
+		}
 		if body.Result.ReferenceData != nil {
 			for k, v := range body.Result.ReferenceData.ReferenceItem {
 				if utf8.RuneCountInString(k) < 1 {
@@ -1396,65 +983,12 @@ func ValidateReversalResultRequestBody(body *ReversalResultRequestBody) (err err
 // ValidateB2CTimeoutRequestBody runs the validations defined on
 // B2CTimeoutRequestBody
 func ValidateB2CTimeoutRequestBody(body *B2CTimeoutRequestBody) (err error) {
-	if body.Result != nil {
-		if body.Result.ResultDesc != nil {
-			if !(*body.Result.ResultDesc == "Service request is has bee accepted successfully" || *body.Result.ResultDesc == "Initiator information is invalid") {
-				err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.Result.ResultDesc", *body.Result.ResultDesc, []interface{}{"Service request is has bee accepted successfully", "Initiator information is invalid"}))
-			}
-		}
-	}
 	if body.ResultParameters != nil {
-		if body.ResultParameters.ResultParameter != nil {
-			for k, v := range body.ResultParameters.ResultParameter.TransactionReceipt {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.TransactionReceipt.key", k, utf8.RuneCountInString(k), 1, true))
+		for _, e := range body.ResultParameters.ResultParameter {
+			if e != nil {
+				if err2 := ValidateB2CResultParametersRequestBody(e); err2 != nil {
+					err = goa.MergeErrors(err, err2)
 				}
-				err = goa.MergeErrors(err, goa.ValidatePattern("body.ResultParameters.ResultParameter.TransactionReceipt[key]", v, "[a-zA-Z]+"))
-			}
-			for k, _ := range body.ResultParameters.ResultParameter.TransactionAmount {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.TransactionAmount.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-			}
-			for k, _ := range body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-			}
-			for k, _ := range body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-			}
-			for k, v := range body.ResultParameters.ResultParameter.TransactionCompletedDateTime {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.TransactionCompletedDateTime.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-				err = goa.MergeErrors(err, goa.ValidateFormat("body.ResultParameters.ResultParameter.TransactionCompletedDateTime[key]", v, goa.FormatDateTime))
-
-			}
-			for k, v := range body.ResultParameters.ResultParameter.ReceiverPartyPublicName {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.ReceiverPartyPublicName.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-				err = goa.MergeErrors(err, goa.ValidatePattern("body.ResultParameters.ResultParameter.ReceiverPartyPublicName[key]", v, "[a-zA-Z]+"))
-			}
-			for k, v := range body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-				if v < 0 {
-					err = goa.MergeErrors(err, goa.InvalidRangeError("body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds[key]", v, 0, true))
-				}
-			}
-			for k, v := range body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-				if !(v == "Y" || v == "N") {
-					err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer[key]", v, []interface{}{"Y", "N"}))
-				}
-				err = goa.MergeErrors(err, goa.ValidatePattern("body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer[key]", v, "[a-zA-Z]+"))
 			}
 		}
 	}
@@ -1472,65 +1006,12 @@ func ValidateB2CTimeoutRequestBody(body *B2CTimeoutRequestBody) (err error) {
 // ValidateB2CResultRequestBody runs the validations defined on
 // B2CResultRequestBody
 func ValidateB2CResultRequestBody(body *B2CResultRequestBody) (err error) {
-	if body.Result != nil {
-		if body.Result.ResultDesc != nil {
-			if !(*body.Result.ResultDesc == "Service request is has bee accepted successfully" || *body.Result.ResultDesc == "Initiator information is invalid") {
-				err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.Result.ResultDesc", *body.Result.ResultDesc, []interface{}{"Service request is has bee accepted successfully", "Initiator information is invalid"}))
-			}
-		}
-	}
 	if body.ResultParameters != nil {
-		if body.ResultParameters.ResultParameter != nil {
-			for k, v := range body.ResultParameters.ResultParameter.TransactionReceipt {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.TransactionReceipt.key", k, utf8.RuneCountInString(k), 1, true))
+		for _, e := range body.ResultParameters.ResultParameter {
+			if e != nil {
+				if err2 := ValidateB2CResultParametersRequestBody(e); err2 != nil {
+					err = goa.MergeErrors(err, err2)
 				}
-				err = goa.MergeErrors(err, goa.ValidatePattern("body.ResultParameters.ResultParameter.TransactionReceipt[key]", v, "[a-zA-Z]+"))
-			}
-			for k, _ := range body.ResultParameters.ResultParameter.TransactionAmount {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.TransactionAmount.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-			}
-			for k, _ := range body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-			}
-			for k, _ := range body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-			}
-			for k, v := range body.ResultParameters.ResultParameter.TransactionCompletedDateTime {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.TransactionCompletedDateTime.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-				err = goa.MergeErrors(err, goa.ValidateFormat("body.ResultParameters.ResultParameter.TransactionCompletedDateTime[key]", v, goa.FormatDateTime))
-
-			}
-			for k, v := range body.ResultParameters.ResultParameter.ReceiverPartyPublicName {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.ReceiverPartyPublicName.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-				err = goa.MergeErrors(err, goa.ValidatePattern("body.ResultParameters.ResultParameter.ReceiverPartyPublicName[key]", v, "[a-zA-Z]+"))
-			}
-			for k, v := range body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-				if v < 0 {
-					err = goa.MergeErrors(err, goa.InvalidRangeError("body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds[key]", v, 0, true))
-				}
-			}
-			for k, v := range body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer {
-				if utf8.RuneCountInString(k) < 1 {
-					err = goa.MergeErrors(err, goa.InvalidLengthError("body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer.key", k, utf8.RuneCountInString(k), 1, true))
-				}
-				if !(v == "Y" || v == "N") {
-					err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer[key]", v, []interface{}{"Y", "N"}))
-				}
-				err = goa.MergeErrors(err, goa.ValidatePattern("body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer[key]", v, "[a-zA-Z]+"))
 			}
 		}
 	}
@@ -1579,6 +1060,50 @@ func ValidateC2BConfirmationRequestBody(body *C2BConfirmationRequestBody) (err e
 		if utf8.RuneCountInString(*body.BillRefNumber) > 20 {
 			err = goa.MergeErrors(err, goa.InvalidLengthError("body.BillRefNumber", *body.BillRefNumber, utf8.RuneCountInString(*body.BillRefNumber), 20, false))
 		}
+	}
+	return
+}
+
+// ValidateAccountBalanceParametersRequestBody runs the validations defined on
+// AccountBalanceParametersRequestBody
+func ValidateAccountBalanceParametersRequestBody(body *AccountBalanceParametersRequestBody) (err error) {
+	if body.BOCompletedTime != nil {
+		err = goa.MergeErrors(err, goa.ValidateFormat("body.BOCompletedTime", *body.BOCompletedTime, goa.FormatDateTime))
+	}
+	return
+}
+
+// ValidateTransactionStatusResultParameterRequestBody runs the validations
+// defined on TransactionStatusResultParameterRequestBody
+func ValidateTransactionStatusResultParameterRequestBody(body *TransactionStatusResultParameterRequestBody) (err error) {
+	if body.FinalisedTime != nil {
+		err = goa.MergeErrors(err, goa.ValidateFormat("body.FinalisedTime", *body.FinalisedTime, goa.FormatDateTime))
+	}
+	if body.InitiatedTime != nil {
+		err = goa.MergeErrors(err, goa.ValidateFormat("body.InitiatedTime", *body.InitiatedTime, goa.FormatDateTime))
+	}
+	return
+}
+
+// ValidateB2CResultParametersRequestBody runs the validations defined on
+// B2CResultParametersRequestBody
+func ValidateB2CResultParametersRequestBody(body *B2CResultParametersRequestBody) (err error) {
+	if body.TransactionReceipt != nil {
+		err = goa.MergeErrors(err, goa.ValidatePattern("body.TransactionReceipt", *body.TransactionReceipt, "[a-zA-Z]+"))
+	}
+	if body.TransactionCompletedDateTime != nil {
+		err = goa.MergeErrors(err, goa.ValidateFormat("body.TransactionCompletedDateTime", *body.TransactionCompletedDateTime, goa.FormatDateTime))
+	}
+	if body.ReceiverPartyPublicName != nil {
+		err = goa.MergeErrors(err, goa.ValidatePattern("body.ReceiverPartyPublicName", *body.ReceiverPartyPublicName, "[a-zA-Z]+"))
+	}
+	if body.B2CRecipientIsRegisteredCustomer != nil {
+		if !(*body.B2CRecipientIsRegisteredCustomer == "Y" || *body.B2CRecipientIsRegisteredCustomer == "N") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError("body.B2CRecipientIsRegisteredCustomer", *body.B2CRecipientIsRegisteredCustomer, []interface{}{"Y", "N"}))
+		}
+	}
+	if body.B2CRecipientIsRegisteredCustomer != nil {
+		err = goa.MergeErrors(err, goa.ValidatePattern("body.B2CRecipientIsRegisteredCustomer", *body.B2CRecipientIsRegisteredCustomer, "[a-zA-Z]+"))
 	}
 	return
 }

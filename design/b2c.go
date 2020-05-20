@@ -88,11 +88,11 @@ var B2CResultParameters = Type("B2CResultParameters", func() {
 		Example(8000) // Number
 
 	})
-	Attribute("B2CWorkingAccountAvailableFunds", Int, func() {
+	Attribute("B2CWorkingAccountAvailableFunds", Float64, func() {
 		Description("Available balance of the Working account under the B2C shortcode used in the transaction.")
 		Example(2000.0) // Decimal
 	})
-	Attribute("B2CUtilityAccountAvailableFunds", Int, func() {
+	Attribute("B2CUtilityAccountAvailableFunds", Float64, func() {
 		Description("Available balance of the Utility account under the B2C shortcode used in the transaction.")
 		Example(23654.5) // Decimal
 	})
@@ -106,11 +106,11 @@ var B2CResultParameters = Type("B2CResultParameters", func() {
 		Pattern("[a-zA-Z]+")
 		Example("254722000000 - Safaricom PLC")
 	})
-	Attribute("B2CChargesPaidAccountAvailableFunds", MapOf(String, Int), func() {
+	Attribute("B2CChargesPaidAccountAvailableFunds", Float64, func() {
 		Description("Available balance of the Charges Paid account under the B2C shortcode used in the transaction.")
 		Example(236543.9) // Decimal
 	})
-	Attribute("B2CRecipientIsRegisteredCustomer", MapOf(String, String), func() {
+	Attribute("B2CRecipientIsRegisteredCustomer", String, func() {
 		Description("Key indicating whether customer is registered on M-PESA")
 		Pattern("[a-zA-Z]+")
 		// "Y" for Yes

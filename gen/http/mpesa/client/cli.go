@@ -22,57 +22,60 @@ func BuildAccountBalanceTimeoutPayload(mpesaAccountBalanceTimeoutBody string) (*
 	{
 		err = json.Unmarshal([]byte(mpesaAccountBalanceTimeoutBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationID\": \"AG_20170728_0000589b6252f7f25488\",\n      \"OriginatorConversationID\": \"19464-802673-1\",\n      \"ReferenceData\": {\n         \"ReferenceItem\": {\n            \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\"\n         }\n      },\n      \"ResultCode\": 0,\n      \"ResultDesc\": \"The service request has b een accepted successfully.\",\n      \"ResultParameters\": {\n         \"ResultParameter\": {\n            \"AccountBalance\": {\n               \"AccountBalance\": \"Working Account|KES|46713.00|46713.00|0.00|0.00\\u0026Float Account|KES|0.00|0.00|0.00|0.00\\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00\"\n            },\n            \"BOCompletedTime\": {\n               \"BOCompletedTime\": \"20170728095642\"\n            }\n         }\n      },\n      \"ResultType\": 0,\n      \"TransactionID\": \"LGS0000000\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"Result\": {\n         \"ConversationId\": \"236543-276372-2\",\n         \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n         \"ReferenceData\": {\n            \"ReferenceItem\": {\n               \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\"\n            }\n         },\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"Initiator information is invalid\",\n         \"ResultParameters\": {\n            \"ResultParameter\": [\n               {\n                  \"AccountBalance\": \"Working Account|KES|46713.00|46713.00|0.00|0.00\\u0026Float Account|KES|0.00|0.00|0.00|0.00\\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00\",\n                  \"BOCompletedTime\": \"20170728095642\"\n               },\n               {\n                  \"AccountBalance\": \"Working Account|KES|46713.00|46713.00|0.00|0.00\\u0026Float Account|KES|0.00|0.00|0.00|0.00\\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00\",\n                  \"BOCompletedTime\": \"20170728095642\"\n               }\n            ]\n         },\n         \"ResultType\": 0,\n         \"TransactionID\": \"LHG31AA5TX\"\n      }\n   }'")
 		}
 	}
-	v := &mpesa.AccountBalanceResult{
-		ResultType:               body.ResultType,
-		ResultCode:               body.ResultCode,
-		ResultDesc:               body.ResultDesc,
-		OriginatorConversationID: body.OriginatorConversationID,
-		ConversationID:           body.ConversationID,
-		TransactionID:            body.TransactionID,
-	}
-	if body.ResultParameters != nil {
-		v.ResultParameters = &struct {
-			ResultParameter *struct {
-				AccountBalance  map[string]string
-				BOCompletedTime map[string]string
+	v := &mpesa.AccountBalanceResult{}
+	if body.Result != nil {
+		v.Result = &struct {
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
+			OriginatorConversationID *string
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID    *string
+			ResultParameters *struct {
+				ResultParameter []*AccountBalanceParameters
 			}
-		}{}
-		if body.ResultParameters.ResultParameter != nil {
-			v.ResultParameters.ResultParameter = &struct {
-				AccountBalance  map[string]string
-				BOCompletedTime map[string]string
+			ReferenceData *struct {
+				ReferenceItem map[string]string
+			}
+		}{
+			ResultType:               body.Result.ResultType,
+			ResultCode:               body.Result.ResultCode,
+			ResultDesc:               body.Result.ResultDesc,
+			OriginatorConversationID: body.Result.OriginatorConversationID,
+			ConversationID:           body.Result.ConversationID,
+			TransactionID:            body.Result.TransactionID,
+		}
+		if body.Result.ResultParameters != nil {
+			v.Result.ResultParameters = &struct {
+				ResultParameter []*AccountBalanceParameters
 			}{}
-			if body.ResultParameters.ResultParameter.AccountBalance != nil {
-				v.ResultParameters.ResultParameter.AccountBalance = make(map[string]string, len(body.ResultParameters.ResultParameter.AccountBalance))
-				for key, val := range body.ResultParameters.ResultParameter.AccountBalance {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.AccountBalance[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.BOCompletedTime != nil {
-				v.ResultParameters.ResultParameter.BOCompletedTime = make(map[string]string, len(body.ResultParameters.ResultParameter.BOCompletedTime))
-				for key, val := range body.ResultParameters.ResultParameter.BOCompletedTime {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.BOCompletedTime[tk] = tv
+			if body.Result.ResultParameters.ResultParameter != nil {
+				v.Result.ResultParameters.ResultParameter = make([]*mpesa.AccountBalanceParameters, len(body.Result.ResultParameters.ResultParameter))
+				for i, val := range body.Result.ResultParameters.ResultParameter {
+					v.Result.ResultParameters.ResultParameter[i] = marshalAccountBalanceParametersRequestBodyToMpesaAccountBalanceParameters(val)
 				}
 			}
 		}
-	}
-	if body.ReferenceData != nil {
-		v.ReferenceData = &struct {
-			ReferenceItem map[string]string
-		}{}
-		if body.ReferenceData.ReferenceItem != nil {
-			v.ReferenceData.ReferenceItem = make(map[string]string, len(body.ReferenceData.ReferenceItem))
-			for key, val := range body.ReferenceData.ReferenceItem {
-				tk := key
-				tv := val
-				v.ReferenceData.ReferenceItem[tk] = tv
+		if body.Result.ReferenceData != nil {
+			v.Result.ReferenceData = &struct {
+				ReferenceItem map[string]string
+			}{}
+			if body.Result.ReferenceData.ReferenceItem != nil {
+				v.Result.ReferenceData.ReferenceItem = make(map[string]string, len(body.Result.ReferenceData.ReferenceItem))
+				for key, val := range body.Result.ReferenceData.ReferenceItem {
+					tk := key
+					tv := val
+					v.Result.ReferenceData.ReferenceItem[tk] = tv
+				}
 			}
 		}
 	}
@@ -88,57 +91,60 @@ func BuildAccountBalanceResultEndpointPayload(mpesaAccountBalanceResultBody stri
 	{
 		err = json.Unmarshal([]byte(mpesaAccountBalanceResultBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ConversationID\": \"AG_20170728_0000589b6252f7f25488\",\n      \"OriginatorConversationID\": \"19464-802673-1\",\n      \"ReferenceData\": {\n         \"ReferenceItem\": {\n            \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\"\n         }\n      },\n      \"ResultCode\": 0,\n      \"ResultDesc\": \"The service request has b een accepted successfully.\",\n      \"ResultParameters\": {\n         \"ResultParameter\": {\n            \"AccountBalance\": {\n               \"AccountBalance\": \"Working Account|KES|46713.00|46713.00|0.00|0.00\\u0026Float Account|KES|0.00|0.00|0.00|0.00\\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00\"\n            },\n            \"BOCompletedTime\": {\n               \"BOCompletedTime\": \"20170728095642\"\n            }\n         }\n      },\n      \"ResultType\": 0,\n      \"TransactionID\": \"LGS0000000\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"Result\": {\n         \"ConversationId\": \"236543-276372-2\",\n         \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n         \"ReferenceData\": {\n            \"ReferenceItem\": {\n               \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit\"\n            }\n         },\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"Initiator information is invalid\",\n         \"ResultParameters\": {\n            \"ResultParameter\": [\n               {\n                  \"AccountBalance\": \"Working Account|KES|46713.00|46713.00|0.00|0.00\\u0026Float Account|KES|0.00|0.00|0.00|0.00\\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00\",\n                  \"BOCompletedTime\": \"20170728095642\"\n               },\n               {\n                  \"AccountBalance\": \"Working Account|KES|46713.00|46713.00|0.00|0.00\\u0026Float Account|KES|0.00|0.00|0.00|0.00\\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00\",\n                  \"BOCompletedTime\": \"20170728095642\"\n               }\n            ]\n         },\n         \"ResultType\": 0,\n         \"TransactionID\": \"LHG31AA5TX\"\n      }\n   }'")
 		}
 	}
-	v := &mpesa.AccountBalanceResult{
-		ResultType:               body.ResultType,
-		ResultCode:               body.ResultCode,
-		ResultDesc:               body.ResultDesc,
-		OriginatorConversationID: body.OriginatorConversationID,
-		ConversationID:           body.ConversationID,
-		TransactionID:            body.TransactionID,
-	}
-	if body.ResultParameters != nil {
-		v.ResultParameters = &struct {
-			ResultParameter *struct {
-				AccountBalance  map[string]string
-				BOCompletedTime map[string]string
+	v := &mpesa.AccountBalanceResult{}
+	if body.Result != nil {
+		v.Result = &struct {
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
+			OriginatorConversationID *string
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID    *string
+			ResultParameters *struct {
+				ResultParameter []*AccountBalanceParameters
 			}
-		}{}
-		if body.ResultParameters.ResultParameter != nil {
-			v.ResultParameters.ResultParameter = &struct {
-				AccountBalance  map[string]string
-				BOCompletedTime map[string]string
+			ReferenceData *struct {
+				ReferenceItem map[string]string
+			}
+		}{
+			ResultType:               body.Result.ResultType,
+			ResultCode:               body.Result.ResultCode,
+			ResultDesc:               body.Result.ResultDesc,
+			OriginatorConversationID: body.Result.OriginatorConversationID,
+			ConversationID:           body.Result.ConversationID,
+			TransactionID:            body.Result.TransactionID,
+		}
+		if body.Result.ResultParameters != nil {
+			v.Result.ResultParameters = &struct {
+				ResultParameter []*AccountBalanceParameters
 			}{}
-			if body.ResultParameters.ResultParameter.AccountBalance != nil {
-				v.ResultParameters.ResultParameter.AccountBalance = make(map[string]string, len(body.ResultParameters.ResultParameter.AccountBalance))
-				for key, val := range body.ResultParameters.ResultParameter.AccountBalance {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.AccountBalance[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.BOCompletedTime != nil {
-				v.ResultParameters.ResultParameter.BOCompletedTime = make(map[string]string, len(body.ResultParameters.ResultParameter.BOCompletedTime))
-				for key, val := range body.ResultParameters.ResultParameter.BOCompletedTime {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.BOCompletedTime[tk] = tv
+			if body.Result.ResultParameters.ResultParameter != nil {
+				v.Result.ResultParameters.ResultParameter = make([]*mpesa.AccountBalanceParameters, len(body.Result.ResultParameters.ResultParameter))
+				for i, val := range body.Result.ResultParameters.ResultParameter {
+					v.Result.ResultParameters.ResultParameter[i] = marshalAccountBalanceParametersRequestBodyToMpesaAccountBalanceParameters(val)
 				}
 			}
 		}
-	}
-	if body.ReferenceData != nil {
-		v.ReferenceData = &struct {
-			ReferenceItem map[string]string
-		}{}
-		if body.ReferenceData.ReferenceItem != nil {
-			v.ReferenceData.ReferenceItem = make(map[string]string, len(body.ReferenceData.ReferenceItem))
-			for key, val := range body.ReferenceData.ReferenceItem {
-				tk := key
-				tv := val
-				v.ReferenceData.ReferenceItem[tk] = tv
+		if body.Result.ReferenceData != nil {
+			v.Result.ReferenceData = &struct {
+				ReferenceItem map[string]string
+			}{}
+			if body.Result.ReferenceData.ReferenceItem != nil {
+				v.Result.ReferenceData.ReferenceItem = make(map[string]string, len(body.Result.ReferenceData.ReferenceItem))
+				for key, val := range body.Result.ReferenceData.ReferenceItem {
+					tk := key
+					tv := val
+					v.Result.ReferenceData.ReferenceItem[tk] = tv
+				}
 			}
 		}
 	}
@@ -154,34 +160,26 @@ func BuildTransactionStatusTimeoutPayload(mpesaTransactionStatusTimeoutBody stri
 	{
 		err = json.Unmarshal([]byte(mpesaTransactionStatusTimeoutBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"Result\": {\n         \"ConversationID\": \"AG_20170727_000059c52529a8e080bd\",\n         \"OriginatorConversationID\": \"10816-694520-2\",\n         \"ReferenceData\": {\n            \"ReferenceItem\": {\n               \"Occasion\": \"Occasion\"\n            }\n         },\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"The service request has been accepted successfully\",\n         \"ResultParameters\": {\n            \"ResultParameter\": {\n               \"Amount\": {\n                  \"Amount\": 10\n               },\n               \"Conversation ID\": {\n                  \"Conversation ID\": \"AG_20170727_00004492b1b6d0078fbe\"\n               },\n               \"CreditPartyName\": {\n                  \"CreditPartyName\": \"254708374149 - John Doe\"\n               },\n               \"DebitAccountType\": {\n                  \"DebitAccountType\": \"Utility Account\"\n               },\n               \"DebitPartyCharges\": {\n                  \"DebitPartyCharges\": \"Fee For B2C Payment|KES|33.00\"\n               },\n               \"DebitPartyName\": {\n                  \"DebitPartyName\": \"600134 - Safaricom157\"\n               },\n               \"FinalisedTime\": {\n                  \"FinalisedTime\": 20170727101415\n               },\n               \"InitiatedTime\": {\n                  \"InitiatedTime\": 20170727101415\n               },\n               \"Originator Conversation ID\": {\n                  \"Originator Conversation ID\": \"19455-773836-1\"\n               },\n               \"ReasonType\": {\n                  \"ReasonType\": \"Salary Payment via API\"\n               },\n               \"ReceiptNo\": {\n                  \"ReceiptNo\": \"LGR919G2AV\"\n               },\n               \"TransactionReason\": {\n                  \"TransactionReason\": \"Transaction Reason\"\n               },\n               \"TransactionStatus\": {\n                  \"TransactionStatus\": \"Completed\"\n               }\n            }\n         },\n         \"ResultType\": 0,\n         \"TransactionID\": \"LGR0000000\"\n      }\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"Result\": {\n         \"ConversationId\": \"236543-276372-2\",\n         \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n         \"ReferenceData\": {\n            \"ReferenceItem\": {\n               \"Occasion\": \"Occasion\"\n            }\n         },\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"Initiator information is invalid\",\n         \"ResultParameters\": {\n            \"ResultParameter\": [\n               {\n                  \"Amount\": 10,\n                  \"ConversationID\": \"AG_20170727_00004492b1b6d0078fbe\",\n                  \"CreditPartyName\": \"254708374149 - John Doe\",\n                  \"DebitAccountType\": \"Utility Account\",\n                  \"DebitPartyCharges\": \"Fee For B2C Payment|KES|33.00\",\n                  \"DebitPartyName\": \"600134 - Safaricom157\",\n                  \"FinalisedTime\": \"20170727101415\",\n                  \"InitiatedTime\": \"20170727101415\",\n                  \"Originator Conversation ID\": \"19455-773836-1\",\n                  \"ReasonType\": \"Salary Payment via API\",\n                  \"ReceiptNo\": \"LGR919G2AV\",\n                  \"TransactionReason\": \"Transaction Reason\",\n                  \"TransactionStatus\": \"Completed\"\n               },\n               {\n                  \"Amount\": 10,\n                  \"ConversationID\": \"AG_20170727_00004492b1b6d0078fbe\",\n                  \"CreditPartyName\": \"254708374149 - John Doe\",\n                  \"DebitAccountType\": \"Utility Account\",\n                  \"DebitPartyCharges\": \"Fee For B2C Payment|KES|33.00\",\n                  \"DebitPartyName\": \"600134 - Safaricom157\",\n                  \"FinalisedTime\": \"20170727101415\",\n                  \"InitiatedTime\": \"20170727101415\",\n                  \"Originator Conversation ID\": \"19455-773836-1\",\n                  \"ReasonType\": \"Salary Payment via API\",\n                  \"ReceiptNo\": \"LGR919G2AV\",\n                  \"TransactionReason\": \"Transaction Reason\",\n                  \"TransactionStatus\": \"Completed\"\n               },\n               {\n                  \"Amount\": 10,\n                  \"ConversationID\": \"AG_20170727_00004492b1b6d0078fbe\",\n                  \"CreditPartyName\": \"254708374149 - John Doe\",\n                  \"DebitAccountType\": \"Utility Account\",\n                  \"DebitPartyCharges\": \"Fee For B2C Payment|KES|33.00\",\n                  \"DebitPartyName\": \"600134 - Safaricom157\",\n                  \"FinalisedTime\": \"20170727101415\",\n                  \"InitiatedTime\": \"20170727101415\",\n                  \"Originator Conversation ID\": \"19455-773836-1\",\n                  \"ReasonType\": \"Salary Payment via API\",\n                  \"ReceiptNo\": \"LGR919G2AV\",\n                  \"TransactionReason\": \"Transaction Reason\",\n                  \"TransactionStatus\": \"Completed\"\n               }\n            ]\n         },\n         \"ResultType\": 0,\n         \"TransactionID\": \"LHG31AA5TX\"\n      }\n   }'")
 		}
 	}
 	v := &mpesa.TransactionStatusResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			ResultType               *int
-			ResultCode               *int
-			ResultDesc               *string
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			ConversationID           *string
-			TransactionID            *string
-			ResultParameters         *struct {
-				ResultParameter *struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID    *string
+			ResultParameters *struct {
+				ResultParameter []*TransactionStatusResultParameter
 			}
 			ReferenceData *struct {
 				ReferenceItem map[string]string
@@ -196,141 +194,12 @@ func BuildTransactionStatusTimeoutPayload(mpesaTransactionStatusTimeoutBody stri
 		}
 		if body.Result.ResultParameters != nil {
 			v.Result.ResultParameters = &struct {
-				ResultParameter *struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}
+				ResultParameter []*TransactionStatusResultParameter
 			}{}
 			if body.Result.ResultParameters.ResultParameter != nil {
-				v.Result.ResultParameters.ResultParameter = &struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}{}
-				if body.Result.ResultParameters.ResultParameter.ReceiptNo != nil {
-					v.Result.ResultParameters.ResultParameter.ReceiptNo = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ReceiptNo))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ReceiptNo {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ReceiptNo[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.ConversationID != nil {
-					v.Result.ResultParameters.ResultParameter.ConversationID = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ConversationID))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ConversationID {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ConversationID[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.FinalisedTime != nil {
-					v.Result.ResultParameters.ResultParameter.FinalisedTime = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.FinalisedTime))
-					for key, val := range body.Result.ResultParameters.ResultParameter.FinalisedTime {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.FinalisedTime[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.Amount != nil {
-					v.Result.ResultParameters.ResultParameter.Amount = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.Amount))
-					for key, val := range body.Result.ResultParameters.ResultParameter.Amount {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.Amount[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.TransactionStatus != nil {
-					v.Result.ResultParameters.ResultParameter.TransactionStatus = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.TransactionStatus))
-					for key, val := range body.Result.ResultParameters.ResultParameter.TransactionStatus {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.TransactionStatus[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.ReasonType != nil {
-					v.Result.ResultParameters.ResultParameter.ReasonType = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ReasonType))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ReasonType {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ReasonType[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.TransactionReason != nil {
-					v.Result.ResultParameters.ResultParameter.TransactionReason = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.TransactionReason))
-					for key, val := range body.Result.ResultParameters.ResultParameter.TransactionReason {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.TransactionReason[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitPartyCharges != nil {
-					v.Result.ResultParameters.ResultParameter.DebitPartyCharges = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitPartyCharges))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitPartyCharges {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitPartyCharges[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitAccountType != nil {
-					v.Result.ResultParameters.ResultParameter.DebitAccountType = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitAccountType))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitAccountType {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitAccountType[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.InitiatedTime != nil {
-					v.Result.ResultParameters.ResultParameter.InitiatedTime = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.InitiatedTime))
-					for key, val := range body.Result.ResultParameters.ResultParameter.InitiatedTime {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.InitiatedTime[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.OriginatorConversationID != nil {
-					v.Result.ResultParameters.ResultParameter.OriginatorConversationID = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.OriginatorConversationID))
-					for key, val := range body.Result.ResultParameters.ResultParameter.OriginatorConversationID {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.OriginatorConversationID[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.CreditPartyName != nil {
-					v.Result.ResultParameters.ResultParameter.CreditPartyName = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.CreditPartyName))
-					for key, val := range body.Result.ResultParameters.ResultParameter.CreditPartyName {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.CreditPartyName[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitPartyName != nil {
-					v.Result.ResultParameters.ResultParameter.DebitPartyName = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitPartyName))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitPartyName {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitPartyName[tk] = tv
-					}
+				v.Result.ResultParameters.ResultParameter = make([]*mpesa.TransactionStatusResultParameter, len(body.Result.ResultParameters.ResultParameter))
+				for i, val := range body.Result.ResultParameters.ResultParameter {
+					v.Result.ResultParameters.ResultParameter[i] = marshalTransactionStatusResultParameterRequestBodyToMpesaTransactionStatusResultParameter(val)
 				}
 			}
 		}
@@ -360,34 +229,26 @@ func BuildTransactionStatusResultEndpointPayload(mpesaTransactionStatusResultBod
 	{
 		err = json.Unmarshal([]byte(mpesaTransactionStatusResultBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"Result\": {\n         \"ConversationID\": \"AG_20170727_000059c52529a8e080bd\",\n         \"OriginatorConversationID\": \"10816-694520-2\",\n         \"ReferenceData\": {\n            \"ReferenceItem\": {\n               \"Occasion\": \"Occasion\"\n            }\n         },\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"The service request has been accepted successfully\",\n         \"ResultParameters\": {\n            \"ResultParameter\": {\n               \"Amount\": {\n                  \"Amount\": 10\n               },\n               \"Conversation ID\": {\n                  \"Conversation ID\": \"AG_20170727_00004492b1b6d0078fbe\"\n               },\n               \"CreditPartyName\": {\n                  \"CreditPartyName\": \"254708374149 - John Doe\"\n               },\n               \"DebitAccountType\": {\n                  \"DebitAccountType\": \"Utility Account\"\n               },\n               \"DebitPartyCharges\": {\n                  \"DebitPartyCharges\": \"Fee For B2C Payment|KES|33.00\"\n               },\n               \"DebitPartyName\": {\n                  \"DebitPartyName\": \"600134 - Safaricom157\"\n               },\n               \"FinalisedTime\": {\n                  \"FinalisedTime\": 20170727101415\n               },\n               \"InitiatedTime\": {\n                  \"InitiatedTime\": 20170727101415\n               },\n               \"Originator Conversation ID\": {\n                  \"Originator Conversation ID\": \"19455-773836-1\"\n               },\n               \"ReasonType\": {\n                  \"ReasonType\": \"Salary Payment via API\"\n               },\n               \"ReceiptNo\": {\n                  \"ReceiptNo\": \"LGR919G2AV\"\n               },\n               \"TransactionReason\": {\n                  \"TransactionReason\": \"Transaction Reason\"\n               },\n               \"TransactionStatus\": {\n                  \"TransactionStatus\": \"Completed\"\n               }\n            }\n         },\n         \"ResultType\": 0,\n         \"TransactionID\": \"LGR0000000\"\n      }\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"Result\": {\n         \"ConversationId\": \"236543-276372-2\",\n         \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n         \"ReferenceData\": {\n            \"ReferenceItem\": {\n               \"Occasion\": \"Occasion\"\n            }\n         },\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"Initiator information is invalid\",\n         \"ResultParameters\": {\n            \"ResultParameter\": [\n               {\n                  \"Amount\": 10,\n                  \"ConversationID\": \"AG_20170727_00004492b1b6d0078fbe\",\n                  \"CreditPartyName\": \"254708374149 - John Doe\",\n                  \"DebitAccountType\": \"Utility Account\",\n                  \"DebitPartyCharges\": \"Fee For B2C Payment|KES|33.00\",\n                  \"DebitPartyName\": \"600134 - Safaricom157\",\n                  \"FinalisedTime\": \"20170727101415\",\n                  \"InitiatedTime\": \"20170727101415\",\n                  \"Originator Conversation ID\": \"19455-773836-1\",\n                  \"ReasonType\": \"Salary Payment via API\",\n                  \"ReceiptNo\": \"LGR919G2AV\",\n                  \"TransactionReason\": \"Transaction Reason\",\n                  \"TransactionStatus\": \"Completed\"\n               },\n               {\n                  \"Amount\": 10,\n                  \"ConversationID\": \"AG_20170727_00004492b1b6d0078fbe\",\n                  \"CreditPartyName\": \"254708374149 - John Doe\",\n                  \"DebitAccountType\": \"Utility Account\",\n                  \"DebitPartyCharges\": \"Fee For B2C Payment|KES|33.00\",\n                  \"DebitPartyName\": \"600134 - Safaricom157\",\n                  \"FinalisedTime\": \"20170727101415\",\n                  \"InitiatedTime\": \"20170727101415\",\n                  \"Originator Conversation ID\": \"19455-773836-1\",\n                  \"ReasonType\": \"Salary Payment via API\",\n                  \"ReceiptNo\": \"LGR919G2AV\",\n                  \"TransactionReason\": \"Transaction Reason\",\n                  \"TransactionStatus\": \"Completed\"\n               },\n               {\n                  \"Amount\": 10,\n                  \"ConversationID\": \"AG_20170727_00004492b1b6d0078fbe\",\n                  \"CreditPartyName\": \"254708374149 - John Doe\",\n                  \"DebitAccountType\": \"Utility Account\",\n                  \"DebitPartyCharges\": \"Fee For B2C Payment|KES|33.00\",\n                  \"DebitPartyName\": \"600134 - Safaricom157\",\n                  \"FinalisedTime\": \"20170727101415\",\n                  \"InitiatedTime\": \"20170727101415\",\n                  \"Originator Conversation ID\": \"19455-773836-1\",\n                  \"ReasonType\": \"Salary Payment via API\",\n                  \"ReceiptNo\": \"LGR919G2AV\",\n                  \"TransactionReason\": \"Transaction Reason\",\n                  \"TransactionStatus\": \"Completed\"\n               },\n               {\n                  \"Amount\": 10,\n                  \"ConversationID\": \"AG_20170727_00004492b1b6d0078fbe\",\n                  \"CreditPartyName\": \"254708374149 - John Doe\",\n                  \"DebitAccountType\": \"Utility Account\",\n                  \"DebitPartyCharges\": \"Fee For B2C Payment|KES|33.00\",\n                  \"DebitPartyName\": \"600134 - Safaricom157\",\n                  \"FinalisedTime\": \"20170727101415\",\n                  \"InitiatedTime\": \"20170727101415\",\n                  \"Originator Conversation ID\": \"19455-773836-1\",\n                  \"ReasonType\": \"Salary Payment via API\",\n                  \"ReceiptNo\": \"LGR919G2AV\",\n                  \"TransactionReason\": \"Transaction Reason\",\n                  \"TransactionStatus\": \"Completed\"\n               }\n            ]\n         },\n         \"ResultType\": 0,\n         \"TransactionID\": \"LHG31AA5TX\"\n      }\n   }'")
 		}
 	}
 	v := &mpesa.TransactionStatusResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			ResultType               *int
-			ResultCode               *int
-			ResultDesc               *string
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			ConversationID           *string
-			TransactionID            *string
-			ResultParameters         *struct {
-				ResultParameter *struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID    *string
+			ResultParameters *struct {
+				ResultParameter []*TransactionStatusResultParameter
 			}
 			ReferenceData *struct {
 				ReferenceItem map[string]string
@@ -402,141 +263,12 @@ func BuildTransactionStatusResultEndpointPayload(mpesaTransactionStatusResultBod
 		}
 		if body.Result.ResultParameters != nil {
 			v.Result.ResultParameters = &struct {
-				ResultParameter *struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}
+				ResultParameter []*TransactionStatusResultParameter
 			}{}
 			if body.Result.ResultParameters.ResultParameter != nil {
-				v.Result.ResultParameters.ResultParameter = &struct {
-					ReceiptNo                map[string]string
-					ConversationID           map[string]string
-					FinalisedTime            map[string]int
-					Amount                   map[string]int
-					TransactionStatus        map[string]string
-					ReasonType               map[string]string
-					TransactionReason        map[string]string
-					DebitPartyCharges        map[string]string
-					DebitAccountType         map[string]string
-					InitiatedTime            map[string]int
-					OriginatorConversationID map[string]string
-					CreditPartyName          map[string]string
-					DebitPartyName           map[string]string
-				}{}
-				if body.Result.ResultParameters.ResultParameter.ReceiptNo != nil {
-					v.Result.ResultParameters.ResultParameter.ReceiptNo = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ReceiptNo))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ReceiptNo {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ReceiptNo[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.ConversationID != nil {
-					v.Result.ResultParameters.ResultParameter.ConversationID = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ConversationID))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ConversationID {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ConversationID[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.FinalisedTime != nil {
-					v.Result.ResultParameters.ResultParameter.FinalisedTime = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.FinalisedTime))
-					for key, val := range body.Result.ResultParameters.ResultParameter.FinalisedTime {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.FinalisedTime[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.Amount != nil {
-					v.Result.ResultParameters.ResultParameter.Amount = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.Amount))
-					for key, val := range body.Result.ResultParameters.ResultParameter.Amount {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.Amount[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.TransactionStatus != nil {
-					v.Result.ResultParameters.ResultParameter.TransactionStatus = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.TransactionStatus))
-					for key, val := range body.Result.ResultParameters.ResultParameter.TransactionStatus {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.TransactionStatus[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.ReasonType != nil {
-					v.Result.ResultParameters.ResultParameter.ReasonType = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.ReasonType))
-					for key, val := range body.Result.ResultParameters.ResultParameter.ReasonType {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.ReasonType[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.TransactionReason != nil {
-					v.Result.ResultParameters.ResultParameter.TransactionReason = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.TransactionReason))
-					for key, val := range body.Result.ResultParameters.ResultParameter.TransactionReason {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.TransactionReason[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitPartyCharges != nil {
-					v.Result.ResultParameters.ResultParameter.DebitPartyCharges = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitPartyCharges))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitPartyCharges {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitPartyCharges[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitAccountType != nil {
-					v.Result.ResultParameters.ResultParameter.DebitAccountType = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitAccountType))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitAccountType {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitAccountType[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.InitiatedTime != nil {
-					v.Result.ResultParameters.ResultParameter.InitiatedTime = make(map[string]int, len(body.Result.ResultParameters.ResultParameter.InitiatedTime))
-					for key, val := range body.Result.ResultParameters.ResultParameter.InitiatedTime {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.InitiatedTime[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.OriginatorConversationID != nil {
-					v.Result.ResultParameters.ResultParameter.OriginatorConversationID = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.OriginatorConversationID))
-					for key, val := range body.Result.ResultParameters.ResultParameter.OriginatorConversationID {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.OriginatorConversationID[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.CreditPartyName != nil {
-					v.Result.ResultParameters.ResultParameter.CreditPartyName = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.CreditPartyName))
-					for key, val := range body.Result.ResultParameters.ResultParameter.CreditPartyName {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.CreditPartyName[tk] = tv
-					}
-				}
-				if body.Result.ResultParameters.ResultParameter.DebitPartyName != nil {
-					v.Result.ResultParameters.ResultParameter.DebitPartyName = make(map[string]string, len(body.Result.ResultParameters.ResultParameter.DebitPartyName))
-					for key, val := range body.Result.ResultParameters.ResultParameter.DebitPartyName {
-						tk := key
-						tv := val
-						v.Result.ResultParameters.ResultParameter.DebitPartyName[tk] = tv
-					}
+				v.Result.ResultParameters.ResultParameter = make([]*mpesa.TransactionStatusResultParameter, len(body.Result.ResultParameters.ResultParameter))
+				for i, val := range body.Result.ResultParameters.ResultParameter {
+					v.Result.ResultParameters.ResultParameter[i] = marshalTransactionStatusResultParameterRequestBodyToMpesaTransactionStatusResultParameter(val)
 				}
 			}
 		}
@@ -566,19 +298,25 @@ func BuildReversalTimeoutPayload(mpesaReversalTimeoutBody string) (*mpesa.Revers
 	{
 		err = json.Unmarshal([]byte(mpesaReversalTimeoutBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"Result\": {\n         \"ConversationID\": \"AG_20170727_00004efadacd98a01d15\",\n         \"OriginatorConversationID\": \"10819-695089-1\",\n         \"ReferenceData\": {\n            \"ReferenceItem\": {\n               \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit\"\n            }\n         },\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"The service request has been accepted successfully.\",\n         \"ResultType\": 0,\n         \"TransactionID\": \"LGR019G3J2\"\n      }\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"Result\": {\n         \"ConversationId\": \"236543-276372-2\",\n         \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n         \"ReferenceData\": {\n            \"ReferenceItem\": {\n               \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit\"\n            }\n         },\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"Initiator information is invalid\",\n         \"ResultType\": 0,\n         \"TransactionID\": \"LHG31AA5TX\"\n      }\n   }'")
 		}
 	}
 	v := &mpesa.ReversalResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			ResultType               *int
-			ResultCode               *int
-			ResultDesc               *string
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			ConversationID           *string
-			TransactionID            *string
-			ReferenceData            *struct {
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID *string
+			ReferenceData *struct {
 				ReferenceItem map[string]string
 			}
 		}{
@@ -615,19 +353,25 @@ func BuildReversalResultEndpointPayload(mpesaReversalResultBody string) (*mpesa.
 	{
 		err = json.Unmarshal([]byte(mpesaReversalResultBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"Result\": {\n         \"ConversationID\": \"AG_20170727_00004efadacd98a01d15\",\n         \"OriginatorConversationID\": \"10819-695089-1\",\n         \"ReferenceData\": {\n            \"ReferenceItem\": {\n               \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit\"\n            }\n         },\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"The service request has been accepted successfully.\",\n         \"ResultType\": 0,\n         \"TransactionID\": \"LGR019G3J2\"\n      }\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"Result\": {\n         \"ConversationId\": \"236543-276372-2\",\n         \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n         \"ReferenceData\": {\n            \"ReferenceItem\": {\n               \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit\"\n            }\n         },\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"Initiator information is invalid\",\n         \"ResultType\": 0,\n         \"TransactionID\": \"LHG31AA5TX\"\n      }\n   }'")
 		}
 	}
 	v := &mpesa.ReversalResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			ResultType               *int
-			ResultCode               *int
-			ResultDesc               *string
+			// Status code indicating whether transaction was already sent to your listener
+			ResultType *int
+			// Numeric status code indicating the status of the transaction processing
+			ResultCode *int
+			// Message from the API that gives the status of the request
+			ResultDesc *string
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			ConversationID           *string
-			TransactionID            *string
-			ReferenceData            *struct {
+			// Unique identifier for the transaction request.
+			ConversationID *string
+			// Unique M-PESA transaction ID for every payment request.
+			TransactionID *string
+			ReferenceData *struct {
 				ReferenceItem map[string]string
 			}
 		}{
@@ -664,21 +408,21 @@ func BuildB2CTimeoutPayload(mpesaB2CTimeoutBody string) (*mpesa.B2CPaymentResult
 	{
 		err = json.Unmarshal([]byte(mpesaB2CTimeoutBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ReferenceData\": {\n         \"ReferenceItem\": {\n            \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit\"\n         }\n      },\n      \"Result\": {\n         \"ConversationId\": \"236543-276372-2\",\n         \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"Service request is has bee accepted successfully\",\n         \"ResultType\": 6016153715838598845,\n         \"TransactionID\": \"LHG31AA5TX\"\n      },\n      \"ResultParameters\": {\n         \"ResultParameter\": {\n            \"B2CChargesPaidAccountAvailableFunds\": {\n               \"B2CChargesPaidAccountAvailableFunds\": 0\n            },\n            \"B2CRecipientIsRegisteredCustomer\": {\n               \"ReceiverPartyPublicName\": \"Y\"\n            },\n            \"B2CUtilityAccountAvailableFunds\": {\n               \"B2CUtilityAccountAvailableFunds\": 133568\n            },\n            \"B2CWorkingAccountAvailableFunds\": {\n               \"B2CWorkingAccountAvailableFunds\": 150000\n            },\n            \"ReceiverPartyPublicName\": {\n               \"ReceiverPartyPublicName\": \"254708374149 - John Doe\"\n            },\n            \"TransactionAmount\": {\n               \"TransactionAmount\": 8000\n            },\n            \"TransactionCompletedDateTime\": {\n               \"TransactionCompletedDateTime\": \"17.07.2017 10:54:57\"\n            },\n            \"TransactionReceipt\": {\n               \"TransactionReceipt\": \"LGH3197RIB\"\n            }\n         }\n      }\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ReferenceData\": {\n         \"ReferenceItem\": {\n            \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit\"\n         }\n      },\n      \"Result\": {\n         \"ConversationId\": \"236543-276372-2\",\n         \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"Initiator information is invalid\",\n         \"ResultType\": 0,\n         \"TransactionID\": \"LHG31AA5TX\"\n      },\n      \"ResultParameters\": {\n         \"ResultParameter\": [\n            {\n               \"B2CChargesPaidAccountAvailableFunds\": 236543.9,\n               \"B2CRecipientIsRegisteredCustomer\": \"Y\",\n               \"B2CUtilityAccountAvailableFunds\": 23654.5,\n               \"B2CWorkingAccountAvailableFunds\": 2000,\n               \"ReceiverPartyPublicName\": \"254722000000 - Safaricom PLC\",\n               \"TransactionAmount\": 8000,\n               \"TransactionCompletedDateTime\": \"17.07.2017 10:54:57\",\n               \"TransactionReceipt\": \"LGH3197RIB\"\n            },\n            {\n               \"B2CChargesPaidAccountAvailableFunds\": 236543.9,\n               \"B2CRecipientIsRegisteredCustomer\": \"Y\",\n               \"B2CUtilityAccountAvailableFunds\": 23654.5,\n               \"B2CWorkingAccountAvailableFunds\": 2000,\n               \"ReceiverPartyPublicName\": \"254722000000 - Safaricom PLC\",\n               \"TransactionAmount\": 8000,\n               \"TransactionCompletedDateTime\": \"17.07.2017 10:54:57\",\n               \"TransactionReceipt\": \"LGH3197RIB\"\n            }\n         ]\n      }\n   }'")
 		}
 	}
 	v := &mpesa.B2CPaymentResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			// Status code that indicates whether the transaction was already sent
+			// Status code indicating whether transaction was already sent to your listener
 			ResultType *int
-			// Numeric status code that indicates the status of the transaction processing
+			// Numeric status code indicating the status of the transaction processing
 			ResultCode *int
 			// Message from the API that gives the status of the request
 			ResultDesc *string
-			// Global unique identifier for the transaction request.
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			// Global unique identifier for the transaction request.
+			// Unique identifier for the transaction request.
 			ConversationID *string
 			// Unique M-PESA transaction ID for every payment request.
 			TransactionID *string
@@ -693,115 +437,12 @@ func BuildB2CTimeoutPayload(mpesaB2CTimeoutBody string) (*mpesa.B2CPaymentResult
 	}
 	if body.ResultParameters != nil {
 		v.ResultParameters = &struct {
-			ResultParameter *struct {
-				// This is a unique M-PESA transaction ID for every payment request.
-				TransactionReceipt map[string]string
-				// This is the amount that was transacted.
-				TransactionAmount map[string]int
-				// Available balance of the Working account under the B2C shortcode used in the
-				// transaction.
-				B2CWorkingAccountAvailableFunds map[string]int
-				// Available balance of the Utility account under the B2C shortcode used in the
-				// transaction.
-				B2CUtilityAccountAvailableFunds map[string]int
-				// This is the date and time that the transaction completed M-PESA.
-				TransactionCompletedDateTime map[string]string
-				// This is the name and phone number of the customer who received the payment.
-				ReceiverPartyPublicName map[string]string
-				// Available balance of the Charges Paid account under the B2C shortcode used
-				// in the transaction.
-				B2CChargesPaidAccountAvailableFunds map[string]int
-				// This is a key that indicates whether the customer is a M-PESA registered
-				// customer or not
-				B2CRecipientIsRegisteredCustomer map[string]string
-			}
+			ResultParameter []*B2CResultParameters
 		}{}
 		if body.ResultParameters.ResultParameter != nil {
-			v.ResultParameters.ResultParameter = &struct {
-				// This is a unique M-PESA transaction ID for every payment request.
-				TransactionReceipt map[string]string
-				// This is the amount that was transacted.
-				TransactionAmount map[string]int
-				// Available balance of the Working account under the B2C shortcode used in the
-				// transaction.
-				B2CWorkingAccountAvailableFunds map[string]int
-				// Available balance of the Utility account under the B2C shortcode used in the
-				// transaction.
-				B2CUtilityAccountAvailableFunds map[string]int
-				// This is the date and time that the transaction completed M-PESA.
-				TransactionCompletedDateTime map[string]string
-				// This is the name and phone number of the customer who received the payment.
-				ReceiverPartyPublicName map[string]string
-				// Available balance of the Charges Paid account under the B2C shortcode used
-				// in the transaction.
-				B2CChargesPaidAccountAvailableFunds map[string]int
-				// This is a key that indicates whether the customer is a M-PESA registered
-				// customer or not
-				B2CRecipientIsRegisteredCustomer map[string]string
-			}{}
-			if body.ResultParameters.ResultParameter.TransactionReceipt != nil {
-				v.ResultParameters.ResultParameter.TransactionReceipt = make(map[string]string, len(body.ResultParameters.ResultParameter.TransactionReceipt))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionReceipt {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionReceipt[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.TransactionAmount != nil {
-				v.ResultParameters.ResultParameter.TransactionAmount = make(map[string]int, len(body.ResultParameters.ResultParameter.TransactionAmount))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionAmount {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionAmount[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.TransactionCompletedDateTime != nil {
-				v.ResultParameters.ResultParameter.TransactionCompletedDateTime = make(map[string]string, len(body.ResultParameters.ResultParameter.TransactionCompletedDateTime))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionCompletedDateTime {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionCompletedDateTime[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.ReceiverPartyPublicName != nil {
-				v.ResultParameters.ResultParameter.ReceiverPartyPublicName = make(map[string]string, len(body.ResultParameters.ResultParameter.ReceiverPartyPublicName))
-				for key, val := range body.ResultParameters.ResultParameter.ReceiverPartyPublicName {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.ReceiverPartyPublicName[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer != nil {
-				v.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer = make(map[string]string, len(body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer))
-				for key, val := range body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer[tk] = tv
-				}
+			v.ResultParameters.ResultParameter = make([]*mpesa.B2CResultParameters, len(body.ResultParameters.ResultParameter))
+			for i, val := range body.ResultParameters.ResultParameter {
+				v.ResultParameters.ResultParameter[i] = marshalB2CResultParametersRequestBodyToMpesaB2CResultParameters(val)
 			}
 		}
 	}
@@ -830,21 +471,21 @@ func BuildB2CResultPayload(mpesaB2CResultBody string) (*mpesa.B2CPaymentResult, 
 	{
 		err = json.Unmarshal([]byte(mpesaB2CResultBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ReferenceData\": {\n         \"ReferenceItem\": {\n            \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit\"\n         }\n      },\n      \"Result\": {\n         \"ConversationId\": \"236543-276372-2\",\n         \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"Service request is has bee accepted successfully\",\n         \"ResultType\": 8294826480937208011,\n         \"TransactionID\": \"LHG31AA5TX\"\n      },\n      \"ResultParameters\": {\n         \"ResultParameter\": {\n            \"B2CChargesPaidAccountAvailableFunds\": {\n               \"B2CChargesPaidAccountAvailableFunds\": 0\n            },\n            \"B2CRecipientIsRegisteredCustomer\": {\n               \"ReceiverPartyPublicName\": \"Y\"\n            },\n            \"B2CUtilityAccountAvailableFunds\": {\n               \"B2CUtilityAccountAvailableFunds\": 133568\n            },\n            \"B2CWorkingAccountAvailableFunds\": {\n               \"B2CWorkingAccountAvailableFunds\": 150000\n            },\n            \"ReceiverPartyPublicName\": {\n               \"ReceiverPartyPublicName\": \"254708374149 - John Doe\"\n            },\n            \"TransactionAmount\": {\n               \"TransactionAmount\": 8000\n            },\n            \"TransactionCompletedDateTime\": {\n               \"TransactionCompletedDateTime\": \"17.07.2017 10:54:57\"\n            },\n            \"TransactionReceipt\": {\n               \"TransactionReceipt\": \"LGH3197RIB\"\n            }\n         }\n      }\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"ReferenceData\": {\n         \"ReferenceItem\": {\n            \"QueueTimeoutURL\": \"https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit\"\n         }\n      },\n      \"Result\": {\n         \"ConversationId\": \"236543-276372-2\",\n         \"OriginatorConversationId\": \"AG_2376487236_126732989KJHJKH\",\n         \"ResultCode\": 0,\n         \"ResultDesc\": \"Initiator information is invalid\",\n         \"ResultType\": 0,\n         \"TransactionID\": \"LHG31AA5TX\"\n      },\n      \"ResultParameters\": {\n         \"ResultParameter\": [\n            {\n               \"B2CChargesPaidAccountAvailableFunds\": 236543.9,\n               \"B2CRecipientIsRegisteredCustomer\": \"Y\",\n               \"B2CUtilityAccountAvailableFunds\": 23654.5,\n               \"B2CWorkingAccountAvailableFunds\": 2000,\n               \"ReceiverPartyPublicName\": \"254722000000 - Safaricom PLC\",\n               \"TransactionAmount\": 8000,\n               \"TransactionCompletedDateTime\": \"17.07.2017 10:54:57\",\n               \"TransactionReceipt\": \"LGH3197RIB\"\n            },\n            {\n               \"B2CChargesPaidAccountAvailableFunds\": 236543.9,\n               \"B2CRecipientIsRegisteredCustomer\": \"Y\",\n               \"B2CUtilityAccountAvailableFunds\": 23654.5,\n               \"B2CWorkingAccountAvailableFunds\": 2000,\n               \"ReceiverPartyPublicName\": \"254722000000 - Safaricom PLC\",\n               \"TransactionAmount\": 8000,\n               \"TransactionCompletedDateTime\": \"17.07.2017 10:54:57\",\n               \"TransactionReceipt\": \"LGH3197RIB\"\n            },\n            {\n               \"B2CChargesPaidAccountAvailableFunds\": 236543.9,\n               \"B2CRecipientIsRegisteredCustomer\": \"Y\",\n               \"B2CUtilityAccountAvailableFunds\": 23654.5,\n               \"B2CWorkingAccountAvailableFunds\": 2000,\n               \"ReceiverPartyPublicName\": \"254722000000 - Safaricom PLC\",\n               \"TransactionAmount\": 8000,\n               \"TransactionCompletedDateTime\": \"17.07.2017 10:54:57\",\n               \"TransactionReceipt\": \"LGH3197RIB\"\n            }\n         ]\n      }\n   }'")
 		}
 	}
 	v := &mpesa.B2CPaymentResult{}
 	if body.Result != nil {
 		v.Result = &struct {
-			// Status code that indicates whether the transaction was already sent
+			// Status code indicating whether transaction was already sent to your listener
 			ResultType *int
-			// Numeric status code that indicates the status of the transaction processing
+			// Numeric status code indicating the status of the transaction processing
 			ResultCode *int
 			// Message from the API that gives the status of the request
 			ResultDesc *string
-			// Global unique identifier for the transaction request.
+			// Unique identifier for the transaction request.
 			OriginatorConversationID *string
-			// Global unique identifier for the transaction request.
+			// Unique identifier for the transaction request.
 			ConversationID *string
 			// Unique M-PESA transaction ID for every payment request.
 			TransactionID *string
@@ -859,115 +500,12 @@ func BuildB2CResultPayload(mpesaB2CResultBody string) (*mpesa.B2CPaymentResult, 
 	}
 	if body.ResultParameters != nil {
 		v.ResultParameters = &struct {
-			ResultParameter *struct {
-				// This is a unique M-PESA transaction ID for every payment request.
-				TransactionReceipt map[string]string
-				// This is the amount that was transacted.
-				TransactionAmount map[string]int
-				// Available balance of the Working account under the B2C shortcode used in the
-				// transaction.
-				B2CWorkingAccountAvailableFunds map[string]int
-				// Available balance of the Utility account under the B2C shortcode used in the
-				// transaction.
-				B2CUtilityAccountAvailableFunds map[string]int
-				// This is the date and time that the transaction completed M-PESA.
-				TransactionCompletedDateTime map[string]string
-				// This is the name and phone number of the customer who received the payment.
-				ReceiverPartyPublicName map[string]string
-				// Available balance of the Charges Paid account under the B2C shortcode used
-				// in the transaction.
-				B2CChargesPaidAccountAvailableFunds map[string]int
-				// This is a key that indicates whether the customer is a M-PESA registered
-				// customer or not
-				B2CRecipientIsRegisteredCustomer map[string]string
-			}
+			ResultParameter []*B2CResultParameters
 		}{}
 		if body.ResultParameters.ResultParameter != nil {
-			v.ResultParameters.ResultParameter = &struct {
-				// This is a unique M-PESA transaction ID for every payment request.
-				TransactionReceipt map[string]string
-				// This is the amount that was transacted.
-				TransactionAmount map[string]int
-				// Available balance of the Working account under the B2C shortcode used in the
-				// transaction.
-				B2CWorkingAccountAvailableFunds map[string]int
-				// Available balance of the Utility account under the B2C shortcode used in the
-				// transaction.
-				B2CUtilityAccountAvailableFunds map[string]int
-				// This is the date and time that the transaction completed M-PESA.
-				TransactionCompletedDateTime map[string]string
-				// This is the name and phone number of the customer who received the payment.
-				ReceiverPartyPublicName map[string]string
-				// Available balance of the Charges Paid account under the B2C shortcode used
-				// in the transaction.
-				B2CChargesPaidAccountAvailableFunds map[string]int
-				// This is a key that indicates whether the customer is a M-PESA registered
-				// customer or not
-				B2CRecipientIsRegisteredCustomer map[string]string
-			}{}
-			if body.ResultParameters.ResultParameter.TransactionReceipt != nil {
-				v.ResultParameters.ResultParameter.TransactionReceipt = make(map[string]string, len(body.ResultParameters.ResultParameter.TransactionReceipt))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionReceipt {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionReceipt[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.TransactionAmount != nil {
-				v.ResultParameters.ResultParameter.TransactionAmount = make(map[string]int, len(body.ResultParameters.ResultParameter.TransactionAmount))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionAmount {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionAmount[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CWorkingAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CUtilityAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.TransactionCompletedDateTime != nil {
-				v.ResultParameters.ResultParameter.TransactionCompletedDateTime = make(map[string]string, len(body.ResultParameters.ResultParameter.TransactionCompletedDateTime))
-				for key, val := range body.ResultParameters.ResultParameter.TransactionCompletedDateTime {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.TransactionCompletedDateTime[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.ReceiverPartyPublicName != nil {
-				v.ResultParameters.ResultParameter.ReceiverPartyPublicName = make(map[string]string, len(body.ResultParameters.ResultParameter.ReceiverPartyPublicName))
-				for key, val := range body.ResultParameters.ResultParameter.ReceiverPartyPublicName {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.ReceiverPartyPublicName[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds != nil {
-				v.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds = make(map[string]int, len(body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds))
-				for key, val := range body.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CChargesPaidAccountAvailableFunds[tk] = tv
-				}
-			}
-			if body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer != nil {
-				v.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer = make(map[string]string, len(body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer))
-				for key, val := range body.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer {
-					tk := key
-					tv := val
-					v.ResultParameters.ResultParameter.B2CRecipientIsRegisteredCustomer[tk] = tv
-				}
+			v.ResultParameters.ResultParameter = make([]*mpesa.B2CResultParameters, len(body.ResultParameters.ResultParameter))
+			for i, val := range body.ResultParameters.ResultParameter {
+				v.ResultParameters.ResultParameter[i] = marshalB2CResultParametersRequestBodyToMpesaB2CResultParameters(val)
 			}
 		}
 	}
@@ -996,7 +534,7 @@ func BuildC2BValidationPayload(mpesaC2BValidationBody string) (*mpesa.Validation
 	{
 		err = json.Unmarshal([]byte(mpesaC2BValidationBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"BillRefNumber\": \"29f\",\n      \"BusinessShortCode\": 654321,\n      \"FirstName\": \"John\",\n      \"InvoiceNumber\": \"Ullam delectus sunt a labore non nihil.\",\n      \"LastName\": \"Jane\",\n      \"MSISDN\": 4568569217785673917,\n      \"MiddleName\": \"Doe\",\n      \"OrgAccountBalance\": 30671,\n      \"ThirdPartyTransID\": \"Itaque qui enim aliquam iste non voluptatem.\",\n      \"TransAmount\": 100,\n      \"TransID\": \"LHG31AA5TX\",\n      \"TransTime\": \"20180713154301\",\n      \"TransactionType\": \"Pay Bill\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"BillRefNumber\": \"ele\",\n      \"BusinessShortCode\": 654321,\n      \"FirstName\": \"John\",\n      \"InvoiceNumber\": \"Animi et.\",\n      \"LastName\": \"Jane\",\n      \"MSISDN\": 7807928622680112375,\n      \"MiddleName\": \"Doe\",\n      \"OrgAccountBalance\": 30671,\n      \"ThirdPartyTransID\": \"Ratione minima rerum voluptatem hic molestiae expedita.\",\n      \"TransAmount\": 100,\n      \"TransID\": \"LHG31AA5TX\",\n      \"TransTime\": \"20180713154301\",\n      \"TransactionType\": \"Buy Goods\"\n   }'")
 		}
 	}
 	v := &mpesa.ValidationResult{
@@ -1026,7 +564,7 @@ func BuildC2BConfirmationPayload(mpesaC2BConfirmationBody string) (*mpesa.Confir
 	{
 		err = json.Unmarshal([]byte(mpesaC2BConfirmationBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"BillRefNumber\": \"lbq\",\n      \"BusinessShortCode\": 654321,\n      \"FirstName\": \"John\",\n      \"InvoiceNumber\": \"Repellendus ea suscipit culpa assumenda.\",\n      \"LastName\": \"Jane\",\n      \"MSISDN\": 5331004031813005250,\n      \"MiddleName\": \"Doe\",\n      \"OrgAccountBalance\": 30671,\n      \"ThirdPartyTransID\": \"In commodi asperiores.\",\n      \"TransAmount\": 100,\n      \"TransID\": \"LHG31AA5TX\",\n      \"TransTime\": \"20180713154301\",\n      \"TransactionType\": \"Buy Goods\"\n   }'")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"BillRefNumber\": \"3wz\",\n      \"BusinessShortCode\": 654321,\n      \"FirstName\": \"John\",\n      \"InvoiceNumber\": \"Ut voluptatem dolores qui reprehenderit.\",\n      \"LastName\": \"Jane\",\n      \"MSISDN\": 3226968445935365337,\n      \"MiddleName\": \"Doe\",\n      \"OrgAccountBalance\": 30671,\n      \"ThirdPartyTransID\": \"Animi qui aliquam occaecati expedita at.\",\n      \"TransAmount\": 100,\n      \"TransID\": \"LHG31AA5TX\",\n      \"TransTime\": \"20180713154301\",\n      \"TransactionType\": \"Pay Bill\"\n   }'")
 		}
 	}
 	v := &mpesa.ConfirmationResult{

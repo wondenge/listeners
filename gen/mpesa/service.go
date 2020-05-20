@@ -48,20 +48,25 @@ var MethodNames = [10]string{"AccountBalanceTimeout", "AccountBalanceResult", "T
 // AccountBalanceResult is the payload type of the mpesa service
 // AccountBalanceTimeout method.
 type AccountBalanceResult struct {
-	ResultType               *int
-	ResultCode               *int
-	ResultDesc               *string
-	OriginatorConversationID *string
-	ConversationID           *string
-	TransactionID            *string
-	ResultParameters         *struct {
-		ResultParameter *struct {
-			AccountBalance  map[string]string
-			BOCompletedTime map[string]string
+	Result *struct {
+		// Status code indicating whether transaction was already sent to your listener
+		ResultType int
+		// Numeric status code indicating the status of the transaction processing
+		ResultCode *int
+		// Message from the API that gives the status of the request
+		ResultDesc *string
+		// Unique identifier for the transaction request.
+		OriginatorConversationID *string
+		// Unique identifier for the transaction request.
+		ConversationID *string
+		// Unique M-PESA transaction ID for every payment request.
+		TransactionID    *string
+		ResultParameters *struct {
+			ResultParameter []*AccountBalanceParameters
 		}
-	}
-	ReferenceData *struct {
-		ReferenceItem map[string]string
+		ReferenceData *struct {
+			ReferenceItem map[string]string
+		}
 	}
 }
 
@@ -69,28 +74,20 @@ type AccountBalanceResult struct {
 // TransactionStatusTimeout method.
 type TransactionStatusResult struct {
 	Result *struct {
-		ResultType               *int
-		ResultCode               *int
-		ResultDesc               *string
+		// Status code indicating whether transaction was already sent to your listener
+		ResultType int
+		// Numeric status code indicating the status of the transaction processing
+		ResultCode *int
+		// Message from the API that gives the status of the request
+		ResultDesc *string
+		// Unique identifier for the transaction request.
 		OriginatorConversationID *string
-		ConversationID           *string
-		TransactionID            *string
-		ResultParameters         *struct {
-			ResultParameter *struct {
-				ReceiptNo                map[string]string
-				ConversationID           map[string]string
-				FinalisedTime            map[string]int
-				Amount                   map[string]int
-				TransactionStatus        map[string]string
-				ReasonType               map[string]string
-				TransactionReason        map[string]string
-				DebitPartyCharges        map[string]string
-				DebitAccountType         map[string]string
-				InitiatedTime            map[string]int
-				OriginatorConversationID map[string]string
-				CreditPartyName          map[string]string
-				DebitPartyName           map[string]string
-			}
+		// Unique identifier for the transaction request.
+		ConversationID *string
+		// Unique M-PESA transaction ID for every payment request.
+		TransactionID    *string
+		ResultParameters *struct {
+			ResultParameter []*TransactionStatusResultParameter
 		}
 		ReferenceData *struct {
 			ReferenceItem map[string]string
@@ -102,13 +99,19 @@ type TransactionStatusResult struct {
 // method.
 type ReversalResult struct {
 	Result *struct {
-		ResultType               *int
-		ResultCode               *int
-		ResultDesc               *string
+		// Status code indicating whether transaction was already sent to your listener
+		ResultType int
+		// Numeric status code indicating the status of the transaction processing
+		ResultCode *int
+		// Message from the API that gives the status of the request
+		ResultDesc *string
+		// Unique identifier for the transaction request.
 		OriginatorConversationID *string
-		ConversationID           *string
-		TransactionID            *string
-		ReferenceData            *struct {
+		// Unique identifier for the transaction request.
+		ConversationID *string
+		// Unique M-PESA transaction ID for every payment request.
+		TransactionID *string
+		ReferenceData *struct {
 			ReferenceItem map[string]string
 		}
 	}
@@ -117,42 +120,21 @@ type ReversalResult struct {
 // B2CPaymentResult is the payload type of the mpesa service B2CTimeout method.
 type B2CPaymentResult struct {
 	Result *struct {
-		// Status code that indicates whether the transaction was already sent
+		// Status code indicating whether transaction was already sent to your listener
 		ResultType int
-		// Numeric status code that indicates the status of the transaction processing
+		// Numeric status code indicating the status of the transaction processing
 		ResultCode *int
 		// Message from the API that gives the status of the request
 		ResultDesc *string
-		// Global unique identifier for the transaction request.
+		// Unique identifier for the transaction request.
 		OriginatorConversationID *string
-		// Global unique identifier for the transaction request.
+		// Unique identifier for the transaction request.
 		ConversationID *string
 		// Unique M-PESA transaction ID for every payment request.
 		TransactionID *string
 	}
 	ResultParameters *struct {
-		ResultParameter *struct {
-			// This is a unique M-PESA transaction ID for every payment request.
-			TransactionReceipt map[string]string
-			// This is the amount that was transacted.
-			TransactionAmount map[string]int
-			// Available balance of the Working account under the B2C shortcode used in the
-			// transaction.
-			B2CWorkingAccountAvailableFunds map[string]int
-			// Available balance of the Utility account under the B2C shortcode used in the
-			// transaction.
-			B2CUtilityAccountAvailableFunds map[string]int
-			// This is the date and time that the transaction completed M-PESA.
-			TransactionCompletedDateTime map[string]string
-			// This is the name and phone number of the customer who received the payment.
-			ReceiverPartyPublicName map[string]string
-			// Available balance of the Charges Paid account under the B2C shortcode used
-			// in the transaction.
-			B2CChargesPaidAccountAvailableFunds map[string]int
-			// This is a key that indicates whether the customer is a M-PESA registered
-			// customer or not
-			B2CRecipientIsRegisteredCustomer map[string]string
-		}
+		ResultParameter []*B2CResultParameters
 	}
 	ReferenceData *struct {
 		ReferenceItem map[string]string
@@ -162,7 +144,7 @@ type B2CPaymentResult struct {
 // ValidationResult is the payload type of the mpesa service C2BValidation
 // method.
 type ValidationResult struct {
-	// The transaction type specified during the payment request.
+	// Transaction type specified during the payment request.
 	TransactionType *string
 	// Unique M-Pesa transaction ID for every payment request
 	TransID *string
@@ -192,7 +174,7 @@ type ValidationResult struct {
 // ConfirmationResult is the payload type of the mpesa service C2BConfirmation
 // method.
 type ConfirmationResult struct {
-	// The transaction type specified during the payment request.
+	// Transaction type specified during the payment request.
 	TransactionType *string
 	// Unique M-Pesa transaction ID for every payment request
 	TransID *string
@@ -217,4 +199,47 @@ type ConfirmationResult struct {
 	MiddleName *string
 	// Last Name of the customer making payment.
 	LastName *string
+}
+
+type AccountBalanceParameters struct {
+	AccountBalance  *string
+	BOCompletedTime *string
+}
+
+type TransactionStatusResultParameter struct {
+	ReceiptNo                *string
+	ConversationID           *string
+	FinalisedTime            *string
+	Amount                   *int
+	TransactionStatus        *string
+	ReasonType               *string
+	TransactionReason        *string
+	DebitPartyCharges        *string
+	DebitAccountType         *string
+	InitiatedTime            *string
+	OriginatorConversationID *string
+	CreditPartyName          *string
+	DebitPartyName           *string
+}
+
+type B2CResultParameters struct {
+	// This is a unique M-PESA transaction ID for every payment request.
+	TransactionReceipt *string
+	// This is the amount that was transacted.
+	TransactionAmount *int
+	// Available balance of the Working account under the B2C shortcode used in the
+	// transaction.
+	B2CWorkingAccountAvailableFunds *float64
+	// Available balance of the Utility account under the B2C shortcode used in the
+	// transaction.
+	B2CUtilityAccountAvailableFunds *float64
+	// This is the date and time that the transaction completed M-PESA.
+	TransactionCompletedDateTime *string
+	// This is the name and phone number of the customer who received the payment.
+	ReceiverPartyPublicName *string
+	// Available balance of the Charges Paid account under the B2C shortcode used
+	// in the transaction.
+	B2CChargesPaidAccountAvailableFunds *float64
+	// Key indicating whether customer is registered on M-PESA
+	B2CRecipientIsRegisteredCustomer *string
 }

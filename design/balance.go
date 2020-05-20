@@ -65,8 +65,7 @@ var AccountBalanceResult = Type("AccountBalanceResult", func() {
 })
 
 var AccountBalanceParameters = Type("AccountBalanceParameters", func() {
-	Attribute("AccountBalance", MapOf(String, String), func() {
-		Pattern("[a-zA-Z]+")
+	Attribute("AccountBalance", String, func() {
 		Example("Working Account|KES|46713.00|46713.00|0.00|0.00&Float Account|KES|0.00|0.00|0.00|0.00&Utility Account|KES|49217.00|49217.00|0.00|0.00&Charges Paid Account|KES|-220.00|-220.00|0.00|0.00&Organization Settlement Account|KES|0.00|0.00|0.00|0.00")
 	})
 	Attribute("BOCompletedTime", String, func() {

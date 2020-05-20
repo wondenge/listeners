@@ -682,3 +682,127 @@ func DecodeC2BConfirmationResponse(decoder func(*http.Response) goahttp.Decoder,
 		}
 	}
 }
+
+// marshalMpesaAccountBalanceParametersToAccountBalanceParametersRequestBody
+// builds a value of type *AccountBalanceParametersRequestBody from a value of
+// type *mpesa.AccountBalanceParameters.
+func marshalMpesaAccountBalanceParametersToAccountBalanceParametersRequestBody(v *mpesa.AccountBalanceParameters) *AccountBalanceParametersRequestBody {
+	if v == nil {
+		return nil
+	}
+	res := &AccountBalanceParametersRequestBody{
+		AccountBalance:  v.AccountBalance,
+		BOCompletedTime: v.BOCompletedTime,
+	}
+
+	return res
+}
+
+// marshalAccountBalanceParametersRequestBodyToMpesaAccountBalanceParameters
+// builds a value of type *mpesa.AccountBalanceParameters from a value of type
+// *AccountBalanceParametersRequestBody.
+func marshalAccountBalanceParametersRequestBodyToMpesaAccountBalanceParameters(v *AccountBalanceParametersRequestBody) *mpesa.AccountBalanceParameters {
+	if v == nil {
+		return nil
+	}
+	res := &mpesa.AccountBalanceParameters{
+		AccountBalance:  v.AccountBalance,
+		BOCompletedTime: v.BOCompletedTime,
+	}
+
+	return res
+}
+
+// marshalMpesaTransactionStatusResultParameterToTransactionStatusResultParameterRequestBody
+// builds a value of type *TransactionStatusResultParameterRequestBody from a
+// value of type *mpesa.TransactionStatusResultParameter.
+func marshalMpesaTransactionStatusResultParameterToTransactionStatusResultParameterRequestBody(v *mpesa.TransactionStatusResultParameter) *TransactionStatusResultParameterRequestBody {
+	if v == nil {
+		return nil
+	}
+	res := &TransactionStatusResultParameterRequestBody{
+		ReceiptNo:                v.ReceiptNo,
+		ConversationID:           v.ConversationID,
+		FinalisedTime:            v.FinalisedTime,
+		Amount:                   v.Amount,
+		TransactionStatus:        v.TransactionStatus,
+		ReasonType:               v.ReasonType,
+		TransactionReason:        v.TransactionReason,
+		DebitPartyCharges:        v.DebitPartyCharges,
+		DebitAccountType:         v.DebitAccountType,
+		InitiatedTime:            v.InitiatedTime,
+		OriginatorConversationID: v.OriginatorConversationID,
+		CreditPartyName:          v.CreditPartyName,
+		DebitPartyName:           v.DebitPartyName,
+	}
+
+	return res
+}
+
+// marshalTransactionStatusResultParameterRequestBodyToMpesaTransactionStatusResultParameter
+// builds a value of type *mpesa.TransactionStatusResultParameter from a value
+// of type *TransactionStatusResultParameterRequestBody.
+func marshalTransactionStatusResultParameterRequestBodyToMpesaTransactionStatusResultParameter(v *TransactionStatusResultParameterRequestBody) *mpesa.TransactionStatusResultParameter {
+	if v == nil {
+		return nil
+	}
+	res := &mpesa.TransactionStatusResultParameter{
+		ReceiptNo:                v.ReceiptNo,
+		ConversationID:           v.ConversationID,
+		FinalisedTime:            v.FinalisedTime,
+		Amount:                   v.Amount,
+		TransactionStatus:        v.TransactionStatus,
+		ReasonType:               v.ReasonType,
+		TransactionReason:        v.TransactionReason,
+		DebitPartyCharges:        v.DebitPartyCharges,
+		DebitAccountType:         v.DebitAccountType,
+		InitiatedTime:            v.InitiatedTime,
+		OriginatorConversationID: v.OriginatorConversationID,
+		CreditPartyName:          v.CreditPartyName,
+		DebitPartyName:           v.DebitPartyName,
+	}
+
+	return res
+}
+
+// marshalMpesaB2CResultParametersToB2CResultParametersRequestBody builds a
+// value of type *B2CResultParametersRequestBody from a value of type
+// *mpesa.B2CResultParameters.
+func marshalMpesaB2CResultParametersToB2CResultParametersRequestBody(v *mpesa.B2CResultParameters) *B2CResultParametersRequestBody {
+	if v == nil {
+		return nil
+	}
+	res := &B2CResultParametersRequestBody{
+		TransactionReceipt:                  v.TransactionReceipt,
+		TransactionAmount:                   v.TransactionAmount,
+		B2CWorkingAccountAvailableFunds:     v.B2CWorkingAccountAvailableFunds,
+		B2CUtilityAccountAvailableFunds:     v.B2CUtilityAccountAvailableFunds,
+		TransactionCompletedDateTime:        v.TransactionCompletedDateTime,
+		ReceiverPartyPublicName:             v.ReceiverPartyPublicName,
+		B2CChargesPaidAccountAvailableFunds: v.B2CChargesPaidAccountAvailableFunds,
+		B2CRecipientIsRegisteredCustomer:    v.B2CRecipientIsRegisteredCustomer,
+	}
+
+	return res
+}
+
+// marshalB2CResultParametersRequestBodyToMpesaB2CResultParameters builds a
+// value of type *mpesa.B2CResultParameters from a value of type
+// *B2CResultParametersRequestBody.
+func marshalB2CResultParametersRequestBodyToMpesaB2CResultParameters(v *B2CResultParametersRequestBody) *mpesa.B2CResultParameters {
+	if v == nil {
+		return nil
+	}
+	res := &mpesa.B2CResultParameters{
+		TransactionReceipt:                  v.TransactionReceipt,
+		TransactionAmount:                   v.TransactionAmount,
+		B2CWorkingAccountAvailableFunds:     v.B2CWorkingAccountAvailableFunds,
+		B2CUtilityAccountAvailableFunds:     v.B2CUtilityAccountAvailableFunds,
+		TransactionCompletedDateTime:        v.TransactionCompletedDateTime,
+		ReceiverPartyPublicName:             v.ReceiverPartyPublicName,
+		B2CChargesPaidAccountAvailableFunds: v.B2CChargesPaidAccountAvailableFunds,
+		B2CRecipientIsRegisteredCustomer:    v.B2CRecipientIsRegisteredCustomer,
+	}
+
+	return res
+}

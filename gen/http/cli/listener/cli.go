@@ -33,27 +33,31 @@ mpesa (account-balance-timeout|account-balance-result|transaction-status-timeout
 func UsageExamples() string {
 	return os.Args[0] + ` health show` + "\n" +
 		os.Args[0] + ` mpesa account-balance-timeout --body '{
-      "ConversationID": "AG_20170728_0000589b6252f7f25488",
-      "OriginatorConversationID": "19464-802673-1",
-      "ReferenceData": {
-         "ReferenceItem": {
-            "QueueTimeoutURL": "https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit"
-         }
-      },
-      "ResultCode": 0,
-      "ResultDesc": "The service request has b een accepted successfully.",
-      "ResultParameters": {
-         "ResultParameter": {
-            "AccountBalance": {
-               "AccountBalance": "Working Account|KES|46713.00|46713.00|0.00|0.00\u0026Float Account|KES|0.00|0.00|0.00|0.00\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00"
-            },
-            "BOCompletedTime": {
-               "BOCompletedTime": "20170728095642"
+      "Result": {
+         "ConversationId": "236543-276372-2",
+         "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
+         "ReferenceData": {
+            "ReferenceItem": {
+               "QueueTimeoutURL": "https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit"
             }
-         }
-      },
-      "ResultType": 0,
-      "TransactionID": "LGS0000000"
+         },
+         "ResultCode": 0,
+         "ResultDesc": "Initiator information is invalid",
+         "ResultParameters": {
+            "ResultParameter": [
+               {
+                  "AccountBalance": "Working Account|KES|46713.00|46713.00|0.00|0.00\u0026Float Account|KES|0.00|0.00|0.00|0.00\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00",
+                  "BOCompletedTime": "20170728095642"
+               },
+               {
+                  "AccountBalance": "Working Account|KES|46713.00|46713.00|0.00|0.00\u0026Float Account|KES|0.00|0.00|0.00|0.00\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00",
+                  "BOCompletedTime": "20170728095642"
+               }
+            ]
+         },
+         "ResultType": 0,
+         "TransactionID": "LHG31AA5TX"
+      }
    }'` + "\n" +
 		""
 }
@@ -317,27 +321,31 @@ Account Balance Queue TimeOut URL
 
 Example:
     `+os.Args[0]+` mpesa account-balance-timeout --body '{
-      "ConversationID": "AG_20170728_0000589b6252f7f25488",
-      "OriginatorConversationID": "19464-802673-1",
-      "ReferenceData": {
-         "ReferenceItem": {
-            "QueueTimeoutURL": "https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit"
-         }
-      },
-      "ResultCode": 0,
-      "ResultDesc": "The service request has b een accepted successfully.",
-      "ResultParameters": {
-         "ResultParameter": {
-            "AccountBalance": {
-               "AccountBalance": "Working Account|KES|46713.00|46713.00|0.00|0.00\u0026Float Account|KES|0.00|0.00|0.00|0.00\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00"
-            },
-            "BOCompletedTime": {
-               "BOCompletedTime": "20170728095642"
+      "Result": {
+         "ConversationId": "236543-276372-2",
+         "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
+         "ReferenceData": {
+            "ReferenceItem": {
+               "QueueTimeoutURL": "https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit"
             }
-         }
-      },
-      "ResultType": 0,
-      "TransactionID": "LGS0000000"
+         },
+         "ResultCode": 0,
+         "ResultDesc": "Initiator information is invalid",
+         "ResultParameters": {
+            "ResultParameter": [
+               {
+                  "AccountBalance": "Working Account|KES|46713.00|46713.00|0.00|0.00\u0026Float Account|KES|0.00|0.00|0.00|0.00\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00",
+                  "BOCompletedTime": "20170728095642"
+               },
+               {
+                  "AccountBalance": "Working Account|KES|46713.00|46713.00|0.00|0.00\u0026Float Account|KES|0.00|0.00|0.00|0.00\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00",
+                  "BOCompletedTime": "20170728095642"
+               }
+            ]
+         },
+         "ResultType": 0,
+         "TransactionID": "LHG31AA5TX"
+      }
    }'
 `, os.Args[0])
 }
@@ -350,27 +358,31 @@ Account Balance Result URL
 
 Example:
     `+os.Args[0]+` mpesa account-balance-result --body '{
-      "ConversationID": "AG_20170728_0000589b6252f7f25488",
-      "OriginatorConversationID": "19464-802673-1",
-      "ReferenceData": {
-         "ReferenceItem": {
-            "QueueTimeoutURL": "https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit"
-         }
-      },
-      "ResultCode": 0,
-      "ResultDesc": "The service request has b een accepted successfully.",
-      "ResultParameters": {
-         "ResultParameter": {
-            "AccountBalance": {
-               "AccountBalance": "Working Account|KES|46713.00|46713.00|0.00|0.00\u0026Float Account|KES|0.00|0.00|0.00|0.00\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00"
-            },
-            "BOCompletedTime": {
-               "BOCompletedTime": "20170728095642"
+      "Result": {
+         "ConversationId": "236543-276372-2",
+         "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
+         "ReferenceData": {
+            "ReferenceItem": {
+               "QueueTimeoutURL": "https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit"
             }
-         }
-      },
-      "ResultType": 0,
-      "TransactionID": "LGS0000000"
+         },
+         "ResultCode": 0,
+         "ResultDesc": "Initiator information is invalid",
+         "ResultParameters": {
+            "ResultParameter": [
+               {
+                  "AccountBalance": "Working Account|KES|46713.00|46713.00|0.00|0.00\u0026Float Account|KES|0.00|0.00|0.00|0.00\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00",
+                  "BOCompletedTime": "20170728095642"
+               },
+               {
+                  "AccountBalance": "Working Account|KES|46713.00|46713.00|0.00|0.00\u0026Float Account|KES|0.00|0.00|0.00|0.00\u0026Utility Account|KES|49217.00|49217.00|0.00|0.00\u0026Charges Paid Account|KES|-220.00|-220.00|0.00|0.00\u0026Organization Settlement Account|KES|0.00|0.00|0.00|0.00",
+                  "BOCompletedTime": "20170728095642"
+               }
+            ]
+         },
+         "ResultType": 0,
+         "TransactionID": "LHG31AA5TX"
+      }
    }'
 `, os.Args[0])
 }
@@ -384,60 +396,66 @@ Transaction Status Queue TimeOut URL
 Example:
     `+os.Args[0]+` mpesa transaction-status-timeout --body '{
       "Result": {
-         "ConversationID": "AG_20170727_000059c52529a8e080bd",
-         "OriginatorConversationID": "10816-694520-2",
+         "ConversationId": "236543-276372-2",
+         "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
          "ReferenceData": {
             "ReferenceItem": {
                "Occasion": "Occasion"
             }
          },
          "ResultCode": 0,
-         "ResultDesc": "The service request has been accepted successfully",
+         "ResultDesc": "Initiator information is invalid",
          "ResultParameters": {
-            "ResultParameter": {
-               "Amount": {
-                  "Amount": 10
+            "ResultParameter": [
+               {
+                  "Amount": 10,
+                  "ConversationID": "AG_20170727_00004492b1b6d0078fbe",
+                  "CreditPartyName": "254708374149 - John Doe",
+                  "DebitAccountType": "Utility Account",
+                  "DebitPartyCharges": "Fee For B2C Payment|KES|33.00",
+                  "DebitPartyName": "600134 - Safaricom157",
+                  "FinalisedTime": "20170727101415",
+                  "InitiatedTime": "20170727101415",
+                  "Originator Conversation ID": "19455-773836-1",
+                  "ReasonType": "Salary Payment via API",
+                  "ReceiptNo": "LGR919G2AV",
+                  "TransactionReason": "Transaction Reason",
+                  "TransactionStatus": "Completed"
                },
-               "Conversation ID": {
-                  "Conversation ID": "AG_20170727_00004492b1b6d0078fbe"
+               {
+                  "Amount": 10,
+                  "ConversationID": "AG_20170727_00004492b1b6d0078fbe",
+                  "CreditPartyName": "254708374149 - John Doe",
+                  "DebitAccountType": "Utility Account",
+                  "DebitPartyCharges": "Fee For B2C Payment|KES|33.00",
+                  "DebitPartyName": "600134 - Safaricom157",
+                  "FinalisedTime": "20170727101415",
+                  "InitiatedTime": "20170727101415",
+                  "Originator Conversation ID": "19455-773836-1",
+                  "ReasonType": "Salary Payment via API",
+                  "ReceiptNo": "LGR919G2AV",
+                  "TransactionReason": "Transaction Reason",
+                  "TransactionStatus": "Completed"
                },
-               "CreditPartyName": {
-                  "CreditPartyName": "254708374149 - John Doe"
-               },
-               "DebitAccountType": {
-                  "DebitAccountType": "Utility Account"
-               },
-               "DebitPartyCharges": {
-                  "DebitPartyCharges": "Fee For B2C Payment|KES|33.00"
-               },
-               "DebitPartyName": {
-                  "DebitPartyName": "600134 - Safaricom157"
-               },
-               "FinalisedTime": {
-                  "FinalisedTime": 20170727101415
-               },
-               "InitiatedTime": {
-                  "InitiatedTime": 20170727101415
-               },
-               "Originator Conversation ID": {
-                  "Originator Conversation ID": "19455-773836-1"
-               },
-               "ReasonType": {
-                  "ReasonType": "Salary Payment via API"
-               },
-               "ReceiptNo": {
-                  "ReceiptNo": "LGR919G2AV"
-               },
-               "TransactionReason": {
-                  "TransactionReason": "Transaction Reason"
-               },
-               "TransactionStatus": {
+               {
+                  "Amount": 10,
+                  "ConversationID": "AG_20170727_00004492b1b6d0078fbe",
+                  "CreditPartyName": "254708374149 - John Doe",
+                  "DebitAccountType": "Utility Account",
+                  "DebitPartyCharges": "Fee For B2C Payment|KES|33.00",
+                  "DebitPartyName": "600134 - Safaricom157",
+                  "FinalisedTime": "20170727101415",
+                  "InitiatedTime": "20170727101415",
+                  "Originator Conversation ID": "19455-773836-1",
+                  "ReasonType": "Salary Payment via API",
+                  "ReceiptNo": "LGR919G2AV",
+                  "TransactionReason": "Transaction Reason",
                   "TransactionStatus": "Completed"
                }
-            }
+            ]
          },
          "ResultType": 0,
-         "TransactionID": "LGR0000000"
+         "TransactionID": "LHG31AA5TX"
       }
    }'
 `, os.Args[0])
@@ -452,60 +470,81 @@ Transaction Status Result URL
 Example:
     `+os.Args[0]+` mpesa transaction-status-result --body '{
       "Result": {
-         "ConversationID": "AG_20170727_000059c52529a8e080bd",
-         "OriginatorConversationID": "10816-694520-2",
+         "ConversationId": "236543-276372-2",
+         "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
          "ReferenceData": {
             "ReferenceItem": {
                "Occasion": "Occasion"
             }
          },
          "ResultCode": 0,
-         "ResultDesc": "The service request has been accepted successfully",
+         "ResultDesc": "Initiator information is invalid",
          "ResultParameters": {
-            "ResultParameter": {
-               "Amount": {
-                  "Amount": 10
+            "ResultParameter": [
+               {
+                  "Amount": 10,
+                  "ConversationID": "AG_20170727_00004492b1b6d0078fbe",
+                  "CreditPartyName": "254708374149 - John Doe",
+                  "DebitAccountType": "Utility Account",
+                  "DebitPartyCharges": "Fee For B2C Payment|KES|33.00",
+                  "DebitPartyName": "600134 - Safaricom157",
+                  "FinalisedTime": "20170727101415",
+                  "InitiatedTime": "20170727101415",
+                  "Originator Conversation ID": "19455-773836-1",
+                  "ReasonType": "Salary Payment via API",
+                  "ReceiptNo": "LGR919G2AV",
+                  "TransactionReason": "Transaction Reason",
+                  "TransactionStatus": "Completed"
                },
-               "Conversation ID": {
-                  "Conversation ID": "AG_20170727_00004492b1b6d0078fbe"
+               {
+                  "Amount": 10,
+                  "ConversationID": "AG_20170727_00004492b1b6d0078fbe",
+                  "CreditPartyName": "254708374149 - John Doe",
+                  "DebitAccountType": "Utility Account",
+                  "DebitPartyCharges": "Fee For B2C Payment|KES|33.00",
+                  "DebitPartyName": "600134 - Safaricom157",
+                  "FinalisedTime": "20170727101415",
+                  "InitiatedTime": "20170727101415",
+                  "Originator Conversation ID": "19455-773836-1",
+                  "ReasonType": "Salary Payment via API",
+                  "ReceiptNo": "LGR919G2AV",
+                  "TransactionReason": "Transaction Reason",
+                  "TransactionStatus": "Completed"
                },
-               "CreditPartyName": {
-                  "CreditPartyName": "254708374149 - John Doe"
+               {
+                  "Amount": 10,
+                  "ConversationID": "AG_20170727_00004492b1b6d0078fbe",
+                  "CreditPartyName": "254708374149 - John Doe",
+                  "DebitAccountType": "Utility Account",
+                  "DebitPartyCharges": "Fee For B2C Payment|KES|33.00",
+                  "DebitPartyName": "600134 - Safaricom157",
+                  "FinalisedTime": "20170727101415",
+                  "InitiatedTime": "20170727101415",
+                  "Originator Conversation ID": "19455-773836-1",
+                  "ReasonType": "Salary Payment via API",
+                  "ReceiptNo": "LGR919G2AV",
+                  "TransactionReason": "Transaction Reason",
+                  "TransactionStatus": "Completed"
                },
-               "DebitAccountType": {
-                  "DebitAccountType": "Utility Account"
-               },
-               "DebitPartyCharges": {
-                  "DebitPartyCharges": "Fee For B2C Payment|KES|33.00"
-               },
-               "DebitPartyName": {
-                  "DebitPartyName": "600134 - Safaricom157"
-               },
-               "FinalisedTime": {
-                  "FinalisedTime": 20170727101415
-               },
-               "InitiatedTime": {
-                  "InitiatedTime": 20170727101415
-               },
-               "Originator Conversation ID": {
-                  "Originator Conversation ID": "19455-773836-1"
-               },
-               "ReasonType": {
-                  "ReasonType": "Salary Payment via API"
-               },
-               "ReceiptNo": {
-                  "ReceiptNo": "LGR919G2AV"
-               },
-               "TransactionReason": {
-                  "TransactionReason": "Transaction Reason"
-               },
-               "TransactionStatus": {
+               {
+                  "Amount": 10,
+                  "ConversationID": "AG_20170727_00004492b1b6d0078fbe",
+                  "CreditPartyName": "254708374149 - John Doe",
+                  "DebitAccountType": "Utility Account",
+                  "DebitPartyCharges": "Fee For B2C Payment|KES|33.00",
+                  "DebitPartyName": "600134 - Safaricom157",
+                  "FinalisedTime": "20170727101415",
+                  "InitiatedTime": "20170727101415",
+                  "Originator Conversation ID": "19455-773836-1",
+                  "ReasonType": "Salary Payment via API",
+                  "ReceiptNo": "LGR919G2AV",
+                  "TransactionReason": "Transaction Reason",
                   "TransactionStatus": "Completed"
                }
-            }
+            ]
          },
          "ResultType": 0,
-         "TransactionID": "LGR0000000"
+         "TransactionID": "LHG31AA5TX"
       }
    }'
 `, os.Args[0])
@@ -520,17 +559,17 @@ Reversal Queue TimeOut URL
 Example:
     `+os.Args[0]+` mpesa reversal-timeout --body '{
       "Result": {
-         "ConversationID": "AG_20170727_00004efadacd98a01d15",
-         "OriginatorConversationID": "10819-695089-1",
+         "ConversationId": "236543-276372-2",
+         "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
          "ReferenceData": {
             "ReferenceItem": {
                "QueueTimeoutURL": "https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit"
             }
          },
          "ResultCode": 0,
-         "ResultDesc": "The service request has been accepted successfully.",
+         "ResultDesc": "Initiator information is invalid",
          "ResultType": 0,
-         "TransactionID": "LGR019G3J2"
+         "TransactionID": "LHG31AA5TX"
       }
    }'
 `, os.Args[0])
@@ -545,17 +584,17 @@ Reversal Result URL
 Example:
     `+os.Args[0]+` mpesa reversal-result --body '{
       "Result": {
-         "ConversationID": "AG_20170727_00004efadacd98a01d15",
-         "OriginatorConversationID": "10819-695089-1",
+         "ConversationId": "236543-276372-2",
+         "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
          "ReferenceData": {
             "ReferenceItem": {
                "QueueTimeoutURL": "https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit"
             }
          },
          "ResultCode": 0,
-         "ResultDesc": "The service request has been accepted successfully.",
+         "ResultDesc": "Initiator information is invalid",
          "ResultType": 0,
-         "TransactionID": "LGR019G3J2"
+         "TransactionID": "LHG31AA5TX"
       }
    }'
 `, os.Args[0])
@@ -578,37 +617,33 @@ Example:
          "ConversationId": "236543-276372-2",
          "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
          "ResultCode": 0,
-         "ResultDesc": "Service request is has bee accepted successfully",
-         "ResultType": 6016153715838598845,
+         "ResultDesc": "Initiator information is invalid",
+         "ResultType": 0,
          "TransactionID": "LHG31AA5TX"
       },
       "ResultParameters": {
-         "ResultParameter": {
-            "B2CChargesPaidAccountAvailableFunds": {
-               "B2CChargesPaidAccountAvailableFunds": 0
+         "ResultParameter": [
+            {
+               "B2CChargesPaidAccountAvailableFunds": 236543.9,
+               "B2CRecipientIsRegisteredCustomer": "Y",
+               "B2CUtilityAccountAvailableFunds": 23654.5,
+               "B2CWorkingAccountAvailableFunds": 2000,
+               "ReceiverPartyPublicName": "254722000000 - Safaricom PLC",
+               "TransactionAmount": 8000,
+               "TransactionCompletedDateTime": "17.07.2017 10:54:57",
+               "TransactionReceipt": "LGH3197RIB"
             },
-            "B2CRecipientIsRegisteredCustomer": {
-               "ReceiverPartyPublicName": "Y"
-            },
-            "B2CUtilityAccountAvailableFunds": {
-               "B2CUtilityAccountAvailableFunds": 133568
-            },
-            "B2CWorkingAccountAvailableFunds": {
-               "B2CWorkingAccountAvailableFunds": 150000
-            },
-            "ReceiverPartyPublicName": {
-               "ReceiverPartyPublicName": "254708374149 - John Doe"
-            },
-            "TransactionAmount": {
-               "TransactionAmount": 8000
-            },
-            "TransactionCompletedDateTime": {
-               "TransactionCompletedDateTime": "17.07.2017 10:54:57"
-            },
-            "TransactionReceipt": {
+            {
+               "B2CChargesPaidAccountAvailableFunds": 236543.9,
+               "B2CRecipientIsRegisteredCustomer": "Y",
+               "B2CUtilityAccountAvailableFunds": 23654.5,
+               "B2CWorkingAccountAvailableFunds": 2000,
+               "ReceiverPartyPublicName": "254722000000 - Safaricom PLC",
+               "TransactionAmount": 8000,
+               "TransactionCompletedDateTime": "17.07.2017 10:54:57",
                "TransactionReceipt": "LGH3197RIB"
             }
-         }
+         ]
       }
    }'
 `, os.Args[0])
@@ -631,37 +666,43 @@ Example:
          "ConversationId": "236543-276372-2",
          "OriginatorConversationId": "AG_2376487236_126732989KJHJKH",
          "ResultCode": 0,
-         "ResultDesc": "Service request is has bee accepted successfully",
-         "ResultType": 8294826480937208011,
+         "ResultDesc": "Initiator information is invalid",
+         "ResultType": 0,
          "TransactionID": "LHG31AA5TX"
       },
       "ResultParameters": {
-         "ResultParameter": {
-            "B2CChargesPaidAccountAvailableFunds": {
-               "B2CChargesPaidAccountAvailableFunds": 0
+         "ResultParameter": [
+            {
+               "B2CChargesPaidAccountAvailableFunds": 236543.9,
+               "B2CRecipientIsRegisteredCustomer": "Y",
+               "B2CUtilityAccountAvailableFunds": 23654.5,
+               "B2CWorkingAccountAvailableFunds": 2000,
+               "ReceiverPartyPublicName": "254722000000 - Safaricom PLC",
+               "TransactionAmount": 8000,
+               "TransactionCompletedDateTime": "17.07.2017 10:54:57",
+               "TransactionReceipt": "LGH3197RIB"
             },
-            "B2CRecipientIsRegisteredCustomer": {
-               "ReceiverPartyPublicName": "Y"
+            {
+               "B2CChargesPaidAccountAvailableFunds": 236543.9,
+               "B2CRecipientIsRegisteredCustomer": "Y",
+               "B2CUtilityAccountAvailableFunds": 23654.5,
+               "B2CWorkingAccountAvailableFunds": 2000,
+               "ReceiverPartyPublicName": "254722000000 - Safaricom PLC",
+               "TransactionAmount": 8000,
+               "TransactionCompletedDateTime": "17.07.2017 10:54:57",
+               "TransactionReceipt": "LGH3197RIB"
             },
-            "B2CUtilityAccountAvailableFunds": {
-               "B2CUtilityAccountAvailableFunds": 133568
-            },
-            "B2CWorkingAccountAvailableFunds": {
-               "B2CWorkingAccountAvailableFunds": 150000
-            },
-            "ReceiverPartyPublicName": {
-               "ReceiverPartyPublicName": "254708374149 - John Doe"
-            },
-            "TransactionAmount": {
-               "TransactionAmount": 8000
-            },
-            "TransactionCompletedDateTime": {
-               "TransactionCompletedDateTime": "17.07.2017 10:54:57"
-            },
-            "TransactionReceipt": {
+            {
+               "B2CChargesPaidAccountAvailableFunds": 236543.9,
+               "B2CRecipientIsRegisteredCustomer": "Y",
+               "B2CUtilityAccountAvailableFunds": 23654.5,
+               "B2CWorkingAccountAvailableFunds": 2000,
+               "ReceiverPartyPublicName": "254722000000 - Safaricom PLC",
+               "TransactionAmount": 8000,
+               "TransactionCompletedDateTime": "17.07.2017 10:54:57",
                "TransactionReceipt": "LGH3197RIB"
             }
-         }
+         ]
       }
    }'
 `, os.Args[0])
@@ -675,19 +716,19 @@ C2B Validation URL
 
 Example:
     `+os.Args[0]+` mpesa c2-b-validation --body '{
-      "BillRefNumber": "29f",
+      "BillRefNumber": "ele",
       "BusinessShortCode": 654321,
       "FirstName": "John",
-      "InvoiceNumber": "Ullam delectus sunt a labore non nihil.",
+      "InvoiceNumber": "Animi et.",
       "LastName": "Jane",
-      "MSISDN": 4568569217785673917,
+      "MSISDN": 7807928622680112375,
       "MiddleName": "Doe",
       "OrgAccountBalance": 30671,
-      "ThirdPartyTransID": "Itaque qui enim aliquam iste non voluptatem.",
+      "ThirdPartyTransID": "Ratione minima rerum voluptatem hic molestiae expedita.",
       "TransAmount": 100,
       "TransID": "LHG31AA5TX",
       "TransTime": "20180713154301",
-      "TransactionType": "Pay Bill"
+      "TransactionType": "Buy Goods"
    }'
 `, os.Args[0])
 }
@@ -700,19 +741,19 @@ C2B Confirmation URL
 
 Example:
     `+os.Args[0]+` mpesa c2-b-confirmation --body '{
-      "BillRefNumber": "lbq",
+      "BillRefNumber": "3wz",
       "BusinessShortCode": 654321,
       "FirstName": "John",
-      "InvoiceNumber": "Repellendus ea suscipit culpa assumenda.",
+      "InvoiceNumber": "Ut voluptatem dolores qui reprehenderit.",
       "LastName": "Jane",
-      "MSISDN": 5331004031813005250,
+      "MSISDN": 3226968445935365337,
       "MiddleName": "Doe",
       "OrgAccountBalance": 30671,
-      "ThirdPartyTransID": "In commodi asperiores.",
+      "ThirdPartyTransID": "Animi qui aliquam occaecati expedita at.",
       "TransAmount": 100,
       "TransID": "LHG31AA5TX",
       "TransTime": "20180713154301",
-      "TransactionType": "Buy Goods"
+      "TransactionType": "Pay Bill"
    }'
 `, os.Args[0])
 }

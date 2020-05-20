@@ -12,6 +12,7 @@ import (
 	"io"
 	"net/http"
 
+	mpesa "github.com/wondenge/listeners/gen/mpesa"
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
 )
@@ -384,4 +385,66 @@ func DecodeC2BConfirmationRequest(mux goahttp.Muxer, decoder func(*http.Request)
 
 		return payload, nil
 	}
+}
+
+// unmarshalAccountBalanceParametersRequestBodyToMpesaAccountBalanceParameters
+// builds a value of type *mpesa.AccountBalanceParameters from a value of type
+// *AccountBalanceParametersRequestBody.
+func unmarshalAccountBalanceParametersRequestBodyToMpesaAccountBalanceParameters(v *AccountBalanceParametersRequestBody) *mpesa.AccountBalanceParameters {
+	if v == nil {
+		return nil
+	}
+	res := &mpesa.AccountBalanceParameters{
+		AccountBalance:  v.AccountBalance,
+		BOCompletedTime: v.BOCompletedTime,
+	}
+
+	return res
+}
+
+// unmarshalTransactionStatusResultParameterRequestBodyToMpesaTransactionStatusResultParameter
+// builds a value of type *mpesa.TransactionStatusResultParameter from a value
+// of type *TransactionStatusResultParameterRequestBody.
+func unmarshalTransactionStatusResultParameterRequestBodyToMpesaTransactionStatusResultParameter(v *TransactionStatusResultParameterRequestBody) *mpesa.TransactionStatusResultParameter {
+	if v == nil {
+		return nil
+	}
+	res := &mpesa.TransactionStatusResultParameter{
+		ReceiptNo:                v.ReceiptNo,
+		ConversationID:           v.ConversationID,
+		FinalisedTime:            v.FinalisedTime,
+		Amount:                   v.Amount,
+		TransactionStatus:        v.TransactionStatus,
+		ReasonType:               v.ReasonType,
+		TransactionReason:        v.TransactionReason,
+		DebitPartyCharges:        v.DebitPartyCharges,
+		DebitAccountType:         v.DebitAccountType,
+		InitiatedTime:            v.InitiatedTime,
+		OriginatorConversationID: v.OriginatorConversationID,
+		CreditPartyName:          v.CreditPartyName,
+		DebitPartyName:           v.DebitPartyName,
+	}
+
+	return res
+}
+
+// unmarshalB2CResultParametersRequestBodyToMpesaB2CResultParameters builds a
+// value of type *mpesa.B2CResultParameters from a value of type
+// *B2CResultParametersRequestBody.
+func unmarshalB2CResultParametersRequestBodyToMpesaB2CResultParameters(v *B2CResultParametersRequestBody) *mpesa.B2CResultParameters {
+	if v == nil {
+		return nil
+	}
+	res := &mpesa.B2CResultParameters{
+		TransactionReceipt:                  v.TransactionReceipt,
+		TransactionAmount:                   v.TransactionAmount,
+		B2CWorkingAccountAvailableFunds:     v.B2CWorkingAccountAvailableFunds,
+		B2CUtilityAccountAvailableFunds:     v.B2CUtilityAccountAvailableFunds,
+		TransactionCompletedDateTime:        v.TransactionCompletedDateTime,
+		ReceiverPartyPublicName:             v.ReceiverPartyPublicName,
+		B2CChargesPaidAccountAvailableFunds: v.B2CChargesPaidAccountAvailableFunds,
+		B2CRecipientIsRegisteredCustomer:    v.B2CRecipientIsRegisteredCustomer,
+	}
+
+	return res
 }
