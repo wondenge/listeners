@@ -8,45 +8,61 @@ import (
 )
 
 // API describes the global properties of the API server.
-var _ = API("listener", func() {
-	Title("Listener")
-	Description("Golang HTTP service listening for Callback and Timeout URLs")
+var _ = API("safaricom", func() {
+
+	// API title.
+	Title("M-pesa HTTP Listeners")
+
+	// Description of API
+	Description("HTTP service for interacting with callbacks supporting M-pesa APIs")
+
+	// Version of API
 	Version("1.0")
-	TermsOfService("https://github.com/wondenge/mpesa-listener/blob/master/LICENSE")
+
+	// Terms of use of API
+	TermsOfService("https://github.com/wondenge/mpesa-notifiers/blob/master/LICENSE")
+
+	// Contact info for Author and Maintainer
 	Contact(func() {
 		Name("William Ondenge")
 		Email("ondengew@gmail.com")
 		URL("https://www.ondenge.me")
 	})
+
+	// License for Library usage
 	License(func() {
 		Name("Apache License")
-		URL("https://github.com/wondenge/mpesa-listener/blob/master/LICENSE")
+		URL("https://github.com/wondenge/mpesa-notifiers/blob/master/LICENSE")
 	})
+
+	// Library Documentation
 	Docs(func() {
 		Description("Library Usage")
-		URL("https://github.com/wondenge/mpesa-listener/blob/master/README.md")
+		URL("https://github.com/wondenge/mpesa-notifiers/blob/master/README.md")
 	})
-	Server("listener", func() {
-		Description("listener hosts all Listener Services.")
-		Services("swagger", "health", "mpesa", "jenga")
+
+	// Server describes a single process listening for client requests.
+	Server("daraja", func() {
+		Description("daraja hosts all callback services supporting M-pesa APIs.")
+
+		// List services hosted by this server.
+		Services("mpesa", "health", "swagger")
+
+		// List the Hosts and their transport URLs.
 		Host("local", func() {
-			Description("Localhost")
+			Description("local host")
 			URI("http://localhost:3000")
 		})
-	})
-})
 
-var _ = Service("swagger", func() {
-	Description("The swagger service serves the API swagger definition.")
-	HTTP(func() {
-		Path("/swagger")
-	})
+		Host("docker", func() {
+			Description("docker host")
 
-	// Defines an endpoint that serves static assets via HTTP.
-	// Serve the file with relative path ../../gen/http/openapi.json
-	// for requests sent to /swagger.json.
-	Files("/swagger.json", "../../gen/http/openapi.json", func() {
-		Description("JSON document containing the API swagger definition")
+			// We use 0.0.0.0 so the bind will work in the docker image.
+			// We will not be doing TLS here as we expect the instance to
+			// be running in a firewalled environment behind a load balancer
+			// where the load balancer kubernetes ingress will be responsible for TLS.
+			URI("http://0.0.0.0:8000")
+		})
 	})
 })
 
@@ -72,127 +88,15 @@ var _ = Service("health", func() {
 	})
 })
 
-var _ = Service("mpesa", func() {
-
+var _ = Service("swagger", func() {
+	Description("The swagger service serves the API swagger definition.")
 	HTTP(func() {
-		Path("/mpesa")
+		Path("/swagger")
 	})
 
-	// Account Balance Queue TimeOut URL
-	// Path that stores information of time out transaction.
-	Method("AccountBalanceTimeout", func() {
-		Description("Account Balance Queue TimeOut URL")
-		Payload(AccountBalanceResult)
-		Result(String)
-		HTTP(func() {
-			POST("/accountbalance/v1/timeout")
-			Response(StatusCreated)
-		})
-	})
-
-	// Account Balance Result URL
-	// Path that stores information of transaction
-	Method("AccountBalanceResult", func() {
-		Description("Account Balance Result URL")
-		Payload(AccountBalanceResult)
-		Result(String)
-		HTTP(func() {
-			POST("/accountbalance/v1/result")
-			Response(StatusCreated)
-		})
-	})
-
-	// Transaction Status Queue TimeOut URL
-	// Path that stores information of time out transaction.
-	Method("TransactionStatusTimeout", func() {
-		Description("Transaction Status Queue TimeOut URL")
-		Payload(TransactionStatusResult)
-		Result(String)
-		HTTP(func() {
-			POST("/transactionstatus/v1/timeout")
-			Response(StatusCreated)
-		})
-	})
-
-	// Transaction Status Result URL
-	// Path that stores information of transaction
-	Method("TransactionStatusResult", func() {
-		Description("Transaction Status Result URL")
-		Payload(TransactionStatusResult)
-		Result(String)
-		HTTP(func() {
-			POST("/transactionstatus/v1/result")
-			Response(StatusCreated)
-		})
-	})
-
-	// Reversal Queue TimeOut URL
-	// Path that stores information of time out transaction.
-	Method("ReversalTimeout", func() {
-		Description("Reversal Queue TimeOut URL")
-		Payload(ReversalResult)
-		Result(String)
-		HTTP(func() {
-			POST("/reversal/v1/timeout")
-			Response(StatusCreated)
-		})
-	})
-
-	// Reversal Result URL
-	// Path that stores information of transaction
-	Method("ReversalResult", func() {
-		Description("Reversal Result URL")
-		Payload(ReversalResult)
-		Result(String)
-		HTTP(func() {
-			POST("/reversal/v1/result")
-			Response(StatusCreated)
-		})
-	})
-
-	// B2C Queue TimeOut URL
-	// Path that stores information of time out transaction.
-	Method("B2CTimeout", func() {
-		Description("B2C Queue TimeOut URL")
-		Payload(B2CPaymentResult)
-		Result(String)
-		HTTP(func() {
-			POST("/b2c/v1/timeout")
-			Response(StatusCreated)
-		})
-	})
-
-	// B2C Result URL
-	// Path that stores information of transaction
-	Method("B2CResult", func() {
-		Description("B2C Result URL")
-		Payload(B2CPaymentResult)
-		Result(String)
-		HTTP(func() {
-			POST("/b2c/v1/result")
-			Response(StatusCreated)
-		})
-	})
-
-	// C2B Validation URL
-	Method("C2BValidation", func() {
-		Description("C2B Validation URL")
-		Payload(ValidationResult)
-		Result(String)
-		HTTP(func() {
-			POST("/c2b/v1/validation")
-			Response(StatusCreated)
-		})
-	})
-
-	// C2B Confirmation URL
-	Method("C2BConfirmation", func() {
-		Description("C2B Confirmation URL")
-		Payload(ConfirmationResult)
-		Result(String)
-		HTTP(func() {
-			POST("/c2b/v1/confirmation")
-			Response(StatusCreated)
-		})
+	// Serve the file with relative path
+	// ../../gen/http/openapi.json for requests sent to /swagger.json.
+	Files("/swagger.json", "../../gen/http/openapi.json", func() {
+		Description("JSON document containing the API swagger definition")
 	})
 })

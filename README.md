@@ -1,6 +1,16 @@
+<p align="center">
+<img src="src/img/MpesaNotifiers.png" alt="M-pesa Notifiers" title="M-pesa Notifiers" />
+</p>
+<h1 align="center">Easy and Powerful M-pesa Notifiers</h1>
+
+[![Go Report Card](https://goreportcard.com/badge/wondenge/mpesa-notifiers)](https://goreportcard.com/report/wondenge/mpesa-notifiers)
+[![License](https://img.shields.io/badge/license-Apache-blue.svg)]
+
 # Listeners : Golang HTTP service
 
-This is a Golang HTTP service listening for Callbacks and Timeouts from the following API providers.
+This is a Golang HTTP service hosting callbacks to enable rapid prototyping and production use for all Safaricoms M-pesa APIs.
+
+This server has the ability to shutdown nicely to ensure that all requests have been completed. This is usually referred to as graceful shutdown.
 
 # Usage
 
